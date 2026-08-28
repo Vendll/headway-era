@@ -18,7 +18,7 @@ const w = width ?? a.w;
 
 <svg
   {...rest}
-  class:list={['hand-arrow', className]}
+  class:list={['hand-arrow', 'block h-auto', className]}
   width={w}
   viewBox={a.viewBox}
   fill="none"
@@ -30,5 +30,11 @@ const w = width ?? a.w;
 </svg>
 
 <style>
-  .hand-arrow { height: auto; color: inherit; display: block; }
+  /* KEPT deliberately. `color: inherit` here is unlayered, so it beats any
+     `text-*` utility placed on the component - callers colour the arrow with
+     unlayered scoped CSS instead (see digits-assignment.astro's
+     `:global(.tricky__arrow)`, WhereIveBeen's `.where__arrow`,
+     Footer's `.footer__tag :global(.atag__arrow)`). Turning it into a utility
+     would flip that cascade for every caller. */
+  .hand-arrow { color: inherit; }
 </style>

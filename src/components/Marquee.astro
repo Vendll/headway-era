@@ -11,41 +11,24 @@ interface Props {
 const { text, href, repeat = 4, duration = 24, class: className, ...rest } = Astro.props;
 const items = Array.from({ length: repeat }, () => text);
 const Tag = href ? 'a' : 'div';
+const item = 'marquee__item font-display text-[110px] leading-[0.9] tracking-[-0.04em] p-[0.15em_0.35em_0.25em_0] max-[950px]:text-[64px]';
 ---
 
-<Tag {...rest} class:list={['marquee', className]} href={href} target={href?.startsWith('http') ? '_blank' : undefined} rel={href?.startsWith('http') ? 'noopener' : undefined} style={`--marquee-duration:${duration}s`} aria-label={text}>
-  <div class="marquee__track" aria-hidden="true">
-    <div class="marquee__group">{items.map((t) => <span class="marquee__item">{t}</span>)}</div>
-    <div class="marquee__group">{items.map((t) => <span class="marquee__item">{t}</span>)}</div>
+<Tag {...rest} class:list={['marquee', 'block w-full overflow-hidden whitespace-nowrap', className]} href={href} target={href?.startsWith('http') ? '_blank' : undefined} rel={href?.startsWith('http') ? 'noopener' : undefined} style={`--marquee-duration:${duration}s`} aria-label={text}>
+  <div class="marquee__track flex w-max" aria-hidden="true">
+    <div class="marquee__group flex flex-none">{items.map((t) => <span class={item}>{t}</span>)}</div>
+    <div class="marquee__group flex flex-none">{items.map((t) => <span class={item}>{t}</span>)}</div>
   </div>
 </Tag>
 
 <style>
-  .marquee {
-    display: block;
-    overflow: hidden;
-    white-space: nowrap;
-    width: 100%;
-  }
-  .marquee__track {
-    display: flex;
-    width: max-content;
-    animation: marquee var(--marquee-duration, 24s) linear infinite;
-  }
+  /* KEPT deliberately: the loop is a @keyframes animation whose duration comes
+     from the inline `--marquee-duration` custom property, and the hover rule
+     pauses that same animation from the ancestor. */
+  .marquee__track { animation: marquee var(--marquee-duration, 24s) linear infinite; }
   .marquee:hover .marquee__track { animation-play-state: paused; }
-  .marquee__group { display: flex; flex: none; }
-  .marquee__item {
-    font-family: var(--font-display);
-    font-size: 110px;
-    line-height: 0.9;
-    letter-spacing: -0.04em;
-    padding: 0.15em 0.35em 0.25em 0;
-  }
   @keyframes marquee {
     from { transform: translateX(0); }
     to { transform: translateX(-50%); }
-  }
-  @media (max-width: 949px) {
-    .marquee__item { font-size: 64px; }
   }
 </style>

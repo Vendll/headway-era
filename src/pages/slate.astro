@@ -155,8 +155,8 @@ const future = [
 
   <!-- ============ TL;DR ============ -->
   <Section id="tl-dr" class="slate-tldr">
-    <div class="slate-tldr__tag">
-      <ArrowTag side="left" variant="dark" arrowColor="var(--blue)" arrowWidth={80}>Lorem<br /><em>Ipsum</em></ArrowTag>
+    <div class="slate-tldr__tag flex justify-end pr-[180px] mb-[10px] max-[1200px]:pr-[60px] max-[950px]:pr-[16px]">
+      <ArrowTag side="left" variant="dark" arrowColor="var(--blue)" arrowWidth={80}>Lorem<br /><em class="text-[#f5f5f5]">Ipsum</em></ArrowTag>
     </div>
     <Dark>
       <TldrItem label="Label Four" heading={problemHeading}>
@@ -164,7 +164,7 @@ const future = [
           {
             facts.map((f, i) => (
               <li class="fact" data-reveal="up" data-reveal-delay={String(i * 0.08)}>
-                <img class="fact__icon" src="/assets/images/qWwGHHBgQHfzM38Kd3z2GMbmsQ.png" alt="" width="512" height="512" loading="lazy" decoding="async" />
+                <img class="fact__icon w-[26px] h-[26px] flex-none mt-[3px]" src="/assets/images/qWwGHHBgQHfzM38Kd3z2GMbmsQ.png" alt="" width="512" height="512" loading="lazy" decoding="async" />
                 <p class="fact__text" set:html={f.html} />
               </li>
             ))
@@ -194,10 +194,10 @@ const future = [
       </Row>
     </Inner>
 
-    <figure class="whyser" data-reveal="up">
+    <figure class="whyser mt-[40px]" data-reveal="up">
       <div class="cs-figure whyser__box">
         <img
-          class="whyser__shot whyser__shot--a"
+          class="whyser__shot whyser__shot--a left-[11%] top-[19.6%] max-[950px]:left-[4%] max-[950px]:top-[12%]"
           src="/assets/images/kaucHe5n4Xx3zoq0gFAH1Qf68.png"
           alt="Placeholder interface screenshot"
           width="3006"
@@ -206,7 +206,7 @@ const future = [
           decoding="async"
         />
         <img
-          class="whyser__shot whyser__shot--b"
+          class="whyser__shot whyser__shot--b left-[19%] top-[38.8%] max-[950px]:left-[18%] max-[950px]:top-[36%]"
           src="/assets/images/Egcw1liJ1g9S1HAAR8MPF48oLg.png"
           alt="Placeholder settings screenshot"
           width="3260"
@@ -225,11 +225,11 @@ const future = [
       <p>Lorem ipsum dolor sit amet consectetur adipiscing, sed, do, eiusmod, tempor, et incididunt, ut labore et dolore magna aliqua ut enim ad minim veniam quis nostrud exercitation ullamco laboris.</p>
     </Row>
 
-    <Grid cols={2} gap={16} class="comp" min={260}>
+    <Grid cols={2} gap={16} class="comp mt-[24px]" min={260}>
       {
         competitors.map((c, i) => (
           <article class="comp__card cs-card cs-card--outline" data-reveal="up" data-reveal-delay={String(i * 0.06)}>
-            <img class="comp__logo" src={c.logo} alt={`${c.name} logo`} width={c.w} height={c.h} loading="lazy" decoding="async" />
+            <img class="comp__logo h-[32px] w-auto" src={c.logo} alt={`${c.name} logo`} width={c.w} height={c.h} loading="lazy" decoding="async" />
             <div class="cs-body comp__body">
               <p><strong>Lorem ipsum:</strong> {c.works}</p>
               <p><strong>Dolor sit amet consectetur elit:</strong> {c.missing}</p>
@@ -250,17 +250,17 @@ const future = [
   <!-- ============ Core flows ============ -->
   <Section id="core-flows" class="flows">
     {
-      flows.map((f) => (
-        <div class="flow">
+      flows.map((f, i) => (
+        <div class:list={['flow', i > 0 && 'mt-[80px] max-[950px]:mt-[56px]']}>
           <Inner class="flow__text">
-            <p class="cs-label flow__num" data-reveal="fade">{f.num}</p>
-            <h3 class="cs-h cs-h--lg flow__title" data-reveal="up">{f.title}</h3>
+            <p class="cs-label flow__num mb-[26px]" data-reveal="fade">{f.num}</p>
+            <h3 class="cs-h cs-h--lg flow__title mb-[14px]" data-reveal="up">{f.title}</h3>
             <div class="cs-body flow__body" data-reveal="up">
               <p>{f.p1}</p>
               <p>{f.p2}</p>
             </div>
           </Inner>
-          <Figure video src={f.video} alt={f.alt} width={870} radius={12} border class="flow__fig" />
+          <Figure video src={f.video} alt={f.alt} width={870} radius={12} border class="flow__fig mt-[40px]" mediaClass="bg-[#fafafa]" />
         </div>
       ))
     }
@@ -277,20 +277,20 @@ const future = [
       src="/assets/images/O4s9s6XFoPrQFOmcd7hAAvORpo.png"
       alt="Placeholder design system collage"
       pad="0"
-      class="ds-fig"
+      class="ds-fig mt-[40px]"
       caption="Fig. Lorem ipsum dolor sit amet consectetur, adipiscing elit, sed do eiusmod tempor incididunt labore."
     />
   </Section>
 
   <!-- ============ Future enhancements ============ -->
   <Section id="future-enhancements" label="Section Eight" inset class="future-sec">
-    <ul class="future" role="list">
+    <ul class="future list-none w-[760px] max-w-full mx-auto mt-[20px] mb-0 flex flex-col gap-[16px]" role="list">
       {
         future.map((f, i) => (
-          <li class="future__card" data-reveal="up" data-reveal-delay={String(i * 0.06)}>
-            <img class="future__icon" src={f.icon} alt="" width="800" height="800" loading="lazy" decoding="async" />
-            <div class="future__main">
-              <h3 class="future__title">{f.title}</h3>
+          <li class="future__card flex items-start gap-[20px] p-[24px] bg-bg-2 rounded-[8px] max-[641px]:gap-[14px] max-[641px]:p-[16px]" data-reveal="up" data-reveal-delay={String(i * 0.06)}>
+            <img class="future__icon w-[100px] h-[100px] flex-none rounded-md max-[641px]:w-[60px] max-[641px]:h-[60px]" src={f.icon} alt="" width="800" height="800" loading="lazy" decoding="async" />
+            <div class="future__main flex flex-col gap-[12px] pt-[2px]">
+              <h3 class="future__title text-[16px] leading-[1.3] font-medium tracking-[-0.02em] text-ink">{f.title}</h3>
               <p class="cs-p">{f.text}</p>
             </div>
           </li>
@@ -302,188 +302,140 @@ const future = [
   <!-- ============ Reflection ============ -->
   <Section id="reflection">
     <Dark wide class="reflect" style="padding:50px">
-      <p class="cs-label" data-reveal="fade">Section Nine</p>
-      <div class="reflect__grid">
-        <h3 class="cs-h cs-h--lg reflect__h" data-reveal="up">Lorem ipsum dolor</h3>
+      <p class="cs-label mb-[26px]" data-reveal="fade">Section Nine</p>
+      <div class="reflect__grid grid grid-cols-[292px_minmax(0,630px)] gap-x-[48px] max-[950px]:grid-cols-[1fr] max-[950px]:gap-y-[20px]">
+        <h3 class="cs-h cs-h--lg reflect__h text-[#f5f5f5]" data-reveal="up">Lorem ipsum dolor</h3>
         <div class="cs-body reflect__body" data-reveal="up">
-          <p>Lorem ipsum dolor sit amet consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua, ut enim ad minim veniam quis nostrud exercitation ullamco laboris. Nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu.</p>
-          <p>Fugiat nulla pariatur excepteur sint occaecat, cupidatat non proident sunt in culpa qui officia. Deserunt mollit anim id est laborum, sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium. Totam rem aperiam eaque ipsa quae ab illo.</p>
+          <p class="text-[16px] leading-[1.3]">Lorem ipsum dolor sit amet consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua, ut enim ad minim veniam quis nostrud exercitation ullamco laboris. Nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu.</p>
+          <p class="text-[16px] leading-[1.3]">Fugiat nulla pariatur excepteur sint occaecat, cupidatat non proident sunt in culpa qui officia. Deserunt mollit anim id est laborum, sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium. Totam rem aperiam eaque ipsa quae ab illo.</p>
         </div>
       </div>
     </Dark>
-    <p class="mobile-note">Note: Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt.</p>
+    <p class="mobile-note hidden mt-[40px] text-center text-[14px] font-light tracking-[-0.02em] text-muted-2 max-[950px]:block">Note: Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt.</p>
   </Section>
 </CaseStudyLayout>
 
 <style>
-  /* ---------- hero: yellow box, dashboard overflowing the bottom edge ---------- */
-  .slate-hero {
-    display: block;
-    position: relative;
-    background: var(--yellow);
-    height: 726px;
-    min-height: 0;
-    overflow: hidden;
-  }
-  .slate-hero img {
-    position: absolute;
-    left: 50%;
-    top: 175px;
-    width: 810px;
-    max-width: 90%;
-    transform: translateX(-50%);
-  }
+  /* Everything below is KEPT deliberately. Two reasons recur:
+     (a) CASCADE — Tailwind ships its utilities inside `@layer utilities`, while the
+         `.cs-*` primitives in CaseStudyLayout's `<style is:global>
+@layer components {  ` are unlayered.
+           Unlayered author CSS beats layered CSS whatever the specificity, so a
+           utility cannot override `.cs-hero`, `.cs-figure`, `.cs-card`, `.cs-body p`,
+           `.cs-body li`, `.cs-body ul`, `.cs-body strong` or `main :is(img, video)`.
+       (b) API — `:global()` reaching into a child component (ArrowTag, TldrItem,
+           Statement) that exposes no class hook for the element being styled. */
 
-  /* ---------- TL;DR ---------- */
-  .slate-tldr__tag {
-    display: flex;
-    justify-content: flex-end;
-    padding-right: 180px;
-    margin-bottom: 10px;
-  }
-  .slate-tldr__tag :global(.tag-box) { line-height: 0.85; }
-  .slate-tldr__tag :global(.tag-box em) { color: #f5f5f5; }
-  .slate-tldr :global(.tldr__grid) { grid-template-columns: 380px minmax(0, 1fr); }
-  .slate-tldr :global(.tldr__h) { font-size: 20px; }
+    /* ---------- hero: yellow box, dashboard overflowing the bottom edge ----------
+       (a) display/min-height fight .cs-hero; max-width fights .cs-hero > *. */
+    .slate-hero {
+      display: block;
+      position: relative;
+      background: var(--yellow);
+      height: 726px;
+      min-height: 0;
+      overflow: hidden;
+    }
+    .slate-hero img {
+      position: absolute;
+      left: 50%;
+      top: 175px;
+      width: 810px;
+      max-width: 90%;
+      transform: translateX(-50%);
+    }
 
-  .slate-tldr .facts {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-  }
-  .slate-tldr .facts .fact {
-    display: flex;
-    align-items: flex-start;
-    gap: 24px;
-    margin: 0;
-    padding: 32px 24px;
-    background: #1f1f1f;
-    border-radius: 8px;
-  }
-  .fact__icon { width: 26px; height: 26px; flex: none; margin-top: 3px; }
-  .slate-tldr .facts .fact .fact__text {
-    font-size: 14px;
-    line-height: 1.3;
-    font-weight: 300;
-    letter-spacing: -0.01em;
-    color: #969696;
-    margin: 0;
-  }
-  .slate-tldr .facts .fact .fact__text :global(strong) { font-weight: 500; color: #f5f5f5; }
+    /* ---------- TL;DR ----------
+       (b) ArrowTag renders `.tag-box` itself and only forwards `class` to its wrapper;
+       TldrItem renders `.tldr__grid` / `.tldr__h` and forwards `class` to `.tldr`. */
+    .slate-tldr__tag :global(.tag-box) { line-height: 0.85; }
+    .slate-tldr :global(.tldr__grid) { grid-template-columns: 380px minmax(0, 1fr); }
+    .slate-tldr :global(.tldr__h) { font-size: 20px; }
 
-  /* ---------- Whyser figure: two overlapping screenshots ---------- */
-  .whyser { margin-top: 40px; }
-  .whyser__box {
-    display: block;
-    padding: 0;
-    aspect-ratio: 1120 / 474;
-    overflow: hidden;
-  }
-  .whyser__shot {
-    position: absolute;
-    width: 69.6%;
-    height: auto;
-    border-radius: 6px;
-    box-shadow: 0 6px 30px rgba(0, 0, 0, 0.08);
-    background: #fff;
-  }
-  .whyser__shot--a { left: 11%; top: 19.6%; }
-  .whyser__shot--b { left: 19%; top: 38.8%; }
+    /* (a) list-style/padding/margin fight `.cs-body ul`; `.fact` margin fights
+       `.cs-body li`; `.fact__text` size/tracking/colour fight `.cs-body p` and
+       `.cs-dark .cs-body p`. The `strong`s arrive via set:html, so they carry no
+       class of their own. */
+    .slate-tldr .facts {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .slate-tldr .facts .fact {
+      display: flex;
+      align-items: flex-start;
+      gap: 24px;
+      margin: 0;
+      padding: 32px 24px;
+      background: #1f1f1f;
+      border-radius: 8px;
+    }
+    .slate-tldr .facts .fact .fact__text {
+      font-size: 14px;
+      line-height: 1.3;
+      font-weight: 300;
+      letter-spacing: -0.01em;
+      color: #969696;
+      margin: 0;
+    }
+    .slate-tldr .facts .fact .fact__text :global(strong) { font-weight: 500; color: #f5f5f5; }
 
-  /* ---------- Competitive analysis cards ---------- */
-  .comp { margin-top: 24px; }
-  .comp__card {
-    display: flex;
-    flex-direction: column;
-    gap: 32px;
-    padding: 24px;
-    background: #fcfcfc;
-  }
-  .comp__logo { height: 32px; width: auto; }
-  .comp .comp__body :global(strong) { font-weight: 600; color: var(--ink-2); }
+    /* ---------- Whyser figure: two overlapping screenshots ----------
+       (a) `.whyser__box` display/padding fight `.cs-figure`; `.whyser__shot`
+       border-radius fights the unlayered `main :is(img, video, iframe)` rule, and
+       its 949px width override has to outrank the base rule kept here.
+       The per-shot left/top offsets moved to utilities on the images. */
+    .whyser__box {
+      display: block;
+      padding: 0;
+      aspect-ratio: 1120 / 474;
+      overflow: hidden;
+    }
+    .whyser__shot {
+      position: absolute;
+      width: 69.6%;
+      height: auto;
+      border-radius: 6px;
+      box-shadow: 0 6px 30px rgba(0, 0, 0, 0.08);
+      background: #fff;
+    }
 
-  /* ---------- Problem statement: full content width ---------- */
-  .slate :global(.slate-statement) { width: 100%; }
-  .slate :global(.slate-statement .statement__text) { max-width: 1000px; }
+    /* ---------- Competitive analysis cards ----------
+       (a) `.comp__card` background fights `.cs-card--outline`, its 640px padding
+       fights `.cs-card`, and the `strong`s fight `.cs-body strong`. */
+    .comp__card {
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+      padding: 24px;
+      background: #fcfcfc;
+    }
+    .comp .comp__body :global(strong) { font-weight: 600; color: var(--ink-2); }
 
-  /* ---------- Core flows ---------- */
-  .flow + .flow { margin-top: 80px; }
-  .flow__num { margin-bottom: 26px; }
-  .flow__title { margin-bottom: 14px; }
-  .flow__fig { margin-top: 40px; }
-  .flow__fig :global(.fig__media) { background: #fafafa; }
+    /* ---------- Problem statement: full content width ----------
+       (b) Statement owns `.statement` / `.statement__text`; (a) its own scoped
+       `width: 1008px` is unlayered, so `w-full` could not win. */
+    .slate :global(.slate-statement) { width: 100%; }
+    .slate :global(.slate-statement .statement__text) { max-width: 1000px; }
 
-  /* ---------- Design system figure ---------- */
-  .ds-fig { margin-top: 40px; }
-
-  /* ---------- Future enhancements ---------- */
-  .future {
-    list-style: none;
-    width: 760px;
-    max-width: 100%;
-    margin: 20px auto 0;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-  }
-  .future__card {
-    display: flex;
-    align-items: flex-start;
-    gap: 20px;
-    padding: 24px;
-    background: var(--bg-2);
-    border-radius: 8px;
-  }
-  .future__icon { width: 100px; height: 100px; flex: none; border-radius: var(--r-md); }
-  .future__main { display: flex; flex-direction: column; gap: 12px; padding-top: 2px; }
-  .future__title { font-size: 16px; line-height: 1.3; font-weight: 500; letter-spacing: -0.02em; color: var(--ink); }
-
-  /* ---------- Reflection ---------- */
-  .reflect .cs-label { margin-bottom: 26px; }
-  .reflect__grid {
-    display: grid;
-    grid-template-columns: 292px minmax(0, 630px);
-    column-gap: 48px;
-  }
-  .reflect__h { color: #f5f5f5; }
-  .reflect__body :global(p) { font-size: 16px; line-height: 1.3; }
-
-  .mobile-note {
-    display: none;
-    margin-top: 40px;
-    text-align: center;
-    font-size: 14px;
-    font-weight: 300;
-    letter-spacing: -0.02em;
-    color: var(--muted-2);
-  }
-
-  /* ---------- responsive ---------- */
-  @media (max-width: 1199px) {
-    .slate-hero { height: auto; aspect-ratio: 1120 / 726; }
-    .slate-hero img { top: 24%; width: 72%; max-width: none; }
-    .slate-tldr :global(.tldr__grid) { grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr); }
-    .slate-tldr__tag { padding-right: 60px; }
-  }
-  @media (max-width: 949px) {
-    .slate-tldr__tag { padding-right: 16px; }
-    .slate-tldr :global(.tldr__grid) { grid-template-columns: 1fr; }
-    .slate-tldr .facts .fact { padding: 20px; gap: 16px; }
-    .whyser__box { aspect-ratio: 1120 / 560; }
-    .whyser__shot { width: 78%; }
-    .whyser__shot--a { left: 4%; top: 12%; }
-    .whyser__shot--b { left: 18%; top: 36%; }
-    .reflect__grid { grid-template-columns: 1fr; row-gap: 20px; }
-    .flow + .flow { margin-top: 56px; }
-    .mobile-note { display: block; }
-  }
-  @media (max-width: 640px) {
-    .slate-hero img { width: 84%; top: 22%; }
-    .future__card { padding: 16px; gap: 14px; }
-    .future__icon { width: 60px; height: 60px; }
-    .comp__card { gap: 20px; padding: 20px; }
-  }
+    /* ---------- responsive ---------- */
+    @media (max-width: 1199px) {
+      .slate-hero { height: auto; aspect-ratio: 1120 / 726; }
+      .slate-hero img { top: 24%; width: 72%; max-width: none; }
+      .slate-tldr :global(.tldr__grid) { grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr); }
+    }
+    @media (max-width: 949px) {
+      .slate-tldr :global(.tldr__grid) { grid-template-columns: 1fr; }
+      .slate-tldr .facts .fact { padding: 20px; gap: 16px; }
+      .whyser__box { aspect-ratio: 1120 / 560; }
+      .whyser__shot { width: 78%; }
+    }
+    @media (max-width: 640px) {
+      .slate-hero img { width: 84%; top: 22%; }
+      .comp__card { gap: 20px; padding: 20px; }
+    }
+}
 </style>

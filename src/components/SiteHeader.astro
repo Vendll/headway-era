@@ -22,13 +22,23 @@ const isActive = (href: string) => (href.split('#')[0].replace(/\/+$/, '') || '/
 ---
 
 <header
-  class:list={['site-nav', `site-nav--${position}`, `site-nav--${variant}`, { 'site-nav--assemble': assemble }]}
+  class:list={[
+    'site-nav',
+    `site-nav--${position}`,
+    `site-nav--${variant}`,
+    { 'site-nav--assemble': assemble },
+    position === 'absolute' ? 'absolute' : 'fixed',
+    'top-0 left-0 right-0 z-[60] h-[var(--header-h)]',
+    'flex items-center justify-between gap-4',
+    'px-6 max-[950px]:px-4',
+    'font-mono text-[14px] max-[950px]:text-[12px] leading-[1.2] tracking-[-0.03em] text-fg',
+  ]}
   data-header
   data-nav-assemble={assemble ? '' : undefined}
 >
   {
     variant !== 'minimal' && (
-      <div class="site-nav__burger">
+      <div class="site-nav__burger hidden max-[641px]:block">
         <MobileNav client:load items={nav} resumeHref={site.resumeNav} activePath={path} />
       </div>
     )
@@ -36,9 +46,21 @@ const isActive = (href: string) => (href.split('#')[0].replace(/\/+$/, '') || '/
 
   {
     variant !== 'minimal' && (
-      <nav class="site-nav__links" aria-label="Primary">
+      <nav
+        class="site-nav__links flex items-center gap-[22px] max-[950px]:gap-4 max-[641px]:hidden"
+        aria-label="Primary"
+      >
         {nav.map((n) => (
-          <a class:list={['site-nav__link', { 'is-active': isActive(n.href) }]} href={n.href} aria-current={isActive(n.href) ? 'page' : undefined}>
+          <a
+            class:list={[
+              'site-nav__link',
+              { 'is-active': isActive(n.href) },
+              'whitespace-nowrap transition-[color] duration-200 ease-[ease] hover:text-fg',
+              isActive(n.href) ? 'text-fg' : 'text-fg-muted',
+            ]}
+            href={n.href}
+            aria-current={isActive(n.href) ? 'page' : undefined}
+          >
             {n.label}
           </a>
         ))}
@@ -46,13 +68,33 @@ const isActive = (href: string) => (href.split('#')[0].replace(/\/+$/, '') || '/
     )
   }
 
-  <a class="site-nav__logo" href="/" aria-label="Home">
-    <img src={site.logo} alt="Logo" width="556" height="88" />
+  {/* absolutely centred so the mark stays put however long the link list gets */}
+  <a
+    class="site-nav__logo absolute left-1/2 top-1/2 [transform:translate(-50%,-50%)] flex items-center"
+    href="/"
+    aria-label="Home"
+  >
+    {/* the mark is 6.32:1 - at its 48px open size it needs 304px, so max-width must
+        stay above that or it clamps the width and distorts it */}
+    <img
+      class="block h-7 w-auto max-w-[min(340px,45vw)] max-[950px]:h-6 max-[641px]:h-7 max-[641px]:max-w-[62vw]"
+      src={site.logo}
+      alt="Logo"
+      width="556"
+      height="88"
+    />
   </a>
 
   {
     variant !== 'minimal' && (
-      <a class="site-nav__cta" href={site.resumeNav} target="_blank" rel="noopener">
+      /* --ink is not theme-swapped, so the label stays dark on the orange fill on
+         both light and dark pages: 7.95:1, which white-on-orange (2.20:1) is not */
+      <a
+        class="site-nav__cta inline-flex items-center h-8 max-[641px]:h-7 px-[14px] max-[641px]:px-3 border border-brand hover:border-brand-2 rounded-sm bg-brand hover:bg-brand-2 text-ink hover:text-ink whitespace-nowrap transition-[background,color,border-color] duration-200 ease-[ease]"
+        href={site.resumeNav}
+        target="_blank"
+        rel="noopener"
+      >
         Resume
       </a>
     )
@@ -60,28 +102,10 @@ const isActive = (href: string) => (href.split('#')[0].replace(/\/+$/, '') || '/
 </header>
 
 <style>
-  .site-nav {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 60;
-    height: var(--header-h);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 16px;
-    padding: 0 24px;
-    font-family: var(--font-mono);
-    font-size: 14px;
-    line-height: 1.2;
-    letter-spacing: -0.03em;
-    color: var(--fg);
-  }
-  .site-nav--absolute { position: absolute; }
-
   /* --nav-t: 0 = bare landing state, 1 = assembled bar.
-     Defaults to 1 so the nav is complete and usable if the script never runs. */
+     Defaults to 1 so the nav is complete and usable if the script never runs.
+     Everything below interpolates off it, so it stays in CSS: the value is
+     written by src/scripts/nav.ts on every scroll frame. */
   .site-nav { --nav-t: 1; }
   .site-nav::before,
   .site-nav::after {
@@ -131,69 +155,7 @@ const isActive = (href: string) => (href.split('#')[0].replace(/\/+$/, '') || '/
     .site-nav--assemble { --nav-t: 1 !important; }
   }
 
-  .site-nav__burger { display: none; }
-  .site-nav__links { display: flex; align-items: center; gap: 22px; }
-  .site-nav__link {
-    color: var(--fg-muted);
-    white-space: nowrap;
-    transition: color 0.2s ease;
-  }
-  .site-nav__link:hover,
-  .site-nav__link.is-active { color: var(--fg); }
-
-  /* absolutely centred so the mark stays put however long the link list gets */
-  .site-nav__logo {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    display: flex;
-    align-items: center;
-  }
-  .site-nav__logo img {
-    display: block;
-    height: 28px;
-    width: auto;
-    /* the mark is 6.32:1 - at its 48px open size it needs 304px, so this must
-       stay above that or max-width clamps the width and distorts it */
-    max-width: min(340px, 45vw);
-  }
-
-  .site-nav__cta {
-    display: inline-flex;
-    align-items: center;
-    height: 32px;
-    padding: 0 14px;
-    border: 1px solid var(--brand);
-    border-radius: var(--r-sm);
-    background: var(--brand);
-    /* --ink is not theme-swapped, so the label stays dark on the orange fill on
-       both light and dark pages: 7.95:1, which white-on-orange (2.20:1) is not */
-    color: var(--ink);
-    white-space: nowrap;
-    transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
-  }
-  .site-nav__cta:hover {
-    background: var(--brand-2);
-    border-color: var(--brand-2);
-    color: var(--ink);
-  }
-
-  @media (max-width: 949px) {
-    .site-nav { padding: 0 16px; font-size: 12px; }
-    .site-nav__links { gap: 16px; }
-    .site-nav__logo img { height: 24px; }
-  }
-
-  /* stack: logo on top, links beneath — no JS menu needed */
-  /* the sheet takes the links, so the bar is a single row again:
-     burger | centred logo | Resume */
   @media (max-width: 640px) {
-    .site-nav { padding: 0 16px; }
-    .site-nav__burger { display: block; }
-    .site-nav__links { display: none; }
-    .site-nav__logo img { height: 28px; max-width: 62vw; }
     .site-nav--assemble .site-nav__logo img { height: calc(34px - 6px * var(--nav-t)); }
-    .site-nav__cta { height: 28px; padding: 0 12px; }
   }
 </style>

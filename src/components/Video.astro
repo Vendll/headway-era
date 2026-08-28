@@ -18,7 +18,7 @@ const { src, poster, class: className, style, autoplay = true, loop = true, cont
 
 <video
   {...rest}
-  class:list={['vid', className]}
+  class:list={['vid', 'block max-w-full', className]}
   src={src}
   poster={poster}
   muted
@@ -32,7 +32,3 @@ const { src, poster, class: className, style, autoplay = true, loop = true, cont
   aria-label={label}
   style={`${fit ? `object-fit:${fit};` : ''}${style ?? ''}`}
 ></video>
-
-<style>
-  .vid { display: block; max-width: 100%; }
-</style>

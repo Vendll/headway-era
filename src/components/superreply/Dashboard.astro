@@ -29,60 +29,76 @@ const points = [
 ];
 const linePath = points.map(([x, y], i) => `${i ? 'L' : 'M'}${x} ${y}`).join(' ');
 const areaPath = `${linePath} L539.25 136 L0 136 Z`;
+
+/* the pill-shaped "Today" / "Last 7 days" dropdown, and its chevron glyph */
+const select =
+  'dash__select inline-flex items-center justify-between gap-[6px] h-[15px] w-[79px] px-[6px] py-0 border border-line rounded-[3px] text-[6px] text-[#303030] bg-white flex-none';
+const caret = 'w-[4px] h-[4px] border-r border-b border-[#747376] [transform:translateY(-1px)_rotate(45deg)]';
+/* the two <svg> chart layers share a box */
+const plotLayer = 'absolute left-[40px] right-0 top-0 w-[calc(100%_-_40px)] h-[150px] block';
 ---
 
-<div class:list={['dash', className]} role="img" aria-label="Project One dashboard: greeting, placeholder-style profile card for username, four metric cards (Metric One 100k, Metric Two 1560, Total Metric Three 35, Metric Four), and an Activity runs line chart for the last 7 days">
-  <img class="dash__side" src="/assets/images/9usSOhlYHbfJVZfCPLmNDwyQhNo.png" alt="" width="118" height="1820" loading="lazy" decoding="async" />
+<div
+  class:list={[
+    'dash',
+    'relative w-[756px] h-[618px] bg-white rounded-[8px] shadow-[0_2px_24px_rgba(0,0,0,0.06)] overflow-hidden font-body text-ink tracking-[-0.01em] flex-none',
+    'max-[950px]:[zoom:0.72] max-[641px]:[zoom:0.52] max-[461px]:[zoom:0.42]',
+    className,
+  ]}
+  role="img"
+  aria-label="Project One dashboard: greeting, placeholder-style profile card for username, four metric cards (Metric One 100k, Metric Two 1560, Total Metric Three 35, Metric Four), and an Activity runs line chart for the last 7 days"
+>
+  <img class="dash__side absolute left-0 top-0 w-[38px] h-auto border-r border-r-[#ececec]" src="/assets/images/9usSOhlYHbfJVZfCPLmNDwyQhNo.png" alt="" width="118" height="1820" loading="lazy" decoding="async" />
 
-  <div class="dash__top">
-    <span class="dash__crumb">Dashboard</span>
-    <span class="dash__new"><i aria-hidden="true">+</i> New Action</span>
+  <div class="dash__top absolute left-[38px] right-0 top-0 h-[36px] flex items-center justify-between py-0 pr-[10px] pl-[18px] border-b border-b-[#f0f0f0]">
+    <span class="dash__crumb text-[8px] font-medium">Dashboard</span>
+    <span class="dash__new inline-flex items-center gap-[4px] h-[15px] px-[8px] py-0 bg-purple text-white rounded-[3px] text-[6px] font-medium"><i class="not-italic text-[8px] leading-none" aria-hidden="true">+</i> New Action</span>
   </div>
 
-  <div class="dash__main">
-    <p class="dash__hello">Hello, User! <span aria-hidden="true">👋</span></p>
+  <div class="dash__main absolute left-[38px] right-0 top-0 pt-[60px] pr-[12px] pb-0 pl-[18px]">
+    <p class="dash__hello text-[16px] font-semibold tracking-[-0.02em]">Hello, User! <span aria-hidden="true">👋</span></p>
 
-    <div class="dash__profile">
-      <img class="dash__avatar" src="/assets/images/VreHDGKPtkt7nIODurr3FzA8.png" alt="" width="356" height="356" loading="lazy" decoding="async" />
-      <div class="dash__who">
-        <p class="dash__handle">
+    <div class="dash__profile relative flex items-start gap-[16px] pb-[14px] border-b border-b-[#ececec]">
+      <img class="dash__avatar w-[86px] h-[86px] rounded-[50%] flex-none" src="/assets/images/VreHDGKPtkt7nIODurr3FzA8.png" alt="" width="356" height="356" loading="lazy" decoding="async" />
+      <div class="dash__who pt-[8px]">
+        <p class="dash__handle flex items-center gap-[4px] text-[14px] font-semibold tracking-[-0.02em]">
           username
-          <img src="/assets/images/ER6VjEzofV7zjwNHk5HDlRqong.png" alt="" width="40" height="40" loading="lazy" decoding="async" />
-          <span class="dash__more" aria-hidden="true">⋮</span>
+          <img class="w-[10px] h-[10px]" src="/assets/images/ER6VjEzofV7zjwNHk5HDlRqong.png" alt="" width="40" height="40" loading="lazy" decoding="async" />
+          <span class="dash__more text-[10px] text-[#302e33] ml-[4px]" aria-hidden="true">⋮</span>
         </p>
-        <p class="dash__name">Person Five</p>
-        <p class="dash__counts"><b>288</b> posts <b>400k</b> followers <b>1,890</b> following</p>
-        <p class="dash__bio">lorem ipsum 🛸</p>
-        <p class="dash__bio">dolor sit. Lorem &amp; Ipsum @user123</p>
+        <p class="dash__name text-[8px]">Person Five</p>
+        <p class="dash__counts text-[8px] text-[#59585c] [word-spacing:1px]"><b class="font-semibold text-ink">288</b> posts <b class="font-semibold text-ink">400k</b> followers <b class="font-semibold text-ink">1,890</b> following</p>
+        <p class="dash__bio text-[8px]">lorem ipsum 🛸</p>
+        <p class="dash__bio text-[8px] mt-[2px]">dolor sit. Lorem &amp; Ipsum @user123</p>
       </div>
-      <span class="dash__select dash__select--today">Today <i aria-hidden="true"></i></span>
+      <span class:list={[select, 'dash__select--today absolute right-0 bottom-[14px]']}>Today <i class={caret} aria-hidden="true"></i></span>
     </div>
 
-    <div class="dash__cards">
+    <div class="dash__cards grid grid-cols-4 gap-[23px] mt-[10px]">
       {
         stats.map((s) => (
-          <div class="dash__card">
-            <p class="dash__card-label">
+          <div class="dash__card h-[85px] px-[12px] pt-[12px] pb-[10px] border border-[#e6e6e6] rounded-[4px] flex flex-col">
+            <p class="dash__card-label flex items-center gap-[4px] text-[7px] text-[#303030]">
               <svg width="8" height="8" viewBox="-1 -1 10 10" fill="none" aria-hidden="true"><path d="M0 .4v5c0 .1 0 .2.1.3l.3.1h2.9l2.1 1.7V5.8h1.7c.1 0 .2 0 .3-.1l.1-.3v-5c0-.1 0-.2-.1-.3L7.1 0H.4C.3 0 .2 0 .1.1L0 .4Z" stroke="#59585C" stroke-width=".75" stroke-linejoin="round"/></svg>
               {s.label}
             </p>
-            <p class="dash__card-value">{s.value}</p>
-            <p class:list={['dash__card-sub', { 'is-up': s.up }]}>{s.sub}</p>
+            <p class="dash__card-value text-[16px] font-semibold tracking-[-0.02em] text-center">{s.value}</p>
+            <p class:list={['dash__card-sub', { 'is-up': s.up }, 'text-[6.5px] text-center', s.up ? 'text-[#6b9610]' : 'text-muted-2']}>{s.sub}</p>
           </div>
         ))
       }
     </div>
 
-    <div class="dash__runs">
-      <span class="dash__runs-h">Activity runs</span>
-      <span class="dash__select">Last 7 days <i aria-hidden="true"></i></span>
+    <div class="dash__runs flex items-end justify-between mt-[16px]">
+      <span class="dash__runs-h text-[8px] font-semibold">Activity runs</span>
+      <span class={select}>Last 7 days <i class={caret} aria-hidden="true"></i></span>
     </div>
 
-    <div class="dash__chart">
-      <p class="dash__total">Total runs <b>11</b></p>
-      <div class="dash__plot">
-        <div class="dash__y">{yLabels.map((l) => <span>{l}</span>)}</div>
-        <svg class="dash__line" viewBox="-1 -4 542 141" preserveAspectRatio="none" aria-hidden="true">
+    <div class="dash__chart relative mt-[8px] h-[229px] border border-[#e6e6e6] rounded-[4px] px-[16px] pt-[12px] pb-0">
+      <p class="dash__total text-[7px] text-[#303030] text-center">Total runs <b class="font-semibold">11</b></p>
+      <div class="dash__plot relative mt-[12px] h-[176px] pl-[40px]">
+        <div class="dash__y absolute left-0 top-[-4px] w-[30px] h-[154px] flex flex-col justify-between items-end text-[6px] text-[#747376]">{yLabels.map((l) => <span>{l}</span>)}</div>
+        <svg class:list={['dash__line', plotLayer]} viewBox="-1 -4 542 141" preserveAspectRatio="none" aria-hidden="true">
           <defs>
             <linearGradient id="sr-dash-fill" x1="0" y1="0" x2="0" y2="1">
               <stop offset="0" stop-color="#8d01ff" stop-opacity="0.28" />
@@ -92,199 +108,13 @@ const areaPath = `${linePath} L539.25 136 L0 136 Z`;
           <path d={areaPath} fill="url(#sr-dash-fill)" />
           <path d={linePath} stroke="#C290FE" stroke-width="1.5" fill="none" vector-effect="non-scaling-stroke" />
         </svg>
-        <svg class="dash__dots" viewBox="-1 -4 542 141" preserveAspectRatio="none" aria-hidden="true">
+        <svg class:list={['dash__dots', plotLayer, 'overflow-visible']} viewBox="-1 -4 542 141" preserveAspectRatio="none" aria-hidden="true">
           {points.map(([x, y]) => <circle cx={x} cy={y} r="2.4" fill="#8d01ff" />)}
         </svg>
-        <div class="dash__x">{days.map((d) => <span>{d}</span>)}</div>
+        <div class="dash__x absolute left-[40px] right-0 top-[160px] flex justify-between text-[6px] text-[#747376]">
+          {days.map((d, i) => <span class:list={['w-[24px]', i === 0 ? 'text-left' : i === days.length - 1 ? 'text-right' : 'text-center']}>{d}</span>)}
+        </div>
       </div>
     </div>
   </div>
 </div>
-
-<style>
-  .dash {
-    position: relative;
-    width: 756px;
-    height: 618px;
-    background: #fff;
-    border-radius: 8px;
-    box-shadow: 0 2px 24px rgba(0, 0, 0, 0.06);
-    overflow: hidden;
-    font-family: var(--font-body);
-    color: #151515;
-    letter-spacing: -0.01em;
-    flex: none;
-  }
-  .dash p { margin: 0; }
-  .dash__side {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 38px;
-    height: auto;
-    border-right: 1px solid #ececec;
-  }
-  .dash__top {
-    position: absolute;
-    left: 38px;
-    right: 0;
-    top: 0;
-    height: 36px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 10px 0 18px;
-    border-bottom: 1px solid #f0f0f0;
-  }
-  .dash__crumb { font-size: 8px; font-weight: 500; }
-  .dash__new {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    height: 15px;
-    padding: 0 8px;
-    background: var(--purple);
-    color: #fff;
-    border-radius: 3px;
-    font-size: 6px;
-    font-weight: 500;
-  }
-  .dash__new i { font-style: normal; font-size: 8px; line-height: 1; }
-
-  .dash__main {
-    position: absolute;
-    left: 38px;
-    right: 0;
-    top: 0;
-    padding: 60px 12px 0 18px;
-  }
-  .dash__hello { font-size: 16px; font-weight: 600; letter-spacing: -0.02em; margin-bottom: 20px; }
-
-  .dash__profile {
-    position: relative;
-    display: flex;
-    align-items: flex-start;
-    gap: 16px;
-    padding-bottom: 14px;
-    border-bottom: 1px solid #ececec;
-  }
-  .dash__avatar { width: 86px; height: 86px; border-radius: 50%; flex: none; }
-  .dash__who { padding-top: 8px; }
-  .dash__handle { display: flex; align-items: center; gap: 4px; font-size: 14px; font-weight: 600; letter-spacing: -0.02em; }
-  .dash__handle img { width: 10px; height: 10px; }
-  .dash__more { font-size: 10px; color: #302e33; margin-left: 4px; }
-  .dash__name { font-size: 8px; margin-top: 4px; }
-  .dash__counts { font-size: 8px; color: #59585c; margin-top: 6px; word-spacing: 1px; }
-  .dash__counts b { font-weight: 600; color: #151515; }
-  .dash__bio { font-size: 8px; margin-top: 6px; }
-  .dash__bio + .dash__bio { margin-top: 2px; }
-
-  .dash__select {
-    display: inline-flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 6px;
-    height: 15px;
-    width: 79px;
-    padding: 0 6px;
-    border: 1px solid #e3e3e3;
-    border-radius: 3px;
-    font-size: 6px;
-    color: #303030;
-    background: #fff;
-    flex: none;
-  }
-  .dash__select i {
-    width: 4px;
-    height: 4px;
-    border-right: 1px solid #747376;
-    border-bottom: 1px solid #747376;
-    transform: translateY(-1px) rotate(45deg);
-  }
-  .dash__select--today { position: absolute; right: 0; bottom: 14px; }
-
-  .dash__cards {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 23px;
-    margin-top: 10px;
-  }
-  .dash__card {
-    height: 85px;
-    padding: 12px 12px 10px;
-    border: 1px solid #e6e6e6;
-    border-radius: 4px;
-    display: flex;
-    flex-direction: column;
-  }
-  .dash__card-label { display: flex; align-items: center; gap: 4px; font-size: 7px; color: #303030; }
-  .dash__card-value { font-size: 16px; font-weight: 600; letter-spacing: -0.02em; margin-top: 8px; text-align: center; }
-  .dash__card-sub { font-size: 6.5px; color: #5b5b5b; text-align: center; margin-top: 3px; }
-  .dash__card-sub.is-up { color: #6b9610; }
-
-  .dash__runs {
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
-    margin-top: 16px;
-  }
-  .dash__runs-h { font-size: 8px; font-weight: 600; }
-
-  .dash__chart {
-    position: relative;
-    margin-top: 8px;
-    height: 229px;
-    border: 1px solid #e6e6e6;
-    border-radius: 4px;
-    padding: 12px 16px 0;
-  }
-  .dash__total { font-size: 7px; color: #303030; text-align: center; }
-  .dash__total b { font-weight: 600; }
-  .dash__plot {
-    position: relative;
-    margin-top: 12px;
-    height: 176px;
-    padding-left: 40px;
-  }
-  .dash__y {
-    position: absolute;
-    left: 0;
-    top: -4px;
-    width: 30px;
-    height: 154px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: flex-end;
-    font-size: 6px;
-    color: #747376;
-  }
-  .dash__line,
-  .dash__dots {
-    position: absolute;
-    left: 40px;
-    right: 0;
-    top: 0;
-    width: calc(100% - 40px);
-    height: 150px;
-    display: block;
-  }
-  .dash__dots { overflow: visible; }
-  .dash__x {
-    position: absolute;
-    left: 40px;
-    right: 0;
-    top: 160px;
-    display: flex;
-    justify-content: space-between;
-    font-size: 6px;
-    color: #747376;
-  }
-  .dash__x span { width: 24px; text-align: center; }
-  .dash__x span:first-child { text-align: left; }
-  .dash__x span:last-child { text-align: right; }
-
-  @media (max-width: 949px) { .dash { zoom: 0.72; } }
-  @media (max-width: 640px) { .dash { zoom: 0.52; } }
-  @media (max-width: 460px) { .dash { zoom: 0.42; } }
-</style>

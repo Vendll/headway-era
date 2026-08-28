@@ -1,30 +1,36 @@
 ---
 import { experience, site } from '@/data/site';
 import HandArrow from './HandArrow.astro';
+
+const meta = 'text-[16px] font-light leading-[0.8] tracking-[-0.02em] text-fg-muted';
 ---
 
-<section class="where" id="where">
-  <div class="where__head">
-    <p class="where__note" data-reveal>Lorem ipsum dolor sit <strong>amet consectetur<br />adipiscing elit</strong>, sed eiusmod</p>
-    <div class="where__title" data-reveal data-reveal-delay="0.1">
-      <HandArrow class="where__arrow" width={130} />
-      <h2 class="where__h"><em>Lorem</em><br />ipsum sit</h2>
+<section class="where w-[min(1200px,100%_-_2_*_var(--gutter))] mx-auto pt-[110px] pb-[120px] text-fg max-[950px]:py-20" id="where">
+  <div class="where__head flex justify-between items-start gap-10 mb-[60px] max-[950px]:flex-col-reverse max-[950px]:gap-8">
+    <p class="where__note pt-6 text-[16px] font-light leading-[1.2] text-fg-2" data-reveal>Lorem ipsum dolor sit <strong class="font-semibold">amet consectetur<br />adipiscing elit</strong>, sed eiusmod</p>
+    <div class="where__title flex items-start gap-4 text-right max-[950px]:text-left max-[950px]:flex-row-reverse" data-reveal data-reveal-delay="0.1">
+      <HandArrow class="where__arrow mt-[6px] max-[950px]:w-[90px]" width={130} />
+      <h2 class="where__h font-display font-normal text-[84px] leading-[0.8] tracking-[-0.02em] text-fg-2 max-[950px]:text-[56px]"><em class="italic">Lorem</em><br />ipsum sit</h2>
     </div>
   </div>
 
-  <ul class="where__list">
+  <ul class="where__list list-none">
     {
       experience.map((e, i) => (
-        <li class="where__row" data-reveal data-reveal-delay={String(i * 0.06)}>
-          <h3 class="where__company" set:html={e.company} />
-          <p class="where__role" set:html={e.role} />
-          <p class="where__when">{e.when}</p>
+        <li
+          class="where__row grid grid-cols-[460px_1fr_auto] items-center gap-6 pt-[34px] pb-[38px] border-b border-rule max-[950px]:grid-cols-[1fr] max-[950px]:gap-[10px] max-[950px]:py-6"
+          data-reveal
+          data-reveal-delay={String(i * 0.06)}
+        >
+          <h3 class="where__company font-display font-normal text-[42px] leading-[0.8] tracking-[-0.02em] text-fg-2 max-[950px]:text-[32px]" set:html={e.company} />
+          <p class:list={['where__role', meta]} set:html={e.role} />
+          <p class:list={['where__when', meta, 'text-right max-[950px]:text-left']}>{e.when}</p>
         </li>
       ))
     }
   </ul>
 
-  <div class="where__cta" data-reveal>
+  <div class="where__cta flex justify-center mt-[60px]" data-reveal>
     <a class="btn btn--lg" href={site.resumeView} target="_blank" rel="noopener">
       View Resume
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 19h14"/></svg>
@@ -33,58 +39,14 @@ import HandArrow from './HandArrow.astro';
 </section>
 
 <style>
-  .where {
-    width: min(1200px, 100% - 2 * var(--gutter));
-    margin-inline: auto;
-    padding: 110px 0 120px;
-    color: var(--fg);
-  }
-  .where__head {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 40px;
-    margin-bottom: 60px;
-  }
-  .where__note { font-size: 16px; font-weight: 300; line-height: 1.2; color: var(--fg-2); padding-top: 24px; }
-  .where__note strong { font-weight: 600; }
-  .where__title { display: flex; align-items: flex-start; gap: 16px; text-align: right; }
-  .where__arrow { color: var(--blue); margin-top: 6px; }
-  .where__h {
-    font-family: var(--font-display);
-    font-weight: 400;
-    font-size: 84px;
-    line-height: 0.8;
-    letter-spacing: -0.02em;
-    color: var(--fg-2);
-  }
-  .where__h em { font-style: italic; }
-
-  .where__list { list-style: none; }
-  .where__row {
-    display: grid;
-    grid-template-columns: 460px 1fr auto;
-    align-items: center;
-    gap: 24px;
-    padding: 34px 0 38px;
-    border-bottom: 1px solid var(--rule);
-  }
+  /* KEPT deliberately.
+     - `.where__arrow` colour must stay unlayered: HandArrow's own
+       `.hand-arrow { color: inherit }` is unlayered too, so a `text-blue`
+       utility here would lose to it.
+     - `:last-child` is a structural pseudo-class.
+     - `em` / `.accent` arrive through `set:html`, so they cannot carry a class. */
+  .where__arrow { color: var(--blue); }
   .where__row:last-child { border-bottom: 0; }
-  .where__company { font-family: var(--font-display); font-weight: 400; font-size: 42px; line-height: 0.8; letter-spacing: -0.02em; color: var(--fg-2); }
   .where__company :global(em) { font-style: italic; }
-  .where__role, .where__when { font-size: 16px; font-weight: 300; letter-spacing: -0.02em; color: var(--fg-muted); line-height: 0.8; }
   .where__role :global(.accent) { color: var(--green); }
-  .where__when { text-align: right; }
-  .where__cta { display: flex; justify-content: center; margin-top: 60px; }
-
-  @media (max-width: 949px) {
-    .where { padding: 80px 0; }
-    .where__head { flex-direction: column-reverse; gap: 32px; }
-    .where__title { text-align: left; flex-direction: row-reverse; }
-    .where__arrow { width: 90px; }
-    .where__h { font-size: 56px; }
-    .where__row { grid-template-columns: 1fr; gap: 10px; padding: 24px 0; }
-    .where__company { font-size: 32px; }
-    .where__when { text-align: left; }
-  }
 </style>

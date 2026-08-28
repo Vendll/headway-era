@@ -14,15 +14,21 @@ interface Props {
   titleSize?: number;
 }
 const { variant = 'dark', title, num, icon, class: className, style, titleSize, ...rest } = Astro.props;
+
+/* the grey variant re-states the whole type ramp, so it is emitted instead of the
+   default one rather than on top of it (utilities have no source-order guarantee) */
+const titleClass = variant === 'grey'
+  ? 'text-[18px] leading-[1.4] font-semibold tracking-[-0.02em]'
+  : 'text-[19px] leading-[1.2] font-normal tracking-[-0.04em]';
 ---
 
-<div {...rest} class:list={['cs-card', `cs-card--${variant}`, className]} style={style} data-reveal="up">
-  {icon && <div class="cs-card__icon"><img src={icon} alt="" loading="lazy" /></div>}
-  <div class="cs-card__main">
+<div {...rest} class:list={['cs-card', `cs-card--${variant}`, 'flex gap-[20px]', (variant === 'outline' || variant === 'light') && 'text-ink', className]} style={style} data-reveal="up">
+  {icon && <div class="cs-card__icon w-[76px] h-[76px] flex-none bg-white rounded-xs grid place-items-center"><img src={icon} alt="" loading="lazy" class="w-[40px] h-[40px]" /></div>}
+  <div class="cs-card__main flex-1 min-w-0 flex flex-col">
     {(title || num) && (
-      <div class="cs-card__head">
-        {title && <h3 class="cs-card__title" set:html={title} style={titleSize ? `font-size:${titleSize}px` : undefined} />}
-        {num && <span class="cs-card__num">{num}</span>}
+      <div class="cs-card__head flex justify-between items-start gap-[12px] mb-[32px]">
+        {title && <h3 class:list={['cs-card__title', titleClass]} set:html={title} style={titleSize ? `font-size:${titleSize}px` : undefined} />}
+        {num && <span class="cs-card__num font-body text-[20px] font-light tracking-[-0.04em] opacity-60">{num}</span>}
       </div>
     )}
     <div class="cs-card__body cs-body"><slot /></div>
@@ -30,17 +36,9 @@ const { variant = 'dark', title, num, icon, class: className, style, titleSize, 
 </div>
 
 <style>
-  .cs-card { display: flex; gap: 20px; }
-  .cs-card__main { flex: 1; min-width: 0; display: flex; flex-direction: column; }
-  .cs-card__head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; margin-bottom: 32px; }
-  .cs-card__title { font-size: 19px; line-height: 1.2; font-weight: 400; letter-spacing: -0.04em; }
-  .cs-card--grey .cs-card__title { font-size: 18px; font-weight: 600; line-height: 1.4; letter-spacing: -0.02em; }
-  .cs-card__num { font-family: var(--font-body); font-size: 20px; font-weight: 300; letter-spacing: -0.04em; opacity: 0.6; }
+  /* slot content (<p>/<ul>/<li> authored by the caller) — cannot carry utilities */
   .cs-card__body :global(p), .cs-card__body :global(li) { font-size: 14px; line-height: 1.4; letter-spacing: -0.02em; }
   .cs-card__body :global(ul) { list-style: disc; padding-left: 1.1em; margin: 0; }
   .cs-card__body :global(li) { margin: 0.2em 0; }
-  .cs-card--outline, .cs-card--light { color: var(--ink); }
   .cs-card--outline .cs-card__body :global(p), .cs-card--light .cs-card__body :global(p) { color: var(--muted-2); font-size: 16px; }
-  .cs-card__icon { width: 76px; height: 76px; flex: none; background: #fff; border-radius: var(--r-xs); display: grid; place-items: center; }
-  .cs-card__icon img { width: 40px; height: 40px; }
 </style>

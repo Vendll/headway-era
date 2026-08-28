@@ -62,8 +62,12 @@ const reflections = [
   toc={toc}
   class="gemini"
 >
-  <div slot="hero" class="g-hero" data-reveal>
-    <Video class="g-hero__vid" src="/assets/videos/qLleBeKiE3FL1Hr9VFEvmCExPg.mp4" label="Demo: lorem ipsum dolor sit amet consectetur adipiscing elit sed do" />
+  <div
+    slot="hero"
+    class="g-hero relative w-full h-[min(72vh,580px)] bg-[#040404] overflow-hidden mt-[12px] mb-[20px] max-[1300px]:h-[min(45vh,650px)] max-[950px]:mt-0 max-[641px]:h-[45vh]"
+    data-reveal
+  >
+    <Video class="g-hero__vid absolute inset-0 w-full h-full object-cover" src="/assets/videos/qLleBeKiE3FL1Hr9VFEvmCExPg.mp4" label="Demo: lorem ipsum dolor sit amet consectetur adipiscing elit sed do" />
   </div>
 
   <div class="gemini-body">
@@ -82,22 +86,27 @@ const reflections = [
       <Callout class="g-callout" bg="rgba(0, 126, 255, 0.2)" border="rgba(0, 126, 255, 0.5)" color="#262626" title="Lorem ipsum? Dolor.">
         <p>
           Lorem ipsum dolor sit 24h amet consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore magna. <strong>Ut enim ad minim veniam quis nostrud exercitation ullamco laboris nisi ut aliquip ex</strong> in 2026. Duis aute irure dolor in reprehenderit, velit esse cillum fugiat.
-          <a href={articleUrl} target="_blank" rel="noopener">Read the article here</a>
+          <a
+            href={articleUrl}
+            target="_blank"
+            rel="noopener"
+            class="text-blue underline underline-offset-[3px] [transition:opacity_0.2s_ease] hover:opacity-75"
+          >Read the article here</a>
         </p>
       </Callout>
     </Section>
 
     <!-- ============ Problem space (Quick TL;DR) ============ -->
     <Section id="problem" class="g-problem">
-      <div class="g-tldr-tag">
+      <div class="g-tldr-tag flex justify-end pr-[224px] mb-[10px] relative z-[1] max-[1300px]:pr-[120px] max-[950px]:pr-[20px]">
         <ArrowTag side="left" variant="blue" arrowWidth={105} arrowColor="#1710E6">Lorem<br />Ipsum</ArrowTag>
       </div>
 
       <Dark wide class="g-dark">
-        <p class="cs-label">Label Four</p>
-        <div class="g-prob">
-          <div class="g-prob__desc cs-body">
-            <h3 class="g-dark__h">Lorem ipsum sit <em>amet</em>.</h3>
+        <p class="cs-label mb-[34px]">Label Four</p>
+        <div class="g-prob grid grid-cols-[minmax(0,46fr)_minmax(0,54fr)] items-start mb-[34px] max-[950px]:grid-cols-[1fr] max-[950px]:gap-[32px]">
+          <div class="g-prob__desc cs-body flex flex-col gap-[36px]">
+            <h3 class="g-dark__h text-[24px] leading-[1.3] font-medium tracking-[-0.01em] text-light max-[641px]:text-[22px]">Lorem ipsum sit <em class="italic">amet</em>.</h3>
             <div class="g-prob__list">
               <p><strong>Lorem ipsum dolor sit:</strong></p>
               <ul>
@@ -108,14 +117,14 @@ const reflections = [
               </ul>
             </div>
           </div>
-          <div class="g-prob__media">
+          <div class="g-prob__media bg-[rgba(38,38,38,0.3)] rounded-t-[24px] px-[40px] py-[32px] flex justify-center overflow-hidden max-[950px]:rounded-t-[8px] max-[950px]:rounded-b-[8px] max-[950px]:px-[24px]">
             <Video class="g-prob__vid" src="/assets/videos/KcVXKtlWBMhwAXIWJDfVYhgPDKE.mp4" label="Placeholder video: lorem ipsum dolor sit amet consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore magna" />
           </div>
         </div>
 
-        <p class="cs-label">Label Five</p>
-        <div class="g-sol">
-          <h3 class="g-dark__h g-dark__h--sm">Lorem ipsum dolor sit amet consectetur?</h3>
+        <p class="cs-label mb-[34px]">Label Five</p>
+        <div class="g-sol grid grid-cols-[40%_minmax(0,1fr)] gap-[50px] pr-[50px] items-start max-[950px]:grid-cols-[1fr] max-[950px]:gap-[20px] max-[950px]:pr-0">
+          <h3 class="g-dark__h g-dark__h--sm text-[20px] leading-[1.3] font-medium tracking-[-0.02em] text-light max-[641px]:text-[22px]">Lorem ipsum dolor sit amet consectetur?</h3>
           <div class="g-sol__body cs-body">
             <p>A lorem-ipsum dolor sit amet consectetur adipiscing elit.</p>
             <ol>
@@ -131,14 +140,14 @@ const reflections = [
     <!-- ============ Primary research ============ -->
     <Section id="primary-research" class="g-research">
       <div class="cs-inner">
-        <p class="cs-label g-research__label" data-reveal="fade">Section Three</p>
+        <p class="cs-label g-research__label mb-[24px]" data-reveal="fade">Section Three</p>
         <Row label="Label Three" lg class="g-research__row">
-          <div class="g-research__body">
+          <div class="g-research__body relative w-full">
             <p>
               Lorem ipsum dolor
-              <span class="g-hl g-hl--reddit">
-                Lorem<img src="/assets/images/UXfKvddTfTvrnyHpkoXnvWNQdI.png" alt="" width="54" height="21" loading="lazy" decoding="async" />
-                <img class="g-note" src="/assets/images/Berh5Wni94qHMwbkI0KX6uT8KrE.png" alt="Placeholder note" width="92" height="31" loading="lazy" decoding="async" />
+              <span class="g-hl g-hl--reddit relative inline-block">
+                Lorem<img class="absolute pointer-events-none max-w-none w-[54px] h-[21px] left-[-4px] top-0" src="/assets/images/UXfKvddTfTvrnyHpkoXnvWNQdI.png" alt="" width="54" height="21" loading="lazy" decoding="async" />
+                <img class="g-note absolute pointer-events-none max-w-none w-[54px] h-[21px] left-[-4px] top-0" src="/assets/images/Berh5Wni94qHMwbkI0KX6uT8KrE.png" alt="Placeholder note" width="92" height="31" loading="lazy" decoding="async" />
               </span>
               sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et magna.
             </p>
@@ -157,15 +166,17 @@ const reflections = [
         </Row>
       </div>
 
-      <div class="g-figs">
+      <div class="g-figs grid grid-cols-[minmax(0,1fr)_minmax(0,1fr)] gap-[10px] mt-[60px] max-[950px]:grid-cols-[1fr] max-[950px]:mt-[40px]">
         <Figure
           class="g-fig g-fig--reddit"
+          mediaClass="w-[80%]"
           src="/assets/images/YkGijlXSjxSYMldiMgulkoiPrA.png"
           alt="Placeholder screenshot of comment replies"
           caption="Fig. Placeholder responses"
         />
         <Figure
           class="g-fig g-fig--sketch"
+          mediaClass="w-[70%] max-h-[90%] object-contain"
           src="/assets/images/PTFYalKLrCWNF9iLCnF3LioPNQ.png"
           alt="Placeholder sketch image"
           caption="Fig. Placeholder sketches"
@@ -228,15 +239,15 @@ const reflections = [
     <!-- ============ Reflection ============ -->
     <Section id="reflection" class="g-reflection">
       <Dark wide class="g-refl">
-        <p class="cs-label">Section Seven</p>
-        <div class="g-refl__grid">
-          <p class="g-refl__big">
+        <p class="cs-label mb-[24px]">Section Seven</p>
+        <div class="g-refl__grid grid grid-cols-[327px_minmax(0,1fr)] items-start max-[1200px]:grid-cols-[280px_minmax(0,1fr)] max-[1200px]:gap-[30px] max-[950px]:grid-cols-[1fr] max-[950px]:gap-[34px]">
+          <p class="g-refl__big text-[20px] leading-[1.3] font-medium tracking-[-0.02em] text-light relative max-w-[327px]">
             Lorem ipsum:<br /><br />
             Lorem ipsum dolor’s amet.<br />
-            Ut <em class="g-hl g-hl--reads">lorem<img src="/assets/images/CG7vYXLXXagMEQVHe1eGtn0NnU.png" alt="" width="56" height="23" loading="lazy" decoding="async" /></em> sit amet.
+            Ut <em class="g-hl g-hl--reads italic relative inline-block">lorem<img class="absolute pointer-events-none max-w-none w-[56px] h-[23px] left-[-3px] top-[-1px] z-[1]" src="/assets/images/CG7vYXLXXagMEQVHe1eGtn0NnU.png" alt="" width="56" height="23" loading="lazy" decoding="async" /></em> sit amet.
           </p>
-          <ol class="g-refl__list">
-            {reflections.map((r, i) => <li data-reveal="up" data-reveal-delay={String(i * 0.05)}><span>{r}</span></li>)}
+          <ol class="g-refl__list list-none flex flex-col gap-[10px] [counter-reset:item]">
+            {reflections.map((r, i) => <li class="[counter-increment:item] flex gap-[12px] bg-[rgba(38,38,38,0.3)] rounded-[8px] px-[40px] py-[24px] text-[14px] leading-[1.3] font-medium tracking-[-0.01em] text-light-2 max-[950px]:px-[24px] max-[950px]:py-[16px]" data-reveal="up" data-reveal-delay={String(i * 0.05)}><span>{r}</span></li>)}
           </ol>
         </div>
       </Dark>
@@ -245,34 +256,27 @@ const reflections = [
 </CaseStudyLayout>
 
 <style>
-  /* ---------- hero ---------- */
-  .g-hero {
-    position: relative;
-    width: 100%;
-    height: min(72vh, 580px);
-    background: #040404;
-    overflow: hidden;
-    margin: 12px 0 20px;
-  }
-  .g-hero :global(.g-hero__vid) {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
+  /* Everything below stays as CSS: each rule either targets a child component's
+     internals (no prop to hang a class on), or would lose the cascade as a
+     utility — Tailwind utilities live in `@layer utilities`, and every rule it
+     competes with here (CaseStudyLayout's `is:global` block, the component
+     scoped styles) is unlayered and therefore wins. */
 
+  /* `.cs-body strong` (unlayered, 500) would beat a `font-semibold` utility */
   .gemini-body :global(strong) { font-weight: 600; }
 
   /* ---------- introduction ---------- */
+  /* `.cs-row` / `.cs-body strong` are unlayered — utilities lose */
   .g-intro :global(.cs-row) { padding: 18px 0; }
   .g-intro :global(.cs-row__body strong) { color: var(--muted-2); }
 
+  /* `.callout` (Callout scoped) sets padding + border-radius unlayered */
   .gemini-body :global(.g-callout) {
     margin-top: 18px;
     padding: 24px 40px;
     border-radius: 8px;
   }
+  /* Callout internals — no prop exposes these elements */
   .gemini-body :global(.g-callout .callout__title) {
     font-size: 18px;
     line-height: 1.4;
@@ -286,23 +290,10 @@ const reflections = [
     letter-spacing: -0.02em;
   }
   .gemini-body :global(.g-callout strong) { font-weight: 600; }
-  .gemini-body :global(.g-callout a) {
-    color: var(--blue);
-    text-decoration: underline;
-    text-underline-offset: 3px;
-    transition: opacity 0.2s ease;
-  }
-  .gemini-body :global(.g-callout a:hover) { opacity: 0.75; }
 
   /* ---------- Quick TL;DR tag + dark block ---------- */
-  .g-tldr-tag {
-    display: flex;
-    justify-content: flex-end;
-    padding-right: 224px;
-    margin-bottom: 10px;
-    position: relative;
-    z-index: 1;
-  }
+  /* ArrowTag internals: `.tag-box` / `.atag__arrow` have no class prop of their own,
+     and `.atag .atag__arrow { margin-top: 6px }` is unlayered */
   .g-tldr-tag :global(.tag-box) {
     width: 128px;
     text-align: center;
@@ -312,24 +303,7 @@ const reflections = [
   }
   .g-tldr-tag :global(.atag__arrow) { margin-top: 22px; }
 
-  .gemini-body :global(.g-dark .cs-label) { margin-bottom: 34px; }
-  .g-dark__h {
-    font-size: 24px;
-    line-height: 1.3;
-    font-weight: 500;
-    letter-spacing: -0.01em;
-    color: #f5f5f5;
-  }
-  .g-dark__h em { font-style: italic; }
-  .g-dark__h--sm { font-size: 20px; letter-spacing: -0.02em; }
-
-  .g-prob {
-    display: grid;
-    grid-template-columns: minmax(0, 46fr) minmax(0, 54fr);
-    align-items: start;
-    margin-bottom: 34px;
-  }
-  .g-prob__desc { display: flex; flex-direction: column; gap: 36px; }
+  /* `.cs-body p/li/ul` + `.cs-dark .cs-body p` are unlayered — utilities lose */
   .g-prob__list :global(p),
   .g-prob__list :global(li) {
     color: #f5f5f5;
@@ -339,23 +313,9 @@ const reflections = [
   }
   .g-prob__list :global(ul) { margin-top: 1.5em; padding-left: 1.2em; }
   .g-prob__list :global(li) { margin: 0; }
-  .g-prob__media {
-    background: rgba(38, 38, 38, 0.3);
-    border-radius: 24px 24px 0 0;
-    padding: 32px 40px;
-    display: flex;
-    justify-content: center;
-    overflow: hidden;
-  }
+  /* `main :is(img, video, iframe) { border-radius: var(--radius-md) }` is unlayered */
   .g-prob__media :global(.g-prob__vid) { width: 225px; height: auto; border-radius: 12px; }
 
-  .g-sol {
-    display: grid;
-    grid-template-columns: 40% minmax(0, 1fr);
-    gap: 50px;
-    padding-right: 50px;
-    align-items: start;
-  }
   .g-sol__body :global(p),
   .g-sol__body :global(li) {
     color: #f5f5f5;
@@ -368,10 +328,9 @@ const reflections = [
   .g-sol__body :global(p + p) { margin-top: 1.3em; }
 
   /* ---------- primary research ---------- */
-  .g-research__label { margin-bottom: 24px; }
+  /* `.cs-row` / `.cs-row__body` are rendered by Row.astro and are unlayered */
   .gemini-body :global(.g-research__row) { padding: 0; }
   .gemini-body :global(.g-research__row .cs-row__body) { min-height: 291px; display: flex; align-items: center; }
-  .g-research__body { position: relative; width: 100%; }
   .g-research__body :global(p),
   .g-research__body :global(li) { line-height: 1.4; }
   .g-research__body :global(p + p),
@@ -379,32 +338,12 @@ const reflections = [
   .g-research__body :global(ul) { margin-top: 1.4em; padding-left: 1.3em; }
   .g-research__body :global(li) { margin: 0; }
 
-  /* hand-drawn highlight marks + Brisa note */
-  .g-hl { position: relative; display: inline-block; }
-  .g-hl > img { position: absolute; pointer-events: none; max-width: none; }
-  .g-hl--reddit > img { width: 54px; height: 21px; left: -4px; top: 0; }
-  .g-note {
-    position: absolute;
-    left: 40px;
-    top: -44px;
-    width: 92px;
-    height: auto;
-    max-width: none;
-    pointer-events: none;
-  }
-
-  .g-figs {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    gap: 10px;
-    margin-top: 60px;
-  }
+  /* Figure internals: `.cs-figure` / `.cs-figure__caption` have no class prop */
   .g-figs :global(.cs-figure) { height: 50vh; min-height: 320px; padding: 0; }
   .g-figs :global(.cs-figure__caption) { margin-top: 16px; }
-  .gemini-body :global(.g-fig--reddit .fig__media) { width: 80%; }
-  .gemini-body :global(.g-fig--sketch .fig__media) { width: 70%; max-height: 90%; object-fit: contain; }
 
   /* ---------- expected impact ---------- */
+  /* `.cs-card` (layout, unlayered) sets border-radius; `__head/__title/__body` are Card internals */
   .g-impact :global(.cs-card) { border-radius: 8px; min-height: 253px; }
   .g-impact :global(.cs-card__head) { margin-bottom: 42px; }
   .g-impact :global(.cs-card__title) {
@@ -422,6 +361,7 @@ const reflections = [
   }
 
   /* ---------- future enhancements ---------- */
+  /* `.cs-section > .cs-label` and `.cs-card--light` are unlayered; the rest are Card internals */
   .g-future > :global(.cs-label) { margin-bottom: 36px; }
   .g-future :global(.cs-card) {
     align-items: center;
@@ -451,76 +391,26 @@ const reflections = [
   }
 
   /* ---------- reflection ---------- */
+  /* `.cs-dark { padding: 50px 50px 80px }` is unlayered */
   .gemini-body :global(.g-refl) { padding: 50px 70px; }
-  .gemini-body :global(.g-refl .cs-label) { margin-bottom: 24px; }
-  .g-refl__grid {
-    display: grid;
-    grid-template-columns: 327px minmax(0, 1fr);
-    align-items: start;
-  }
-  .g-refl__big {
-    font-size: 20px;
-    line-height: 1.3;
-    font-weight: 500;
-    letter-spacing: -0.02em;
-    color: #f5f5f5;
-    position: relative;
-    max-width: 327px;
-  }
-  .g-refl__big em { font-style: italic; }
-  .g-hl--reads > img { width: 56px; height: 23px; left: -3px; top: -1px; z-index: 1; }
-  .g-refl__list {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    counter-reset: item;
-  }
-  .g-refl__list li {
-    counter-increment: item;
-    display: flex;
-    gap: 12px;
-    background: rgba(38, 38, 38, 0.3);
-    border-radius: 8px;
-    padding: 24px 40px;
-    font-size: 14px;
-    line-height: 1.3;
-    font-weight: 500;
-    letter-spacing: -0.01em;
-    color: #e3e3e3;
-  }
+  /* ::before with content() */
   .g-refl__list li::before { content: counter(item) '.'; min-width: 12px; }
 
   /* ---------- responsive ---------- */
-  @media (max-width: 1299px) {
-    .g-hero { height: min(45vh, 650px); }
-    .g-tldr-tag { padding-right: 120px; }
-  }
   @media (max-width: 1199px) {
     .gemini-body :global(.g-refl) { padding: 32px 24px 40px; }
-    .g-refl__grid { grid-template-columns: 280px minmax(0, 1fr); gap: 30px; }
   }
   @media (max-width: 949px) {
-    .g-hero { margin-top: 0; }
-    .g-tldr-tag { padding-right: 20px; }
-    .g-prob { grid-template-columns: 1fr; gap: 32px; }
-    .g-prob__media { border-radius: 8px; padding: 32px 24px; }
     .g-prob__media :global(.g-prob__vid) { width: 125px; }
-    .g-sol { grid-template-columns: 1fr; gap: 20px; padding-right: 0; }
     .gemini-body :global(.g-research__row .cs-row__body) { min-height: 0; }
-    .g-figs { grid-template-columns: 1fr; margin-top: 40px; }
     .g-figs :global(.cs-figure) { height: auto; min-height: 0; padding: 24px; }
     .g-impact :global(.cs-card) { min-height: 0; }
     .g-impact :global(.cs-card__head) { margin-bottom: 24px; }
     .g-impact :global(.cs-card__title) { font-size: 22px; }
     .g-future :global(.cs-card) { min-height: 0; }
     .gemini-body :global(.g-refl) { padding: 30px 20px; }
-    .g-refl__grid { grid-template-columns: 1fr; gap: 34px; }
-    .g-refl__list li { padding: 16px 24px; }
   }
   @media (max-width: 640px) {
-    .g-hero { height: 45vh; }
     .g-tldr-tag :global(.atag__arrow) { width: 80px; margin-top: 16px; }
-    .g-dark__h { font-size: 22px; }
   }
 </style>

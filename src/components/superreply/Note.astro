@@ -24,33 +24,39 @@ interface Props {
 }
 const { top, left, line = 80, width = 170, side = 'right', vertical = false, lineOffset = 30, class: className, ...rest } = Astro.props;
 const px = (v: number | string) => (typeof v === 'number' ? `${v}px` : v);
+
+/* flex-direction / transform are emitted exclusively so the vertical variant keeps
+   winning over the left variant, exactly as the old cascade did. */
+const dir = vertical ? 'flex-col-reverse' : side === 'left' ? 'flex-row-reverse' : '';
+const shift = side === 'left' ? '-translate-x-full' : '';
+const gap = vertical ? 'gap-[6px]' : 'gap-[10px]';
+
+/* vertical: the line runs downwards from the text and the dot sits at its far end */
+const lineClass = vertical
+  ? 'relative flex-none w-0 h-[var(--line)] ml-[var(--line-x,30px)] border-l-2 border-dotted border-purple opacity-85'
+  : 'relative flex-none w-[var(--line)] h-0 mt-[7px] border-t-2 border-dotted border-purple opacity-85';
 ---
 
-<div {...rest} class:list={['note', `note--${side}`, { 'note--v': vertical }, className]} style={`top:${px(top)};left:${px(left)};--line:${line}px;--w:${width}px;--line-x:${lineOffset}px`}>
-  <span class="note__line" aria-hidden="true"></span>
-  <div class="note__text"><slot /></div>
+<div
+  {...rest}
+  class:list={[
+    'note',
+    `note--${side}`,
+    { 'note--v': vertical },
+    'absolute flex items-start z-[2] pointer-events-none',
+    gap,
+    dir,
+    shift,
+    'max-[1200px]:hidden',
+    className,
+  ]}
+  style={`top:${px(top)};left:${px(left)};--line:${line}px;--w:${width}px;--line-x:${lineOffset}px;--c:#8d01ff`}
+>
+  <span class:list={['note__line', lineClass]} aria-hidden="true"></span>
+  <div class="note__text w-[var(--w)] text-[12px] leading-[1.25] font-normal tracking-[-0.01em] text-muted-2"><slot /></div>
 </div>
 
 <style>
-  .note {
-    position: absolute;
-    display: flex;
-    align-items: flex-start;
-    gap: 10px;
-    z-index: 2;
-    pointer-events: none;
-    --c: #8d01ff;
-  }
-  .note--left { flex-direction: row-reverse; transform: translateX(-100%); }
-  .note__line {
-    position: relative;
-    flex: none;
-    width: var(--line);
-    height: 0;
-    margin-top: 7px;
-    border-top: 2px dotted var(--c);
-    opacity: 0.85;
-  }
   /* dot at the text end of the line */
   .note__line::after {
     content: '';
@@ -63,33 +69,12 @@ const px = (v: number | string) => (typeof v === 'number' ? `${v}px` : v);
   }
   .note--right .note__line::after { right: -3px; }
   .note--left .note__line::after { left: -3px; }
+  /* vertical: dot at the far (bottom) end */
+  .note--v .note__line::after { top: auto; bottom: -3px; left: -4px; right: auto; }
 
-  .note__text {
-    width: var(--w);
-    font-size: 12px;
-    line-height: 1.25;
-    font-weight: 400;
-    letter-spacing: -0.01em;
-    color: #5b5b5b;
-  }
+  /* slotted content — owned by the caller's markup, so it stays as :global() CSS */
   .note__text :global(p + p) { margin-top: 1em; }
   .note__text :global(strong) { font-weight: 500; color: #262626; }
   .note__text :global(ul) { list-style: disc; padding-left: 1.1em; margin-top: 4px; }
   .note__text :global(li) { margin: 0; }
-
-  /* vertical: text above, line going down, dot at the far (bottom) end */
-  .note--v { flex-direction: column-reverse; align-items: flex-start; gap: 6px; }
-  .note--v .note__line {
-    width: 0;
-    height: var(--line);
-    margin: 0 0 0 var(--line-x, 30px);
-    border-top: 0;
-    border-left: 2px dotted var(--c);
-  }
-  .note--v .note__line::after { top: auto; bottom: -3px; left: -4px; right: auto; }
-
-  /* the figures re-flow below 1200px, so pixel-positioned notes are hidden there */
-  @media (max-width: 1199px) {
-    .note { display: none; }
-  }
 </style>

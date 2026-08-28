@@ -10,7 +10,7 @@ const { size = 31, rotate = 0, class: className, style = '' } = Astro.props;
 ---
 
 <svg
-  class:list={['sr-cursor', className]}
+  class:list={['sr-cursor', 'block text-green flex-none', className]}
   width={size}
   height={Math.round(size * (31.804 / 30.626))}
   viewBox="0 0 30.626 31.804"
@@ -24,7 +24,3 @@ const { size = 31, rotate = 0, class: className, style = '' } = Astro.props;
     fill="currentColor"
   />
 </svg>
-
-<style>
-  .sr-cursor { display: block; color: var(--green); flex: none; }
-</style>

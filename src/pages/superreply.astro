@@ -54,6 +54,24 @@ const learnings = [
 const stepShot = '/assets/images/djJdc6k2i5Ime1kmzF32WltW4.png';
 const stepAlt =
   'Placeholder product screenshot';
+
+/* shared utilities for the fixed-layout figure containers (.sr-fig) */
+const figBase = 'relative w-full bg-bg-2 rounded-lg';
+/* one "Step #n" figure: sticky card that un-sticks and pads out below 1200px */
+const stepBase =
+  'sticky top-[60px] h-[761px] bg-bg-2 rounded-lg overflow-hidden max-[1200px]:relative max-[1200px]:top-auto max-[1200px]:h-auto max-[1200px]:pt-[100px] max-[1200px]:px-[24px] max-[1200px]:pb-[40px] max-[950px]:pt-[80px] max-[950px]:px-[16px] max-[950px]:pb-[24px]';
+const stepHeading =
+  'absolute top-[30px] left-[40px] font-display font-normal text-[48px] leading-[53px] tracking-[-0.02em] text-ink max-[1200px]:top-[24px] max-[1200px]:left-[24px] max-[950px]:text-[36px] max-[950px]:leading-[1]';
+/* `rounded-[6px]!` / `rounded-[8px]!`: global.css has an unlayered
+   `main :is(img, video, iframe) { border-radius: var(--radius-md) }` which outranks
+   the (layered) utilities, so the per-image radius has to be important. */
+const stepImg =
+  'absolute top-[134px] w-[752px] h-auto rounded-[6px]! [box-shadow:0_2px_24px_rgba(0,0,0,0.06)] max-[1200px]:relative max-[1200px]:top-auto max-[1200px]:left-auto! max-[1200px]:w-full max-[1200px]:max-w-[752px] max-[1200px]:mx-auto max-[1200px]:block';
+/* one box in the "where was the gap?" diagram */
+const gapBox = 'rounded-sm grid place-items-center text-[#f5f5f5] text-[16px] leading-[1.6] font-medium tracking-[-0.02em] text-center';
+const gapLink = 'block w-[2px] h-[16px] mx-auto [border-left:2px_dotted_rgba(141,1,255,0.8)]';
+/* the 880px inner text column above each flow figure */
+const flowText = 'mt-[80px] max-[950px]:mt-[56px]';
 ---
 
 <CaseStudyLayout
@@ -67,8 +85,13 @@ const stepAlt =
   class="superreply"
 >
   <!-- ============ Hero ============ -->
-  <div slot="hero" class="sr-hero" data-reveal="up">
+  <div
+    slot="hero"
+    class="sr-hero relative w-full h-[clamp(420px,72vh,727px)] bg-purple overflow-hidden rounded-lg mb-[40px] max-[1200px]:h-auto max-[1200px]:aspect-[1120/727]"
+    data-reveal="up"
+  >
     <img
+      class="absolute left-[50%] bottom-0 h-[89%] w-auto max-w-none [transform:translateX(-50%)] max-[1200px]:h-auto max-[1200px]:w-[89%] max-[1200px]:max-w-[89%] max-[641px]:w-[94%] max-[641px]:max-w-[94%]"
       src="/assets/images/gAtztWfqOBOUmmIsslCnlYYMK4.png"
       alt="Placeholder product screenshot"
       width="1564"
@@ -95,7 +118,7 @@ const stepAlt =
 
     <!-- ============ TL;DR ============ -->
     <Section id="tldr" class="sr-tldr">
-      <div class="sr-tldr__tag">
+      <div class="sr-tldr__tag flex justify-end pr-[224px] mb-[10px] relative z-[1] max-[1300px]:pr-[120px] max-[950px]:pr-[20px]">
         <ArrowTag side="left" variant="blue" arrowWidth={105} arrowColor="#1710E6">Lorem<br />Ipsum</ArrowTag>
       </div>
       <Dark class="sr-dark">
@@ -119,7 +142,7 @@ const stepAlt =
 
     <!-- ============ Preview ============ -->
     <Section id="preview" label="Section Three" class="sr-preview">
-      <h2 class="cs-h sr-preview__h" data-reveal="up">Lorem ipsum dolor sit amet</h2>
+      <h2 class="cs-h sr-preview__h mb-[40px]" data-reveal="up">Lorem ipsum dolor sit amet</h2>
       <Figure
         video
         src="/assets/videos/ThKe0cQVVPaMiAS4dDq2xMPaHMs.mp4"
@@ -130,6 +153,7 @@ const stepAlt =
         radius={8}
         border
         class="sr-preview__fig"
+        mediaClass="bg-[#fafafa] aspect-[3440/2160]"
       />
     </Section>
 
@@ -141,7 +165,7 @@ const stepAlt =
         </Row>
 
         <img
-          class="sr-illus"
+          class="sr-illus w-full h-auto mt-[60px]"
           src="/assets/images/vF2uuni209xr7xgdE14jmNV0zOA.png"
           alt="Placeholder illustration"
           width="3400"
@@ -151,8 +175,8 @@ const stepAlt =
           data-reveal="up"
         />
 
-        <p class="sr-groups-h" data-reveal="fade">Lorem ipsum:</p>
-        <Grid cols={3} gap={16} class="sr-groups" min={240}>
+        <p class="sr-groups-h text-[16px] leading-[1.4] font-medium tracking-[-0.02em] text-ink mt-[60px] max-[950px]:mt-[40px]" data-reveal="fade">Lorem ipsum:</p>
+        <Grid cols={3} gap={16} class="sr-groups mt-[18px]" min={240}>
           {
             groups.map((g, i) => (
               <Card variant="dark" title={g.title} num={g.num} data-reveal-delay={String(i * 0.06)}>
@@ -166,7 +190,7 @@ const stepAlt =
           }
         </Grid>
 
-        <Row label="Sed do eiusmod tempor incididunt" class="sr-learned">
+        <Row label="Sed do eiusmod tempor incididunt" class="sr-learned mt-[60px]">
           <p>Ut enim ad minim veniam quis nostrud 7+ exercitation, ullamco laboris nisi, ut aliquip ex commodo.</p>
           <ul>
             <li>2-4 lorem ipsum dolor sit amet consectetur</li>
@@ -180,17 +204,17 @@ const stepAlt =
           </p>
         </Row>
 
-        <Row label="Ut enim ad minim?" class="sr-gap-row">
-          <div class="sr-gap" data-reveal="up">
-            <div class="sr-gap__col">
-              <div class="sr-gap__box sr-gap__box--hi">Consectetur Elit</div>
-              <span class="sr-gap__link" aria-hidden="true"></span>
-              <div class="sr-gap__box">Incididunt Laborum</div>
-              <span class="sr-gap__link" aria-hidden="true"></span>
-              <div class="sr-gap__box">Exercitation Nisi</div>
+        <Row label="Ut enim ad minim?" class="sr-gap-row mt-[40px]">
+          <div class="sr-gap relative w-[433px] max-w-full h-[240px] ml-[85px] max-[950px]:ml-0 max-[950px]:h-auto max-[950px]:w-full" data-reveal="up">
+            <div class="sr-gap__col w-[253px] h-full flex flex-col items-stretch max-[950px]:max-w-full">
+              <div class:list={['sr-gap__box sr-gap__box--hi', gapBox, 'h-[82px] bg-purple']}>Consectetur Elit</div>
+              <span class:list={['sr-gap__link', gapLink]} aria-hidden="true"></span>
+              <div class:list={['sr-gap__box', gapBox, 'h-[63px] bg-dark']}>Incididunt Laborum</div>
+              <span class:list={['sr-gap__link', gapLink]} aria-hidden="true"></span>
+              <div class:list={['sr-gap__box', gapBox, 'h-[63px] bg-dark']}>Exercitation Nisi</div>
             </div>
-            <Cursor class="sr-gap__cursor" rotate={-34} />
-            <p class="sr-gap__note">Nostrud exercitation ullamco laboris nisi ut aliquip.</p>
+            <Cursor class="sr-gap__cursor absolute top-[63px] left-[242px]" rotate={-34} />
+            <p class="sr-gap__note absolute top-[58px] right-[17px] w-[119px] text-[14px] leading-[1.3] font-medium tracking-[-0.02em] text-muted-2 max-[950px]:static max-[950px]:w-auto max-[950px]:mt-[16px]">Nostrud exercitation ullamco laboris nisi ut aliquip.</p>
           </div>
         </Row>
       </Inner>
@@ -206,16 +230,24 @@ const stepAlt =
     <!-- ============ Core flows ============ -->
     <Section id="core-flows" class="sr-flows">
       <!-- Flow #1: onboarding -->
-      <Inner class="sr-flow__text">
-        <p class="cs-label sr-flow__num" data-reveal="fade">Item #1</p>
-        <h3 class="cs-h sr-flow__h" data-reveal="up">Consectetur</h3>
+      <Inner class="sr-flow__text mt-0">
+        <p class="cs-label sr-flow__num mb-[26px]" data-reveal="fade">Item #1</p>
+        <h3 class="cs-h sr-flow__h mb-[14px]" data-reveal="up">Consectetur</h3>
         <p class="cs-p" data-reveal="up">
           Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua enim. Ad minim veniam quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat duis aute irure dolor in 2 reprehenderit voluptate velit esse cillum dolore.
         </p>
       </Inner>
-      <div class="sr-fig sr-fig--onboard" data-reveal="up">
-        <div class="sr-fig__card">
+      <div
+        class:list={[
+          'sr-fig sr-fig--onboard',
+          figBase,
+          'mt-[40px] h-[640px] max-[1200px]:h-auto max-[1200px]:py-[60px] max-[1200px]:px-[24px] max-[641px]:py-[24px] max-[641px]:px-[16px]',
+        ]}
+        data-reveal="up"
+      >
+        <div class="sr-fig__card absolute left-[100px] top-[100px] w-[760px] h-[439px] rounded-[8px] bg-white overflow-hidden max-[1200px]:relative max-[1200px]:left-auto max-[1200px]:top-auto max-[1200px]:max-w-full max-[1200px]:h-auto max-[1200px]:mx-auto">
           <img
+            class="w-full h-auto"
             src="/assets/images/HbQr9uUX1NFmMc28MLI48fAB8I.png"
             alt="Placeholder product screenshot"
             width="3024"
@@ -234,35 +266,62 @@ const stepAlt =
       </div>
 
       <!-- Dashboard -->
-      <Inner class="sr-flow__text">
-        <h3 class="cs-h sr-flow__h" data-reveal="up">Adipiscing elit eiusmod</h3>
+      <Inner class={`sr-flow__text ${flowText}`}>
+        <h3 class="cs-h sr-flow__h mb-[14px]" data-reveal="up">Adipiscing elit eiusmod</h3>
         <p class="cs-p" data-reveal="up">
           Lorem ipsum dolor sit amet consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore. Magna aliqua ut enim ad minim veniam quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat duis. Duis aute "irure dolor" in reprehenderit voluptate velit esse cillum dolore eu fugiat nulla pariatur excepteur sint occaecat cupidatat non proident sunt culpa.
         </p>
       </Inner>
-      <div class="sr-fig sr-fig--dash" data-reveal="up">
+      <div
+        class:list={[
+          'sr-fig sr-fig--dash',
+          figBase,
+          'mt-[40px] h-[818px] pt-[100px] pr-0 pb-[100px] pl-[90px]',
+          'max-[1200px]:h-auto max-[1200px]:pt-[60px] max-[1200px]:pr-[24px] max-[1200px]:pb-[60px] max-[1200px]:pl-[24px] max-[1200px]:flex max-[1200px]:justify-center',
+          'max-[641px]:pt-[24px] max-[641px]:pr-[16px] max-[641px]:pb-[24px] max-[641px]:pl-[16px]',
+        ]}
+        data-reveal="up"
+      >
         <Dashboard />
         <Note top={109} left={842} line={48} width={183}>Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt.</Note>
         <Note top={200} left={582} line={308} width={183}>
           Lorem ipsum dolor sit amet consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam quis nostrud exercitation ullamco laboris, nisi ut aliquip ex ea commodo consequat.
         </Note>
       </div>
-      <div class="sr-fig sr-fig--dash" data-reveal="up">
+      <div
+        class:list={[
+          'sr-fig sr-fig--dash',
+          figBase,
+          /* `.sr-fig--dash + .sr-fig--dash` — the second dashboard figure sits 60px below the first */
+          'mt-[60px] h-[818px] pt-[100px] pr-0 pb-[100px] pl-[90px]',
+          'max-[1200px]:h-auto max-[1200px]:pt-[60px] max-[1200px]:pr-[24px] max-[1200px]:pb-[60px] max-[1200px]:pl-[24px] max-[1200px]:flex max-[1200px]:justify-center',
+          'max-[641px]:pt-[24px] max-[641px]:pr-[16px] max-[641px]:pb-[24px] max-[641px]:pl-[16px]',
+        ]}
+        data-reveal="up"
+      >
         <Dashboard />
         <Note top={435} left={830} line={60} width={183}>Consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna.</Note>
         <Note top={593} left={824} line={66} width={183}>Aliqua enim ad minim veniam quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</Note>
       </div>
 
       <!-- Flow #2: templates -->
-      <Inner class="sr-flow__text">
-        <p class="cs-label sr-flow__num" data-reveal="fade">Item #2</p>
-        <h3 class="cs-h sr-flow__h" data-reveal="up">Tempor incididunt</h3>
+      <Inner class={`sr-flow__text ${flowText}`}>
+        <p class="cs-label sr-flow__num mb-[26px]" data-reveal="fade">Item #2</p>
+        <h3 class="cs-h sr-flow__h mb-[14px]" data-reveal="up">Tempor incididunt</h3>
         <p class="cs-p" data-reveal="up">
           Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod, tempor incididunt, ut labore, et dolore magna aliqua. Enim ad minim veniam quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat, duis aute irure dolor in reprehenderit voluptate velit esse cillum dolore eu fugiat nulla pariatur excepteur sint occaecat cupidatat.
         </p>
       </Inner>
-      <div class="sr-fig sr-fig--templates" data-reveal="up">
+      <div
+        class:list={[
+          'sr-fig sr-fig--templates',
+          figBase,
+          'mt-[40px] h-[669px] grid place-items-center max-[1200px]:h-auto max-[1200px]:py-[60px] max-[1200px]:px-[24px] max-[641px]:py-[24px] max-[641px]:px-[16px]',
+        ]}
+        data-reveal="up"
+      >
         <img
+          class="w-[760px] max-w-full h-auto"
           src="/assets/images/dg1DHGzqPMIbl1PVw9GhAXt9bqM.png"
           alt="Placeholder product screenshot"
           width="1491"
@@ -270,29 +329,29 @@ const stepAlt =
           loading="lazy"
           decoding="async"
         />
-        <Cursor class="sr-fig__cursor" size={26} rotate={30} />
+        <Cursor class="sr-fig__cursor absolute left-[649px] top-[417px]" size={26} rotate={30} />
       </div>
 
       <!-- Creating an automation: sticky-stacked step figures -->
-      <Inner class="sr-flow__text">
-        <h3 class="cs-h sr-flow__h" data-reveal="up">Dolore magna Aliqua</h3>
+      <Inner class={`sr-flow__text ${flowText}`}>
+        <h3 class="cs-h sr-flow__h mb-[14px]" data-reveal="up">Dolore magna Aliqua</h3>
         <p class="cs-p" data-reveal="up">
           Lorem ipsum dolor sit amet consectetur adipiscing elit 5-step sed, do eiusmod tempor, incididunt ut labore, et dolore magna, aliqua enim ad minim veniam quis nostrud exercitation ullamco laboris nisi. Ut aliquip ex ea commodo consequat duis aute irure dolor in reprehenderit voluptate velit esse cillum dolore eu fugiat nulla in 10 pariatur excepteur.
         </p>
       </Inner>
-      <div class="sr-steps">
-        <div class="sr-step" data-reveal="up">
-          <h4 class="sr-step__h">Step <em>#1</em></h4>
-          <img class="sr-step__img" style="left:259px" src={stepShot} alt={stepAlt} width="1504" height="978" loading="lazy" decoding="async" />
+      <div class="sr-steps flex flex-col gap-[200px] mt-[40px] max-[1200px]:gap-[40px]">
+        <div class:list={['sr-step', stepBase]} data-reveal="up">
+          <h4 class:list={['sr-step__h', stepHeading]}>Step <em class="italic">#1</em></h4>
+          <img class:list={['sr-step__img', stepImg]} style="left:259px" src={stepShot} alt={stepAlt} width="1504" height="978" loading="lazy" decoding="async" />
           <Note vertical top={42} left={313} line={30} width={225} lineOffset={40}>
             Lorem ipsum dolor sit amet consectetur adipiscing elit sed. Do eiusmod tempor incididunt ut labore et dolore magna aliqua enim ad minim.
           </Note>
           <Note side="left" top={269} left={329} line={121} width={130}>Veniam quis nostrud exercitation ullamco laboris nisi, ut aliquip, ex ea commodo consequat duis aute irure.</Note>
         </div>
 
-        <div class="sr-step" data-reveal="up">
-          <h4 class="sr-step__h">Step <em>#3</em></h4>
-          <img class="sr-step__img" style="left:110px" src={stepShot} alt="" width="1504" height="978" loading="lazy" decoding="async" />
+        <div class:list={['sr-step', stepBase]} data-reveal="up">
+          <h4 class:list={['sr-step__h', stepHeading]}>Step <em class="italic">#3</em></h4>
+          <img class:list={['sr-step__img', stepImg]} style="left:110px" src={stepShot} alt="" width="1504" height="978" loading="lazy" decoding="async" />
           <Note top={338} left={603} line={298} width={166}>Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod.</Note>
           <Note top={432} left={603} line={298} width={166}>
             <p>'Lorem ipsum dolor' sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt labore.</p>
@@ -300,9 +359,9 @@ const stepAlt =
           </Note>
         </div>
 
-        <div class="sr-step" data-reveal="up">
-          <h4 class="sr-step__h">Step <em>#5</em></h4>
-          <img class="sr-step__img" style="left:74px" src={stepShot} alt="" width="1504" height="978" loading="lazy" decoding="async" />
+        <div class:list={['sr-step', stepBase]} data-reveal="up">
+          <h4 class:list={['sr-step__h', stepHeading]}>Step <em class="italic">#5</em></h4>
+          <img class:list={['sr-step__img', stepImg]} style="left:74px" src={stepShot} alt="" width="1504" height="978" loading="lazy" decoding="async" />
           <Note top={219} left={799} line={66} width={170}>Sed do eiusmod, tempor, incididunt ut labore et dolore magna aliqua.</Note>
           <Note top={356} left={741} line={124} width={170}>
             Lorem ipsum dolor sit amet consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore, et dolore magna aliqua enim, ad minim veniam quis nostrud exercitation ullamco laboris nisi aliquip ex ea commodo.
@@ -313,16 +372,23 @@ const stepAlt =
       </div>
 
       <!-- Automations table -->
-      <Inner class="sr-flow__text">
-        <h3 class="cs-h sr-flow__h" data-reveal="up">Veniam exercitation ullamco</h3>
+      <Inner class={`sr-flow__text ${flowText}`}>
+        <h3 class="cs-h sr-flow__h mb-[14px]" data-reveal="up">Veniam exercitation ullamco</h3>
         <p class="cs-p" data-reveal="up">
           Lorem ipsum dolor sit amet consectetur adipiscing elit, sed do eiusmod, tempor incididunt ut labore et dolore magna aliqua.<br />
           Enim ad minim veniam, quis nostrud, exercitation ullamco laboris nisi ut aliquip, ex ea commodo consequat duis aute irure dolor in reprehenderit voluptate velit esse cillum dolore.
         </p>
       </Inner>
-      <div class="sr-fig sr-fig--table" data-reveal="up">
+      <div
+        class:list={[
+          'sr-fig sr-fig--table',
+          figBase,
+          'mt-[40px] py-[40px] px-[10px] flex justify-center max-[1200px]:px-[24px] max-[641px]:py-[24px] max-[641px]:px-[16px]',
+        ]}
+        data-reveal="up"
+      >
         <img
-          class="sr-table"
+          class="sr-table w-[759px] max-w-full h-auto rounded-[8px]!"
           src="/assets/images/gqDPmojyL22OPYUqiFT3urLzgU.png"
           alt="Placeholder product screenshot"
           width="2824"
@@ -330,10 +396,20 @@ const stepAlt =
           loading="lazy"
           decoding="async"
         />
-        <img class="sr-table__drop" src="/assets/images/HlAzmMXVc55PMrGOoSWR3PxMGIQ.png" alt="Placeholder UI detail" width="318" height="412" loading="lazy" decoding="async" />
-        <span class="sr-table__lead" aria-hidden="true"></span>
         <img
-          class="sr-table__toasts"
+          class="sr-table__drop absolute top-[80px] left-[65px] w-[81px] h-auto max-[1200px]:hidden"
+          src="/assets/images/HlAzmMXVc55PMrGOoSWR3PxMGIQ.png"
+          alt="Placeholder UI detail"
+          width="318"
+          height="412"
+          loading="lazy"
+          decoding="async"
+        />
+        <span
+          class="sr-table__lead absolute top-[86px] left-[159px] w-[92px] [border-top:2px_dotted_#8d01ff] opacity-[0.85] max-[1200px]:hidden"
+          aria-hidden="true"></span>
+        <img
+          class="sr-table__toasts absolute bottom-[177px] left-[888px] w-[195px] h-auto max-[1200px]:hidden"
           src="/assets/images/nkzK6FtHMWJlAcDiJJOb63vDViQ.png"
           alt="Placeholder notification messages"
           width="800"
@@ -346,26 +422,30 @@ const stepAlt =
 
     <!-- ============ Brand identity ============ -->
     <Section id="brand-identity" class="sr-brand-sec">
-      <div class="sr-brand" data-reveal="up">
-        <div class="sr-brand__text">
-          <p class="cs-label">Section Seven</p>
-          <h2 class="cs-h sr-brand__h">Ut labore et dolore magna</h2>
+      <div
+        class="sr-brand w-[1040px] max-w-full mx-auto bg-bg-2 rounded-lg pt-[54px] px-[12px] pb-[50px] max-[950px]:pt-[32px] max-[950px]:px-[16px] max-[950px]:pb-[32px]"
+        data-reveal="up"
+      >
+        <div class="sr-brand__text pr-[124px] pl-[100px] max-[1200px]:pr-[24px] max-[1200px]:pl-[24px] max-[950px]:pr-0 max-[950px]:pl-0">
+          <p class="cs-label mb-[30px]">Section Seven</p>
+          <h2 class="cs-h sr-brand__h mb-[20px]">Ut labore et dolore magna</h2>
           <p class="cs-p">
             Lorem ipsum dolor sit amet consectetur, adipiscing elit sed do eiusmod tempor incididunt labore. Et dolore magna aliqua, enim ad minim veniam quis nostrud exercitation ullamco laboris, nisi ut aliquip ex ea commodo consequat. Duis aute irure, dolor, in reprehenderit voluptate velit esse cillum dolore eu fugiat nulla pariatur excepteur.
           </p>
         </div>
-        <div class="sr-brand__grid">
-          <div class="sr-brand__col">
-            <div class="sr-brand__logo">
-              <img src="/assets/images/LgCF9NV0EP7pZf5Dq1vUCKDFXEg.png" alt="Placeholder logo" width="1412" height="255" loading="lazy" decoding="async" />
+        <div class="sr-brand__grid grid grid-cols-[1fr_1fr] gap-[12px] mt-[80px] max-[950px]:grid-cols-[1fr] max-[950px]:mt-[40px]">
+          <div class="sr-brand__col flex flex-col gap-[12px] h-[642px] max-[950px]:h-auto">
+            <div class="sr-brand__logo h-[112px] grid place-items-center">
+              <img class="w-[84%] h-auto" src="/assets/images/LgCF9NV0EP7pZf5Dq1vUCKDFXEg.png" alt="Placeholder logo" width="1412" height="255" loading="lazy" decoding="async" />
             </div>
-            <div class="sr-brand__phone">
-              <img src="/assets/images/vKJRutiuBofzlT6AxxNbIZQPmAE.png" alt="Placeholder device photo" width="4000" height="2668" loading="lazy" decoding="async" />
+            <div class="sr-brand__phone flex-1 bg-purple rounded-md overflow-hidden max-[950px]:aspect-[504/518]">
+              <img class="w-full h-full object-cover" src="/assets/images/vKJRutiuBofzlT6AxxNbIZQPmAE.png" alt="Placeholder device photo" width="4000" height="2668" loading="lazy" decoding="async" />
             </div>
           </div>
-          <div class="sr-brand__col">
-            <div class="sr-brand__laptop">
+          <div class="sr-brand__col flex flex-col gap-[12px] h-[642px] max-[950px]:h-auto">
+            <div class="sr-brand__laptop relative flex-1 min-h-0 overflow-hidden bg-purple rounded-md max-[950px]:aspect-[504/315] max-[950px]:flex-none">
               <img
+                class="absolute left-[50%] [transform:translateX(-50%)] w-auto max-w-none bottom-[1px] h-[208px] max-[950px]:h-auto max-[950px]:w-[72%]"
                 src="/assets/images/QPiJ3QAy5gEcDNpL87mTfQ.png"
                 alt="Placeholder marketing site screenshot"
                 width="2552"
@@ -374,8 +454,9 @@ const stepAlt =
                 decoding="async"
               />
             </div>
-            <div class="sr-brand__poster">
+            <div class="sr-brand__poster relative flex-1 min-h-0 overflow-hidden bg-[#262626] rounded-md max-[950px]:aspect-[504/315] max-[950px]:flex-none">
               <img
+                class="absolute left-[50%] [transform:translateX(-50%)] w-auto max-w-none bottom-[-87px] h-[326px] max-[950px]:h-auto max-[950px]:w-[62%] max-[950px]:bottom-[-14%]"
                 src="/assets/images/ceOmvvQzNOiZ1XdTmpjDVJgqGk.png"
                 alt="Placeholder social media graphics"
                 width="1280"
@@ -391,12 +472,15 @@ const stepAlt =
 
     <!-- ============ Outcome ============ -->
     <Section label="Section Eight" class="sr-outcome">
-      <div class="sr-outcome__grid">
-        <div class="sr-outcome__col">
-          <h3 class="cs-h" data-reveal="up">Lorem ipsum dolor amet?</h3>
-          <div class="sr-users" data-reveal="up">
+      <div class="sr-outcome__grid grid grid-cols-[1fr_1fr] gap-[50px] items-stretch max-[950px]:grid-cols-[1fr] max-[950px]:gap-[40px]">
+        <div class="sr-outcome__col flex flex-col">
+          <h3 class="cs-h mb-[20px]" data-reveal="up">Lorem ipsum dolor amet?</h3>
+          <div
+            class="sr-users relative flex-1 min-h-[525px] bg-bg-2 rounded-md max-[950px]:min-h-0 max-[950px]:p-[24px] max-[950px]:grid max-[950px]:grid-cols-[1fr_1fr] max-[950px]:gap-[16px] max-[950px]:items-start max-[641px]:grid-cols-[1fr]"
+            data-reveal="up"
+          >
             <img
-              class="sr-users__a"
+              class="sr-users__a absolute h-auto w-[228px] top-[40px] left-[35px] max-[950px]:static max-[950px]:w-full max-[950px]:[transform:none]"
               src="/assets/images/gHT3li4bTrJ5BsDLBZcvqFdByk0.png"
               alt="Placeholder testimonial card"
               width="1144"
@@ -405,7 +489,7 @@ const stepAlt =
               decoding="async"
             />
             <img
-              class="sr-users__b"
+              class="sr-users__b absolute h-auto w-[228px] bottom-[39px] left-[35px] max-[950px]:static max-[950px]:w-full max-[950px]:[transform:none]"
               src="/assets/images/59WFsCDgPUCNNe2KyhNdLVylw.png"
               alt="Placeholder testimonial card"
               width="1158"
@@ -414,7 +498,7 @@ const stepAlt =
               decoding="async"
             />
             <img
-              class="sr-users__c"
+              class="sr-users__c absolute h-auto w-[227px] top-[51%] left-[272px] [transform:translateY(-50%)] max-[1200px]:left-auto max-[1200px]:right-[35px] max-[950px]:static max-[950px]:w-full max-[950px]:[transform:none]"
               src="/assets/images/qpHU5oNwJmaY3i4IHkN2Q0efOx8.png"
               alt="Placeholder testimonial card"
               width="1152"
@@ -424,10 +508,11 @@ const stepAlt =
             />
           </div>
         </div>
-        <div class="sr-outcome__col">
-          <h3 class="cs-h" data-reveal="up">Sed do eiusmod tempor?</h3>
-          <div class="sr-client" data-reveal="up">
+        <div class="sr-outcome__col flex flex-col">
+          <h3 class="cs-h mb-[20px]" data-reveal="up">Sed do eiusmod tempor?</h3>
+          <div class="sr-client rounded-lg flex-1 bg-bg-2 p-[50px] flex items-center max-[950px]:p-[24px]" data-reveal="up">
             <img
+              class="w-full h-auto"
               src="/assets/images/ZrhgCBwklSKkdiRfg3irCBkgo.png"
               alt="Placeholder testimonial card"
               width="1284"
@@ -442,11 +527,11 @@ const stepAlt =
 
     <!-- ============ Impact ============ -->
     <Section id="impact" label="Section Nine" class="sr-impact">
-      <div class="sr-impact__grid">
+      <div class="sr-impact__grid grid grid-cols-[1fr_1fr] gap-[16px] mt-[16px] max-[950px]:grid-cols-[1fr] max-[950px]:gap-0">
         <Stat label="Lorem Ipsum" value="6 weeks" caption="Lorem ipsum dolor sit <b>6 weeks</b>,<br />consectetur 100+ adipiscing elit 60 sed." />
         <Stat label="Dolor Sit Amet" value="100,000+" caption="Adipiscing <b>100,000+ elit sed</b><br />do eiusmod tempor incididunt labore." />
         <Stat
-          class="sr-impact__wide"
+          class="sr-impact__wide col-span-full"
           label="Consectetur Adipiscing Elit"
           value="5 lorem ipsum"
           caption="Lorem ipsum dolor sit <b>5-step amet</b>,<br />consectetur adipiscing elit sed<br /><b>eiusmod tempor incididunt 10 labore.</b>"
@@ -457,8 +542,8 @@ const stepAlt =
     <!-- ============ Key learnings ============ -->
     <Section id="key-learnings" class="sr-learn-sec">
       <Dark wide class="sr-learn">
-        <p class="cs-label" data-reveal="fade">Section Ten</p>
-        <h2 class="sr-learn__h" data-reveal="up">Ut enim ad minim veniam quis nostrud sed</h2>
+        <p class="cs-label mb-[36px]" data-reveal="fade">Section Ten</p>
+        <h2 class="sr-learn__h text-[18px] leading-[1.3] font-semibold tracking-[-0.02em] text-[#f5f5f5] mb-[32px]" data-reveal="up">Ut enim ad minim veniam quis nostrud sed</h2>
         <Grid cols={3} gap={30} class="sr-learn__grid" min={240}>
           {
             learnings.map((l, i) => (
@@ -469,43 +554,23 @@ const stepAlt =
           }
         </Grid>
       </Dark>
-      <p class="sr-mobile-note">Note: Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor.</p>
+      <p class="sr-mobile-note hidden mt-[40px] text-center text-[14px] font-light tracking-[-0.02em] text-muted-2 max-[950px]:block">Note: Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor.</p>
     </Section>
   </div>
 </CaseStudyLayout>
 
 <style>
-  /* ---------- hero: purple box, laptop sitting on its bottom edge ---------- */
-  .sr-hero {
-    position: relative;
-    width: 100%;
-    height: clamp(420px, 72vh, 727px);
-    background: var(--purple);
-    overflow: hidden;
-    border-radius: var(--r-lg);
-    margin-bottom: 40px;
-  }
-  .sr-hero img {
-    position: absolute;
-    left: 50%;
-    bottom: 0;
-    height: 89%;
-    width: auto;
-    max-width: none;
-    transform: translateX(-50%);
-  }
+  /* Everything below is deliberately NOT a utility: each rule either reaches into a
+     child component's internals (no prop to hang a class on), or has to outrank
+     unlayered CSS that the utilities layer would lose to, or is driven by a JS
+     custom property. Everything else now lives on the markup as Tailwind classes. */
 
+  /* `strong` is authored inside slot content / set:html, so it cannot carry a class. */
   .sr-body :global(.cs-body strong) { font-weight: 600; }
 
   /* ---------- TL;DR ---------- */
-  .sr-tldr__tag {
-    display: flex;
-    justify-content: flex-end;
-    padding-right: 224px;
-    margin-bottom: 10px;
-    position: relative;
-    z-index: 1;
-  }
+  /* ArrowTag internals: the box has no class prop, and `.atag .atag__arrow`
+     (unlayered, 0,2,0) would beat a utility on the arrow. */
   .sr-tldr__tag :global(.tag-box) {
     width: 128px;
     text-align: center;
@@ -514,166 +579,27 @@ const stepAlt =
     padding: 5px 0;
   }
   .sr-tldr__tag :global(.atag__arrow) { margin-top: 22px; }
+  /* `.cs-dark { width: 1008px }` is unlayered global CSS — a `w-[1080px]` utility loses to it. */
   .sr-body :global(.sr-dark) { width: 1080px; }
+  /* TldrItem internals (heading/body are set:html + slot content). */
   .sr-body :global(.sr-dark .tldr__h .accent) { color: var(--purple-2); }
   .sr-body :global(.sr-dark .tldr__body li) { margin: 0.2em 0; }
   .sr-body :global(.sr-dark .tldr__body ul) { margin-top: 1em; }
 
-  /* ---------- preview ---------- */
-  .sr-preview__h { margin-bottom: 40px; }
-  .sr-body :global(.sr-preview__fig .fig__media) { background: #fafafa; aspect-ratio: 3440 / 2160; }
-
   /* ---------- user research ---------- */
-  .sr-illus { width: 100%; height: auto; margin-top: 60px; }
-  .sr-groups-h {
-    font-size: 16px;
-    line-height: 1.4;
-    font-weight: 500;
-    letter-spacing: -0.02em;
-    color: var(--ink);
-    margin-top: 60px;
-  }
-  .sr-body :global(.sr-groups) { margin-top: 18px; }
+  /* Card internals: no prop reaches .cs-card__main / __head / __num, and
+     `.cs-card { padding: 24px }` is unlayered. */
   .sr-body :global(.sr-groups .cs-card) { min-height: 253px; }
   .sr-body :global(.sr-groups .cs-card__main) { justify-content: space-between; }
   .sr-body :global(.sr-groups .cs-card__head) { margin-bottom: 24px; }
   .sr-body :global(.sr-groups .cs-card__num) { opacity: 0.5; }
-  .sr-body :global(.sr-learned) { margin-top: 60px; }
-  .sr-body :global(.sr-gap-row) { margin-top: 40px; }
-
-  /* "Where was the gap?" diagram */
-  .sr-gap {
-    position: relative;
-    width: 433px;
-    max-width: 100%;
-    height: 240px;
-    margin-left: 85px;
-  }
-  .sr-gap__col {
-    width: 253px;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-  }
-  .sr-gap__box {
-    border-radius: var(--r-sm);
-    height: 63px;
-    display: grid;
-    place-items: center;
-    background: var(--dark);
-    color: #f5f5f5;
-    font-size: 16px;
-    line-height: 1.6;
-    font-weight: 500;
-    letter-spacing: -0.02em;
-    text-align: center;
-  }
-  .sr-gap__box--hi { height: 82px; background: var(--purple); }
-  .sr-gap__link {
-    display: block;
-    width: 2px;
-    height: 16px;
-    margin: 0 auto;
-    border-left: 2px dotted rgba(141, 1, 255, 0.8);
-  }
-  .sr-gap :global(.sr-gap__cursor) { position: absolute; top: 63px; left: 242px; }
-  .sr-gap__note {
-    position: absolute;
-    top: 58px;
-    right: 17px;
-    width: 119px;
-    font-size: 14px;
-    line-height: 1.3;
-    font-weight: 500;
-    letter-spacing: -0.02em;
-    color: var(--muted-2);
-  }
 
   /* ---------- problem statement: full content width ---------- */
+  /* `.statement { width: 1008px }` is unlayered (Statement.astro), so it beats `w-full`. */
   .sr-body :global(.sr-statement) { width: 100%; }
 
-  /* ---------- core flows ---------- */
-  .sr-body :global(.sr-flow__text) { margin-top: 80px; }
-  .sr-body :global(.sr-flows > .sr-flow__text:first-child) { margin-top: 0; }
-  .sr-flow__num { margin-bottom: 26px; }
-  .sr-flow__h { margin-bottom: 14px; }
-
-  .sr-fig {
-    position: relative;
-    width: 100%;
-    background: var(--bg-2);
-    border-radius: var(--r-lg);
-    margin-top: 40px;
-  }
-  .sr-fig--onboard { height: 640px; }
-  .sr-fig__card {
-    position: absolute;
-    left: 100px;
-    top: 100px;
-    width: 760px;
-    height: 439px;
-    border-radius: 8px;
-    background: #fff;
-    overflow: hidden;
-  }
-  .sr-fig__card img { width: 100%; height: auto; }
-
-  .sr-fig--dash { height: 818px; padding: 100px 0 100px 90px; }
-  .sr-fig--dash + .sr-fig--dash { margin-top: 60px; }
-
-  .sr-fig--templates { height: 669px; display: grid; place-items: center; }
-  .sr-fig--templates img { width: 760px; max-width: 100%; height: auto; }
-  .sr-fig :global(.sr-fig__cursor) { position: absolute; left: 649px; top: 417px; }
-
-  /* sticky-stacked "Step #n" figures */
-  .sr-steps {
-    display: flex;
-    flex-direction: column;
-    gap: 200px;
-    margin-top: 40px;
-  }
-  .sr-step {
-    position: sticky;
-    top: 60px;
-    height: 761px;
-    background: var(--bg-2);
-    border-radius: var(--r-lg);
-    overflow: hidden;
-  }
-  .sr-step__h {
-    position: absolute;
-    top: 30px;
-    left: 40px;
-    font-family: var(--font-display);
-    font-weight: 400;
-    font-size: 48px;
-    line-height: 53px;
-    letter-spacing: -0.02em;
-    color: var(--ink);
-  }
-  .sr-step__h em { font-style: italic; }
-  .sr-step__img {
-    position: absolute;
-    top: 134px;
-    width: 752px;
-    height: auto;
-    border-radius: 6px;
-    box-shadow: 0 2px 24px rgba(0, 0, 0, 0.06);
-  }
-
-  .sr-fig--table { padding: 40px 10px; display: flex; justify-content: center; }
-  .sr-table { width: 759px; max-width: 100%; height: auto; border-radius: 8px; }
-  .sr-table__drop { position: absolute; top: 80px; left: 65px; width: 81px; height: auto; }
-  .sr-table__toasts { position: absolute; bottom: 177px; left: 888px; width: 195px; height: auto; }
-  .sr-table__lead {
-    position: absolute;
-    top: 86px;
-    left: 159px;
-    width: 92px;
-    border-top: 2px dotted #8d01ff;
-    opacity: 0.85;
-  }
+  /* ---------- automations table ---------- */
+  /* ::before with `content` has no utility equivalent. */
   .sr-table__lead::before {
     content: '';
     position: absolute;
@@ -685,86 +611,8 @@ const stepAlt =
     background: #8d01ff;
   }
 
-  /* ---------- brand identity ---------- */
-  .sr-brand {
-    width: 1040px;
-    max-width: 100%;
-    margin-inline: auto;
-    background: var(--bg-2);
-    border-radius: var(--r-lg);
-    padding: 54px 12px 50px;
-  }
-  .sr-brand__text { padding: 0 124px 0 100px; }
-  .sr-brand__text .cs-label { margin-bottom: 30px; }
-  .sr-brand__h { margin-bottom: 20px; }
-  .sr-brand__grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-    margin-top: 80px;
-  }
-  .sr-brand__col { display: flex; flex-direction: column; gap: 12px; height: 642px; }
-  .sr-brand__logo { height: 112px; display: grid; place-items: center; }
-  .sr-brand__logo img { width: 84%; height: auto; }
-  .sr-brand__phone { flex: 1; background: var(--purple); border-radius: var(--r-md); overflow: hidden; }
-  .sr-brand__phone img { width: 100%; height: 100%; object-fit: cover; }
-  .sr-brand__laptop,
-  .sr-brand__poster {
-    position: relative;
-    flex: 1;
-    min-height: 0;
-    overflow: hidden;
-  }
-  .sr-brand__laptop { background: var(--purple); border-radius: var(--r-md); overflow: hidden; }
-  .sr-brand__poster { background: #262626; border-radius: var(--r-md); overflow: hidden; }
-  .sr-brand__laptop img,
-  .sr-brand__poster img {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    width: auto;
-    max-width: none;
-  }
-  .sr-brand__laptop img { bottom: 1px; height: 208px; }
-  .sr-brand__poster img { bottom: -87px; height: 326px; }
-
-  /* ---------- outcome ---------- */
-  .sr-outcome__grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 50px;
-    align-items: stretch;
-  }
-  .sr-outcome__col { display: flex; flex-direction: column; }
-  .sr-outcome__col .cs-h { margin-bottom: 20px; }
-  .sr-users {
-    position: relative;
-    flex: 1;
-    min-height: 525px;
-    background: var(--bg-2);
-    border-radius: var(--r-md);
-  }
-  .sr-users img { position: absolute; height: auto; }
-  .sr-users__a { width: 228px; top: 40px; left: 35px; }
-  .sr-users__b { width: 228px; bottom: 39px; left: 35px; }
-  .sr-users__c { width: 227px; top: 51%; left: 272px; transform: translateY(-50%); }
-  .sr-client {
-    border-radius: var(--r-lg);
-    flex: 1;
-    background: var(--bg-2);
-    padding: 50px;
-    display: flex;
-    align-items: center;
-  }
-  .sr-client img { width: 100%; height: auto; }
-
   /* ---------- impact ---------- */
-  .sr-impact__grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 16px;
-    margin-top: 16px;
-  }
+  /* Stat internals; `.stat { gap: 22px }` and `.cs-card`/`.stat__label` are unlayered. */
   .sr-body :global(.sr-impact__grid .stat) {
     justify-content: center;
     gap: 36px;
@@ -772,33 +620,14 @@ const stepAlt =
     padding: 50px 40px;
   }
   .sr-body :global(.sr-impact__grid .stat__label) { min-width: 326px; justify-content: center; }
-  .sr-body :global(.sr-impact__wide) { grid-column: 1 / -1; }
 
   /* ---------- key learnings ---------- */
+  /* `.cs-dark { padding: 50px 50px 80px }` and `.cs-card { padding: 24px }` are unlayered. */
   .sr-body :global(.sr-learn) { padding: 50px; }
-  .sr-body :global(.sr-learn .cs-label) { margin-bottom: 36px; }
-  .sr-learn__h {
-    font-size: 18px;
-    line-height: 1.3;
-    font-weight: 600;
-    letter-spacing: -0.02em;
-    color: #f5f5f5;
-    margin-bottom: 32px;
-  }
   .sr-body :global(.sr-learn__grid .cs-card) { min-height: 210px; padding: 20px; }
   .sr-body :global(.sr-learn__grid .cs-card__main) { justify-content: space-between; }
   .sr-body :global(.sr-learn__grid .cs-card__head) { margin-bottom: 24px; }
   .sr-body :global(.sr-learn__grid .cs-card__body p) { color: #e3e3e3; }
-
-  .sr-mobile-note {
-    display: none;
-    margin-top: 40px;
-    text-align: center;
-    font-size: 14px;
-    font-weight: 300;
-    letter-spacing: -0.02em;
-    color: var(--muted-2);
-  }
 
   /* ---------- responsive ---------- */
   /* 1200–1499px: the content column is narrower than the 1120px these fixed-layout figures were designed for,
@@ -806,62 +635,22 @@ const stepAlt =
   @media (min-width: 1200px) and (max-width: 1499px) {
     .sr-fig--onboard, .sr-fig--dash, .sr-fig--templates, .sr-step, .sr-fig--table { zoom: var(--fig-zoom, 1); }
   }
-  @media (max-width: 1299px) {
-    .sr-tldr__tag { padding-right: 120px; }
-  }
+  /* The two Cursor SVGs are positioned by utilities on their `class` prop, but hiding
+     them has to stay here: `.sr-cursor { display: block }` (Cursor.astro) is unlayered
+     and outranks a `hidden` utility. */
   @media (max-width: 1199px) {
-    .sr-hero { height: auto; aspect-ratio: 1120 / 727; }
-    .sr-hero img { height: auto; width: 89%; max-width: 89%; }
-    .sr-fig--onboard { height: auto; padding: 60px 24px; }
-    .sr-fig__card { position: relative; left: auto; top: auto; width: 760px; max-width: 100%; height: auto; margin-inline: auto; }
-    .sr-fig--dash { height: auto; padding: 60px 24px; display: flex; justify-content: center; }
-    .sr-fig--templates { height: auto; padding: 60px 24px; }
     .sr-fig :global(.sr-fig__cursor) { display: none; }
-    .sr-steps { gap: 40px; }
-    .sr-step { position: relative; top: auto; height: auto; padding: 100px 24px 40px; }
-    .sr-step__h { top: 24px; left: 24px; }
-    .sr-step__img { position: relative; top: auto; left: auto !important; width: 100%; max-width: 752px; margin-inline: auto; display: block; }
-    .sr-fig--table { padding: 40px 24px 40px; }
-    .sr-table__drop, .sr-table__toasts, .sr-table__lead { display: none; }
-    .sr-brand__text { padding: 0 24px; }
-    .sr-users__c { left: auto; right: 35px; }
   }
   @media (max-width: 949px) {
-    .sr-tldr__tag { padding-right: 20px; }
-    .sr-groups-h { margin-top: 40px; }
     .sr-body :global(.sr-groups .cs-card) { min-height: 0; }
-    .sr-gap { margin-left: 0; height: auto; width: 100%; }
-    .sr-gap__col { width: 253px; max-width: 100%; }
     .sr-gap :global(.sr-gap__cursor) { display: none; }
-    .sr-gap__note { position: static; width: auto; margin-top: 16px; }
-    .sr-body :global(.sr-flow__text) { margin-top: 56px; }
-    .sr-step { padding: 80px 16px 24px; }
-    .sr-step__h { font-size: 36px; line-height: 1; }
-    .sr-brand { padding: 32px 16px; }
-    .sr-brand__text { padding: 0; }
-    .sr-brand__grid { grid-template-columns: 1fr; margin-top: 40px; }
-    .sr-brand__col { height: auto; }
-    .sr-brand__phone { aspect-ratio: 504 / 518; }
-    .sr-brand__laptop, .sr-brand__poster { aspect-ratio: 504 / 315; flex: none; }
-    .sr-brand__laptop img { height: auto; width: 72%; }
-    .sr-brand__poster img { height: auto; width: 62%; bottom: -14%; }
-    .sr-outcome__grid { grid-template-columns: 1fr; gap: 40px; }
-    .sr-users { min-height: 0; padding: 24px; display: grid; grid-template-columns: 1fr 1fr; gap: 16px; align-items: start; }
-    .sr-users img { position: static; width: 100%; transform: none; }
-    .sr-client { padding: 24px; }
-    .sr-impact__grid { grid-template-columns: 1fr; gap: 0; }
     .sr-body :global(.sr-impact__grid .stat) { min-height: 0; padding: 32px 16px; gap: 24px; }
     .sr-body :global(.sr-impact__grid .stat__label) { min-width: 0; }
     .sr-body :global(.sr-learn) { padding: 32px 24px 40px; }
     .sr-body :global(.sr-learn__grid .cs-card) { min-height: 0; }
-    .sr-mobile-note { display: block; }
   }
   @media (max-width: 640px) {
     .sr-tldr__tag :global(.atag__arrow) { width: 80px; margin-top: 16px; }
-    .sr-hero img { width: 94%; max-width: 94%; }
-    .sr-fig--onboard, .sr-fig--dash, .sr-fig--templates { padding: 24px 16px; }
-    .sr-fig--table { padding: 24px 16px; }
-    .sr-users { grid-template-columns: 1fr; }
   }
 </style>
 

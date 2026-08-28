@@ -34,23 +34,29 @@ const copies = [0, 1, 2];
 ---
 
 <section
-  class:list={['ticker', className]}
+  class:list={[
+    'ticker w-full flex items-center py-[10px] overflow-hidden cursor-grab select-none touch-pan-y',
+    /* Framer clips the strip to the middle 86% of the viewport (hard edges, no fade) */
+    '[-webkit-mask-image:linear-gradient(to_right,transparent_7%,#000_7%,#000_93%,transparent_93%)] [mask-image:linear-gradient(to_right,transparent_7%,#000_7%,#000_93%,transparent_93%)]',
+    'max-[810px]:[-webkit-mask-image:linear-gradient(to_right,transparent_0,#000_6%,#000_94%,transparent_100%)] max-[810px]:[mask-image:linear-gradient(to_right,transparent_0,#000_6%,#000_94%,transparent_100%)]',
+    className,
+  ]}
   data-ticker
   data-speed={speed}
   data-count={items.length}
   style={`--t-h:${height}px;--t-gap:${gap}px`}
   aria-label={label}
 >
-  <ul class="ticker__track" data-ticker-track>
+  <ul class="ticker__track list-none flex flex-row items-center w-max will-change-transform" data-ticker-track>
     {
       copies.map((copy) =>
         items.map((it) => (
-          <li class="ticker__item" style={`width:${it.width ?? 289}px`} aria-hidden={copy > 0 ? 'true' : undefined}>
+          <li class="ticker__item flex-none relative overflow-hidden rounded-md bg-dark-2" style={`width:${it.width ?? 289}px`} aria-hidden={copy > 0 ? 'true' : undefined}>
             {it.type === 'video' ? (
-              <Video class="ticker__media" src={it.src} fit="cover" label={copy === 0 ? it.alt : undefined} style={it.position ? `object-position:${it.position}` : undefined} />
+              <Video class="ticker__media block w-full h-full object-cover object-center pointer-events-none [-webkit-user-drag:none]" src={it.src} fit="cover" label={copy === 0 ? it.alt : undefined} style={it.position ? `object-position:${it.position}` : undefined} />
             ) : (
               <img
-                class="ticker__media"
+                class="ticker__media block w-full h-full object-cover object-center pointer-events-none [-webkit-user-drag:none]"
                 src={it.src}
                 alt={copy === 0 ? it.alt : ''}
                 loading="lazy"
@@ -169,55 +175,21 @@ const copies = [0, 1, 2];
 </script>
 
 <style>
-  .ticker {
-    width: 100%;
-    height: calc(var(--t-h) + 17px);
-    display: flex;
-    align-items: center;
-    padding: 10px 0;
-    overflow: hidden;
-    cursor: grab;
-    user-select: none;
-    -webkit-user-select: none;
-    touch-action: pan-y;
-    /* Framer clips the strip to the middle 86% of the viewport (hard edges, no fade) */
-    -webkit-mask-image: linear-gradient(to right, transparent 7%, #000 7%, #000 93%, transparent 93%);
-    mask-image: linear-gradient(to right, transparent 7%, #000 7%, #000 93%, transparent 93%);
-  }
-  .ticker.is-dragging { cursor: grabbing; }
+  /* ---------------------------------------------------------------------------
+     Everything else is Tailwind utilities on the markup. What is left here
+     cannot be expressed as a utility — see the note on each rule.
+     ------------------------------------------------------------------------ */
+
+  /* --t-h / --t-gap arrive through the element's inline `style` (component
+     props); the rules that read them stay as CSS. */
+  .ticker { height: calc(var(--t-h) + 17px); }
   .ticker__track {
-    list-style: none;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
     gap: var(--t-gap);
-    width: max-content;
     height: var(--t-h);
-    will-change: transform;
     padding-right: var(--t-gap); /* keeps the seam between copies equal to the gap */
   }
-  .ticker__item {
-    flex: none;
-    border-radius: var(--r-md);
-    overflow: hidden;
-    height: var(--t-h);
-    overflow: hidden;
-    position: relative;
-    background: #1a191c;
-  }
-  .ticker__item :global(.ticker__media) {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
-    pointer-events: none;
-    -webkit-user-drag: none;
-  }
-  @media (max-width: 809px) {
-    .ticker {
-      -webkit-mask-image: linear-gradient(to right, transparent 0, #000 6%, #000 94%, transparent 100%);
-      mask-image: linear-gradient(to right, transparent 0, #000 6%, #000 94%, transparent 100%);
-    }
-  }
+  .ticker__item { height: var(--t-h); }
+
+  /* JS-toggled state class on a compound selector (`.ticker.is-dragging`). */
+  .ticker.is-dragging { cursor: grabbing; }
 </style>

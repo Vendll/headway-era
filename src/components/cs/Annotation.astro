@@ -19,27 +19,46 @@ interface Props {
   vertical?: boolean;
 }
 const { top, left, line = 120, width = 160, side = 'right', color = 'var(--accent-cs, var(--purple-2))', class: className, vertical = false, ...rest } = Astro.props;
+
+/* flex-direction / align-items are emitted exclusively so the vertical variant keeps
+   winning over the left variant, exactly as the old cascade did. */
+const dir = vertical ? 'flex-col items-center' : side === 'left' ? 'flex-row-reverse items-start' : 'items-start';
+const shift = side === 'left' ? '-translate-x-full' : '';
+
+/* vertical: the line runs downwards from the dot instead of sideways */
+const lineClass = vertical
+  ? 'relative flex-none w-0 h-[var(--line)] m-0 border-l-2 border-dotted border-[color:var(--c)]'
+  : 'relative flex-none w-[var(--line)] h-0 mt-[6px] border-t-2 border-dotted border-[color:var(--c)]';
 ---
 
-<div {...rest} class:list={['annot', `annot--${side}`, { 'annot--v': vertical }, className]} style={`top:${top};left:${left};--line:${line}px;--w:${width}px;--c:${color}`}>
-  <span class="annot__line" aria-hidden="true"></span>
-  <div class="annot__text"><slot /></div>
+<div
+  {...rest}
+  class:list={[
+    'annot',
+    `annot--${side}`,
+    { 'annot--v': vertical },
+    'absolute flex gap-[10px] z-[2] pointer-events-none',
+    dir,
+    shift,
+    'max-[950px]:hidden',
+    className,
+  ]}
+  style={`top:${top};left:${left};--line:${line}px;--w:${width}px;--c:${color}`}
+>
+  <span class:list={['annot__line', lineClass]} aria-hidden="true"></span>
+  <div class="annot__text w-[var(--w)] text-[12px] leading-[1.25] font-normal tracking-[-0.01em] text-muted-2"><slot /></div>
 </div>
 
 <style>
-  .annot { position: absolute; display: flex; align-items: flex-start; gap: 10px; z-index: 2; pointer-events: none; }
-  .annot--left { flex-direction: row-reverse; transform: translateX(-100%); }
-  .annot__line { position: relative; width: var(--line); height: 0; border-top: 2px dotted var(--c); margin-top: 6px; flex: none; }
+  /* dots at both ends of the leader line — ::before/::after with `content` */
   .annot__line::before, .annot__line::after { content: ''; position: absolute; top: -4px; width: 6px; height: 6px; border-radius: 50%; background: var(--c); }
   .annot__line::before { left: -3px; }
   .annot__line::after { right: -3px; }
-  .annot__text { width: var(--w); font-size: 12px; line-height: 1.25; font-weight: 400; letter-spacing: -0.01em; color: #5b5b5b; }
+  .annot--v .annot__line::before { top: -3px; left: -4px; }
+  .annot--v .annot__line::after { top: auto; bottom: -3px; left: -4px; }
+
+  /* slotted content — owned by the caller's markup, so it stays as :global() CSS */
   .annot__text :global(ul) { list-style: disc; padding-left: 1.1em; margin-top: 4px; }
   .annot__text :global(strong) { display: block; font-weight: 500; color: #151515; margin-bottom: 4px; }
   .annot__text :global(p) { margin: 0; }
-  .annot--v { flex-direction: column; align-items: center; }
-  .annot--v .annot__line { width: 0; height: var(--line); border-top: 0; border-left: 2px dotted var(--c); margin: 0; }
-  .annot--v .annot__line::before { top: -3px; left: -4px; }
-  .annot--v .annot__line::after { top: auto; bottom: -3px; left: -4px; }
-  @media (max-width: 949px) { .annot { display: none; } }
 </style>

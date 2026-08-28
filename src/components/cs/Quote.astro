@@ -10,23 +10,15 @@ interface Props {
 const { author, role, color, markColor = 'var(--accent-cs, var(--purple))', class: className, ...rest } = Astro.props;
 ---
 
-<blockquote {...rest} class:list={['quote', className]} style={color ? `color:${color}` : undefined} data-reveal="up">
-  <span class="quote__mark" style={`color:${markColor}`} aria-hidden="true">“</span>
-  <div class="quote__box">
-    <p class="quote__text"><slot /></p>
+<blockquote {...rest} class:list={['quote', 'relative m-0 p-[50px_0_0_30px]', className]} style={color ? `color:${color}` : undefined} data-reveal="up">
+  <span class="quote__mark absolute left-0 top-0 font-display text-[200px] leading-[0.7]" style={`color:${markColor}`} aria-hidden="true">“</span>
+  <div class="quote__box bg-white border border-line rounded-md p-[40px_32px] ml-[12px]">
+    <p class="quote__text text-[22px] leading-[1.25] font-normal tracking-[-0.02em] text-ink"><slot /></p>
     {(author || role) && (
-      <footer class="quote__by">
+      <footer class="quote__by flex flex-col gap-[2px] mt-[44px] text-[16px] text-muted-2">
         {author && <span>{author}</span>}
         {role && <span>{role}</span>}
       </footer>
     )}
   </div>
 </blockquote>
-
-<style>
-  .quote { position: relative; margin: 0; padding: 50px 0 0 30px; }
-  .quote__mark { position: absolute; left: 0; top: 0; font-family: var(--font-display); font-size: 200px; line-height: 0.7; }
-  .quote__box { background: #fff; border: 1px solid var(--line); border-radius: var(--r-md); padding: 40px 32px 40px 32px; margin-left: 12px; }
-  .quote__text { font-size: 22px; line-height: 1.25; font-weight: 400; letter-spacing: -0.02em; color: var(--ink); }
-  .quote__by { display: flex; flex-direction: column; gap: 2px; margin-top: 44px; font-size: 16px; color: var(--muted-2); }
-</style>

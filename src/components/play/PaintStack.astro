@@ -5,6 +5,12 @@
  * start scrolling in underneath. Each painting sits in a 400 × 400 sticky slot
  * (top: 200px) so they stack on top of each other; the card inside tilts/scales
  * in (scale 1.4, rotateX −40°) as its slot travels up to the pinned position.
+ *
+ * The card's tilt/scale/opacity start state is applied inline by the script below.
+ *
+ * The painting's `rounded-[4px]!` is important because global.css has an UNLAYERED
+ * `main :is(img, video, iframe) { border-radius: var(--radius-md) }`, and utilities
+ * live in @layer utilities — a plain `rounded-[4px]` would lose to it.
  */
 import type { Painting } from './types';
 
@@ -16,22 +22,45 @@ interface Props {
 const { paintings, class: className, id } = Astro.props;
 ---
 
-<section id={id} class:list={['paint', className]} data-paint aria-label="Placeholder images">
-  <div class="paint__pin" data-paint-pin>
-    <h2 class="paint__line">
-      <span class="paint__a">Sed, ut lorem</span>
+<section id={id} class:list={['paint relative w-full flex flex-col items-center overflow-clip', className]} data-paint aria-label="Placeholder images">
+  <div
+    class="paint__pin sticky top-0 z-[9] w-full h-svh pointer-events-none grid place-items-center [--split:238px] max-[810px]:[--split:clamp(96px,17vw,238px)]"
+    data-paint-pin
+  >
+    <h2 class="paint__line flex items-center justify-center gap-[4px] w-full font-body text-[16px] leading-[1.2] font-normal tracking-[-0.02em] text-line m-0">
+      <span class="paint__a block w-[86px] flex-none whitespace-nowrap text-right transition-[transform] duration-[900ms] ease-spring will-change-transform">Sed, ut lorem</span>
       {' '}
-      <span class="paint__b">Et ipsum sit!</span>
+      <span class="paint__b block w-[86px] flex-none whitespace-nowrap text-left transition-[transform] duration-[900ms] ease-spring will-change-transform">Et ipsum sit!</span>
     </h2>
   </div>
 
-  <div class="paint__stack">
-    <span class="paint__trigger" data-paint-trigger aria-hidden="true"></span>
+  <div class="paint__stack relative w-full flex flex-col items-center gap-[250px] pt-[1000px] pb-[180px] max-[1300px]:pb-[150px] max-[810px]:gap-[160px] max-[810px]:pt-[700px] max-[810px]:pb-[120px]">
+    <span
+      class="paint__trigger absolute top-[700px] left-0 w-full h-px pointer-events-none max-[810px]:top-[450px]"
+      data-paint-trigger
+      aria-hidden="true"></span>
     {
       paintings.map((p, i) => (
-        <div class="paint__slot" data-paint-slot style={`--i:${i}`}>
-          <figure class="paint__card" data-paint-card style={`--size:${p.size ?? 0.885};--tilt:${p.tilt ?? -40}`}>
-            <img src={p.src} alt={p.alt} width={p.width} height={p.height} loading="lazy" decoding="async" style={`aspect-ratio:${p.width} / ${p.height}`} />
+        <div
+          class="paint__slot sticky top-[200px] w-[400px] h-[400px] max-w-[calc(100%_-_48px)] max-[810px]:top-[120px] max-[810px]:w-[min(400px,100%_-_48px)] max-[810px]:h-auto max-[810px]:aspect-square"
+          data-paint-slot
+          style={`--i:${i}`}
+        >
+          <figure
+            class="paint__card w-full h-full rounded-[4px] grid place-items-center will-change-[transform,opacity] origin-center"
+            data-paint-card
+            style={`--size:${p.size ?? 0.885};--tilt:${p.tilt ?? -40}`}
+          >
+            <img
+              src={p.src}
+              alt={p.alt}
+              width={p.width}
+              height={p.height}
+              loading="lazy"
+              decoding="async"
+              class="w-[calc(var(--size)*100%)] h-auto rounded-[4px]! object-cover"
+              style={`aspect-ratio:${p.width} / ${p.height}`}
+            />
           </figure>
         </div>
       ))
@@ -98,106 +127,14 @@ const { paintings, class: className, id } = Astro.props;
 </script>
 
 <style>
-  .paint {
-    position: relative;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    overflow: clip;
-  }
+  /* Everything below is KEPT deliberately — see the migration contract.
 
-  /* pinned split line */
-  .paint__pin {
-    position: sticky;
-    top: 0;
-    z-index: 9;
-    width: 100%;
-    height: 100vh;
-    height: 100svh;
-    pointer-events: none;
-    display: grid;
-    place-items: center;
-    --split: 238px;
-  }
-  .paint__line {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 4px;
-    width: 100%;
-    font-family: var(--font-body);
-    font-size: 16px;
-    line-height: 1.2;
-    font-weight: 400;
-    letter-spacing: -0.02em;
-    color: #e3e3e3;
-    margin: 0;
-  }
-  .paint__a,
-  .paint__b {
-    display: block;
-    width: 86px;
-    flex: none;
-    white-space: nowrap;
-    transition: transform 0.9s var(--ease-spring);
-    will-change: transform;
-  }
-  .paint__a { text-align: right; }
-  .paint__b { text-align: left; }
+     `--i` is a per-slot custom property written inline in the markup, and the
+     `.is-split` rules are compound state-class selectors toggled by the script
+     that read the `--split` custom property set by the utility on the pin. */
+
+  .paint__slot { z-index: calc(1 + var(--i)); }
+
   .paint__pin.is-split .paint__a { transform: translateX(calc(-1 * var(--split))); }
   .paint__pin.is-split .paint__b { transform: translateX(var(--split)); }
-
-  /* sticky-stacking paintings */
-  .paint__stack {
-    position: relative;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 250px;
-    padding: 1000px 0 180px;
-  }
-  .paint__trigger {
-    position: absolute;
-    top: 700px;
-    left: 0;
-    width: 100%;
-    height: 1px;
-    pointer-events: none;
-  }
-  .paint__slot {
-    position: sticky;
-    top: 200px;
-    z-index: calc(1 + var(--i));
-    width: 400px;
-    height: 400px;
-    max-width: calc(100% - 48px);
-  }
-  .paint__card {
-    width: 100%;
-    height: 100%;
-    border-radius: 4px;
-    display: grid;
-    place-items: center;
-    will-change: transform, opacity;
-    transform-origin: 50% 50%;
-    /* tilt/scale/opacity start state is applied inline by the script */
-  }
-  .paint__card img {
-    width: calc(var(--size) * 100%);
-    height: auto;
-    border-radius: 4px;
-    object-fit: cover;
-  }
-
-  @media (max-width: 1299px) {
-    .paint__stack { padding: 1000px 0 150px; }
-  }
-  @media (max-width: 809px) {
-    .paint__pin { --split: clamp(96px, 17vw, 238px); }
-    .paint__stack { gap: 160px; padding: 700px 0 120px; }
-    .paint__trigger { top: 450px; }
-    .paint__slot { top: 120px; width: min(400px, 100% - 48px); height: auto; aspect-ratio: 1; }
-  }
 </style>

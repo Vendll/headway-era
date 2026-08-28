@@ -6,6 +6,8 @@ import PaintStack from '@/components/play/PaintStack.astro';
 import type { Poster, Painting } from '@/components/play/types';
 import { site } from '@/data/site';
 
+// Hero headline size is clamp(64px, 8.4vw, 144px): 144px ≥1714, 132px @1440 (Framer breakpoints).
+//
 // DOM order = column-first grid order (row 1 / row 2 alternate), as on the live site.
 // `from` = scattered start state relative to the poster's final grid slot (px / deg).
 const posters: Poster[] = [
@@ -31,13 +33,19 @@ const paintings: Painting[] = [
 
 <BaseLayout title={site.title} theme="dark" header="default">
   <!-- ============ Hero ============ -->
-  <section class="hero" id="hero">
-    <h1 class="hero__h" data-reveal><span class="hero__accent">Lorem</span> ipsum dolor</h1>
-    <div class="hero__copy">
-      <p class="hero__p" data-reveal data-reveal-delay="0.1">
+  <section
+    class="hero w-full max-w-[1246px] mx-auto min-h-[calc(140px_+_70vh)] pt-[140px] px-[24px] flex flex-col items-center justify-center gap-[70px] text-center max-[1300px]:pt-[120px] max-[1300px]:min-h-[calc(120px_+_70vh)] max-[1300px]:gap-[50px] max-[810px]:pt-[110px] max-[810px]:px-[20px] max-[810px]:min-h-0 max-[810px]:gap-[40px]"
+    id="hero"
+  >
+    <h1
+      class="hero__h font-display font-normal text-[length:clamp(64px,8.4vw,144px)] leading-[0.8] tracking-[-0.06em] text-light w-[70%] max-w-[872px] max-[810px]:w-full max-[810px]:text-[length:clamp(56px,16vw,96px)]"
+      data-reveal
+    ><span class="hero__accent text-green">Lorem</span> ipsum dolor</h1>
+    <div class="hero__copy w-[520px] max-w-full flex flex-col gap-[16px] text-left max-[810px]:p-0">
+      <p class="hero__p text-[16px] leading-[1.2] font-light tracking-[-0.02em] text-light" data-reveal data-reveal-delay="0.1">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi aliquip.
       </p>
-      <p class="hero__p" data-reveal data-reveal-delay="0.15">
+      <p class="hero__p text-[16px] leading-[1.2] font-light tracking-[-0.02em] text-light" data-reveal data-reveal-delay="0.15">
         Duis aute irure dolor, in reprehenderit voluptate velit esse. Cillum dolore eu fugiat nulla pariatur, excepteur sint occaecat cupidatat non proident, sunt in culpa, officia, deserunt. Mollit anim id est laborum omnis.
       </p>
     </div>
@@ -51,54 +59,3 @@ const paintings: Painting[] = [
 
   <Footer />
 </BaseLayout>
-
-<style>
-  .hero {
-    width: 100%;
-    max-width: 1246px;
-    margin-inline: auto;
-    min-height: calc(140px + 70vh);
-    padding: 140px 24px 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 70px;
-    text-align: center;
-  }
-  .hero__h {
-    font-family: var(--font-display);
-    font-weight: 400;
-    font-size: clamp(64px, 8.4vw, 144px); /* 144px ≥1714, 132px @1440 (Framer breakpoints) */
-    line-height: 0.8;
-    letter-spacing: -0.06em;
-    color: #f5f5f5;
-    width: 70%;
-    max-width: 872px;
-  }
-  .hero__accent { color: var(--green); }
-  .hero__copy {
-    width: 520px;
-    max-width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    text-align: left;
-  }
-  .hero__p {
-    font-size: 16px;
-    line-height: 1.2;
-    font-weight: 300;
-    letter-spacing: -0.02em;
-    color: #f5f5f5;
-  }
-
-  @media (max-width: 1299px) {
-    .hero { padding-top: 120px; min-height: calc(120px + 70vh); gap: 50px; }
-  }
-  @media (max-width: 809px) {
-    .hero { padding: 110px 20px 0; min-height: 0; gap: 40px; }
-    .hero__h { width: 100%; font-size: clamp(56px, 16vw, 96px); }
-    .hero__copy { padding: 0; }
-  }
-</style>

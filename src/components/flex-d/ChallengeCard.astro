@@ -17,29 +17,23 @@ interface Props {
 const { title, bg, tilt = 0, mascot, mascotAlt = '', class: className } = Astro.props;
 ---
 
-<div class:list={['trick', { 'trick--mascot': !!mascot }, className]} style={`background:${bg};--tilt:${tilt}deg;`}>
-  <h3 class="trick__title" set:html={title} />
+<div
+  class:list={[
+    'trick', { 'trick--mascot': !!mascot },
+    'rounded-md pt-[24px] px-[20px] text-white origin-center [transform:rotate(var(--tilt,0deg))]',
+    mascot ? 'pb-0' : 'pb-[26px]',
+    className,
+  ]}
+  style={`background:${bg};--tilt:${tilt}deg;`}
+>
+  <h3 class="trick__title font-champ font-bold text-[20px] leading-[1.12] tracking-[0] text-white" set:html={title} />
   <div class="trick__body"><slot /></div>
-  {mascot && <img class="trick__mascot" src={mascot} alt={mascotAlt} loading="lazy" decoding="async" />}
+  {mascot && <img class="trick__mascot block w-[44%] mt-[14px] ml-[26%]" src={mascot} alt={mascotAlt} loading="lazy" decoding="async" />}
 </div>
 
 <style>
-  .trick {
-    border-radius: 16px;
-    padding: 24px 20px 26px;
-    color: #fff;
-    transform: rotate(var(--tilt, 0deg));
-    transform-origin: 50% 50%;
-  }
-  .trick--mascot { padding-bottom: 0; }
-  .trick__title {
-    font-family: var(--font-champ);
-    font-weight: 700;
-    font-size: 20px;
-    line-height: 1.12;
-    letter-spacing: 0;
-    color: #fff;
-  }
+  /* Slot content — the body copy is authored in the page, so this :global rule
+     has no markup in this component to move onto. */
   .trick__body :global(p) {
     font-size: 13px;
     line-height: 1.4;
@@ -48,5 +42,4 @@ const { title, bg, tilt = 0, mascot, mascotAlt = '', class: className } = Astro.
     color: rgba(255, 255, 255, 0.94);
     margin-top: 14px;
   }
-  .trick__mascot { width: 44%; margin: 14px 0 0 26%; display: block; }
 </style>

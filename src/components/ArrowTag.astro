@@ -22,21 +22,23 @@ interface Props {
 const { side = 'right', variant = 'blue', class: className, arrowClass, arrowStyle = '', arrowWidth = 100, arrowColor, ...rest } = Astro.props;
 ---
 
-<div {...rest} class:list={['atag', `atag--${side}`, className]} data-reveal>
+<div
+  {...rest}
+  class:list={['atag', `atag--${side}`, 'relative inline-flex items-start gap-2', side === 'left' && 'flex-row-reverse', className]}
+  data-reveal
+>
   <span class:list={['tag-box', `tag-box--${variant}`]}><slot /></span>
   <HandArrow class:list={['atag__arrow', arrowClass]} width={arrowWidth} style={`${arrowColor ? `color:${arrowColor};` : ''}${arrowStyle}`} />
 </div>
 
 <style>
-  .atag {
-    display: inline-flex;
-    align-items: flex-start;
-    gap: 8px;
-    position: relative;
-  }
-  .atag--left { flex-direction: row-reverse; }
+  /* KEPT deliberately. Astro compiles these to `.atag[cid] .atag__arrow[cid]`
+     (0,4,0), which outranks the `.x[cid] .atag__arrow` (0,3,0) `:global()`
+     overrides callers write against the arrow (gemini.astro, superreply.astro,
+     index.astro). Moving them onto the arrow as utilities would drop them into
+     @layer utilities and hand those pages a win they do not have today. */
   .atag .atag__arrow { flex: none; margin-top: 6px; }
-  /* Arrow6 naturally curves from the top-right down to the bottom-left (points down-left);
-     mirror it when it sits on the right so it points away from the box. */
+  /* Arrow6 naturally curves from the top-right down to the bottom-left (points
+     down-left); mirror it when it sits on the right so it points away from the box. */
   .atag--right .atag__arrow { transform: scaleX(-1); }
 </style>

@@ -15,16 +15,19 @@ const resumeCard = '#';
 ---
 
 <BaseLayout title={site.title} theme="dark" header="default" scrollTop={false} noSmooth>
-  <section class="desk" aria-label="Experimental — dolor sit amet">
+  <section
+    class="desk relative h-[100svh] overflow-hidden bg-dark text-light [--s:120px] [--r:min(740px,36vw)] [--cy:calc(39vh_+_var(--r))] max-[1200px]:[--r:36vw] max-[950px]:[--s:84px] max-[950px]:[--r:35vw] max-[950px]:[--cy:48svh]"
+    aria-label="Experimental — dolor sit amet"
+  >
     <h1 class="visually-hidden">Experimental</h1>
 
-    <div class="wheel" data-wheel>
+    <div class="wheel absolute inset-0 origin-[50%_63%] max-[950px]:origin-[50%_50%]" data-wheel>
       <!-- top of the wheel, then clockwise: 0 · 22.5 · 45 · 67.5 · 90, and counter-clockwise: -22.5 · -45 · -67.5 -->
-      <DeskItem href="/about" angle={0} label="About Placeholder" class="item-me">
+      <DeskItem href="/about" angle={0} label="About Placeholder" class="item-me [--media-pos:48%_33%]">
         <img src="/assets/images/8j0h9B6goi93N6Xo9tc31Yu0s.png" alt="Placeholder portrait" width="1118" height="1424" draggable="false" decoding="async" />
       </DeskItem>
 
-      <DeskItem angle={22.5} label="Company Name" class="item-uxterps">
+      <DeskItem angle={22.5} label="Company Name" class="item-uxterps [--box-radius:20px]">
         <img src="/assets/images/r6wUw0Ci3FoQzX9eM3JnMrYg0gc.png" alt="Placeholder wordmark" width="716" height="716" draggable="false" decoding="async" />
       </DeskItem>
 
@@ -36,7 +39,7 @@ const resumeCard = '#';
         <img src="/assets/images/Hn0hPj9VSe9iwziXWsFQWz8lPM.png" alt="Placeholder image" width="1080" height="1350" draggable="false" decoding="async" />
       </DeskItem>
 
-      <DeskItem href="/gemini" angle={90} label="Project Three case study" class="item-gemini">
+      <DeskItem href="/gemini" angle={90} label="Project Three case study" class="item-gemini [--box-bg:#040404]">
         <Video src="/assets/videos/vQb0V0gKxO9GbN6pa99fT8PAz8.mp4" label="Project Three" />
       </DeskItem>
 
@@ -53,7 +56,7 @@ const resumeCard = '#';
       </DeskItem>
     </div>
 
-    <p class="desk__hint" data-reveal="fade" data-reveal-delay="0.6">Dolor sit <em>amet</em>!</p>
+    <p class="desk__hint absolute left-1/2 bottom-[30px] z-[2] font-display font-normal text-[24px] leading-[0.9] tracking-[-0.02em] text-muted-2 whitespace-nowrap pointer-events-none max-[950px]:text-[20px] max-[950px]:bottom-[24px] max-[641px]:bottom-[64px]" data-reveal="fade" data-reveal-delay="0.6">Dolor sit <em class="italic">amet</em>!</p>
   </section>
 </BaseLayout>
 
@@ -124,34 +127,21 @@ const resumeCard = '#';
 </script>
 
 <style>
-  .desk {
-    position: relative;
-    height: 100vh;
-    height: 100svh;
-    overflow: hidden;
-    background: #151515;
-    color: #f5f5f5;
-    /* wheel geometry (Framer: 1440×800 container, spoke radius 740, hub 910px below the container top) */
-    --s: 120px; /* sticker size */
-    --r: min(740px, 36vw); /* spoke radius */
-    --cy: calc(39vh + var(--r)); /* hub y — keeps the top sticker at ~39% of the viewport height */
-  }
+  /* ---------------------------------------------------------------------------
+     Everything else on this page is Tailwind utilities on the markup. What is
+     left here cannot be expressed as a utility — see the note on each rule.
+     ------------------------------------------------------------------------ */
 
-  .wheel {
-    position: absolute;
-    inset: 0;
-    transform-origin: 50% 63%;
-    animation: wheel-in 1.4s var(--ease-spring) both;
-  }
+  /* @keyframes and the animation that uses it. */
+  .wheel { animation: wheel-in 1.4s var(--ease-spring) both; }
   @keyframes wheel-in {
     from { opacity: 0.6; transform: translateY(350px) scale(0.6); }
     to { opacity: 1; transform: none; }
   }
 
-  /* per-sticker tweaks (mirroring the Framer instances) */
-  .item-me { --media-pos: 48% 33%; }
-  .item-uxterps { --box-radius: 20px; }
-  .item-gemini { --box-bg: #040404; }
+  /* :global() into the <video> slotted through <DeskItem>. It has to beat
+     DeskItem's own (unlayered) `.desk-item__box :global(video)` rule, which
+     utilities in @layer utilities never can. */
   .desk .item-gemini :global(video) {
     position: absolute;
     top: 50%;
@@ -162,40 +152,9 @@ const resumeCard = '#';
     object-fit: contain;
   }
 
-  .desk__hint {
-    position: absolute;
-    left: 50%;
-    bottom: 30px;
-    transform: translateX(-50%);
-    z-index: 2;
-    font-family: var(--font-display);
-    font-weight: 400;
-    font-size: 24px;
-    line-height: 0.9;
-    letter-spacing: -0.02em;
-    color: var(--muted-2);
-    white-space: nowrap;
-    pointer-events: none;
-  }
-  .desk__hint em { font-style: italic; }
-  /* the caption fades in on its own; keep the shared reveal from shifting it off-centre */
-  .desk__hint[data-reveal] { transform: translateX(-50%); }
+  /* the caption fades in on its own; these keep the shared, unlayered
+     [data-reveal] helper in global.css from shifting it off-centre. */
+  .desk__hint,
+  .desk__hint[data-reveal],
   .desk__hint[data-reveal].is-in { transform: translateX(-50%); }
-
-  @media (max-width: 1199px) {
-    .desk { --r: 36vw; }
-  }
-  @media (max-width: 949px) {
-    /* phones: full ring around the middle of the screen */
-    .desk {
-      --s: 84px;
-      --r: 35vw;
-      --cy: 48svh;
-    }
-    .wheel { transform-origin: 50% 50%; }
-    .desk__hint { font-size: 20px; bottom: 24px; }
-  }
-  @media (max-width: 640px) {
-    .desk__hint { bottom: 64px; }
-  }
 </style>

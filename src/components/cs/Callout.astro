@@ -11,18 +11,20 @@ interface Props {
 const { bg = '#dce6ff', color = '#151515', border, title, class: className, icon, ...rest } = Astro.props;
 ---
 
-<div {...rest} class:list={['callout', className]} style={`background:${bg};color:${color};${border ? `border:1px solid ${border};` : ''}`} data-reveal="up">
-  {icon && <span class="callout__icon" aria-hidden="true">{icon}</span>}
+<div {...rest} class:list={['callout', 'flex gap-[20px] p-[24px_30px] rounded-md', className]} style={`background:${bg};color:${color};${border ? `border:1px solid ${border};` : ''}`} data-reveal="up">
+  {icon && <span class="callout__icon text-[22px] leading-none flex-none" aria-hidden="true">{icon}</span>}
   <div class="callout__main cs-body">
-    {title && <p class="callout__title" set:html={title} />}
+    {title && <p class="callout__title font-semibold tracking-[-0.02em] mb-[16px] text-inherit" set:html={title} />}
     <slot />
   </div>
 </div>
 
 <style>
-  .callout { display: flex; gap: 20px; padding: 24px 30px; border-radius: var(--r-md); }
-  .callout__title { font-size: 18px; font-weight: 600; letter-spacing: -0.02em; margin-bottom: 16px; color: inherit; }
+  /* `.cs-body p { font-size: 16px }` (CaseStudyLayout, unlayered) outranks a
+     `text-[18px]` utility, so the title size has to stay as CSS. */
+  .callout__title { font-size: 18px; }
+
+  /* slot content (<p>/<li>/<a> authored by the caller) — cannot carry utilities */
   .callout__main :global(p), .callout__main :global(li) { color: inherit; font-weight: 400; }
   .callout__main :global(a) { text-decoration: underline; text-underline-offset: 3px; }
-  .callout__icon { font-size: 22px; line-height: 1; flex: none; }
 </style>

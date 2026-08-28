@@ -19,5 +19,8 @@ const { bg, color, class: className, style, id, wide = false, ...rest } = Astro.
 </div>
 
 <style>
+  /* `.cs-dark { width: 1008px }` lives in CaseStudyLayout's `is:global` block, which is
+     unlayered — a `w-full` utility (@layer utilities) loses to it, and an important one
+     would also outrank the page-level width overrides. This override stays as CSS. */
   .cs-dark--wide { width: 100%; }
 </style>

@@ -9,35 +9,26 @@ interface Props {
 const { href, text, class: className, speed = 100, ...rest } = Astro.props;
 ---
 
-<a {...rest} class:list={['tw', className]} href={href} data-typewriter data-word={text} data-speed={speed}>
+<a
+  {...rest}
+  class:list={['tw', 'inline-flex items-center gap-[2px] min-h-[1.4em] font-mono text-[16px] tracking-[-0.02em] text-inherit', className]}
+  href={href}
+  data-typewriter
+  data-word={text}
+  data-speed={speed}
+>
   <span class="visually-hidden">{text}</span>
-  <span class="tw__text" aria-hidden="true"></span>
-  <span class="tw__cursor" aria-hidden="true"></span>
-  <svg class="tw__chev" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
+  <span class="tw__text whitespace-pre" aria-hidden="true"></span>
+  <span class="tw__cursor inline-block w-[2px] h-[1em] rounded-sm bg-current" aria-hidden="true"></span>
+  <svg class="tw__chev ml-[18px] opacity-0 [transition:opacity_0.4s_ease_0.2s]" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
 </a>
 
 <style>
-  .tw {
-    display: inline-flex;
-    align-items: center;
-    gap: 2px;
-    font-family: var(--font-mono);
-    font-size: 16px;
-    letter-spacing: -0.02em;
-    min-height: 1.4em;
-    color: inherit;
-  }
-  .tw__text { white-space: pre; }
-  .tw__cursor {
-    display: inline-block;
-    width: 2px;
-    height: 1em;
-    background: currentColor;
-    border-radius: var(--r-sm);
-    animation: tw-blink 1s steps(1) infinite;
-  }
+  /* KEPT deliberately: the caret blink is a @keyframes animation, `.is-done` is a
+     state class toggled by src/scripts/typewriter.ts, and the chevron's hover rule
+     is a descendant-of-hover selector that swaps its transition as well. */
+  .tw__cursor { animation: tw-blink 1s steps(1) infinite; }
   .tw.is-done .tw__cursor { animation-duration: 1.2s; }
-  .tw__chev { margin-left: 18px; opacity: 0; transition: opacity 0.4s ease 0.2s; }
   .tw.is-done .tw__chev { opacity: 1; }
   .tw:hover .tw__chev { transform: translateX(3px); transition: transform 0.3s var(--ease-spring); }
   @keyframes tw-blink { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; } }

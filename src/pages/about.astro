@@ -19,31 +19,32 @@ const strip: TickerItem[] = [
 
 <BaseLayout title={site.title} theme="dark" header="default" headerPosition="fixed">
   <!-- ============ How I got here ============ -->
-  <section class="story" id="story">
-    <h1 class="story__h" data-reveal><em>Lorem</em> ipsum dolor</h1>
+  <section class="story flex flex-col items-center pt-[160px] px-[var(--gutter)] pb-0 text-center max-[810px]:pt-[130px]" id="story">
+    <h1 class="story__h font-display font-normal text-[120px] leading-[0.8] tracking-[-0.06em] text-light max-w-[75%] max-[810px]:text-[clamp(56px,22vw,100px)] max-[810px]:max-w-full" data-reveal><em class="italic text-green">Lorem</em> ipsum dolor</h1>
 
-    <div class="story__copy" data-reveal data-reveal-delay="0.1">
-      <p><b>Lorem ipsum dolor sit amet consectetur adipiscing elit</b>. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua enim ad minim. Veniam quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat duis aute.</p>
-      <p>Irure dolor in reprehenderit in “voluptate velit” esse cillum dolore fugiat. Nulla pariatur excepteur sint occaecat.</p>
-      <p>Cupidatat non proident sunt in culpa officia. Deserunt mollit anim, id est laborum, sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium. Doloremque laudantium totam rem aperiam eaque ipsa quae ab illo inventore.</p>
-      <p>Veritatis 2024 et quasi architecto beatae vitae dicta. Sunt explicabo nemo, enim ipsam voluptatem. <b>Quia voluptas sit aspernatur aut odit aut fugit. Sed quia consequuntur magni dolores eos.</b></p>
-      <p>Qui ratione voluptatem sequi nesciunt neque porro quisquam est qui dolorem. Ipsum quia dolor sit amet consectetur adipisci velit. Numquam eius modi tempora incidunt ut labore et dolore magnam <b>aliquam quaerat voluptatem ut enim ad minima veniam</b>.</p>
-      <p>Quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur, quis autem vel eum iure. Reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur at vero eos.</p>
+    <div class="story__copy w-[520px] max-w-full mt-[90px] text-left max-[810px]:mt-[60px]" data-reveal data-reveal-delay="0.1">
+      <p class="text-[16px] leading-[1.2] font-light text-light max-[810px]:text-[14px]"><b class="font-semibold text-green">Lorem ipsum dolor sit amet consectetur adipiscing elit</b>. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua enim ad minim. Veniam quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat duis aute.</p>
+      <p class="mt-[1.2em] text-[16px] leading-[1.2] font-light text-light max-[810px]:text-[14px]">Irure dolor in reprehenderit in “voluptate velit” esse cillum dolore fugiat. Nulla pariatur excepteur sint occaecat.</p>
+      <p class="mt-[1.2em] text-[16px] leading-[1.2] font-light text-light max-[810px]:text-[14px]">Cupidatat non proident sunt in culpa officia. Deserunt mollit anim, id est laborum, sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium. Doloremque laudantium totam rem aperiam eaque ipsa quae ab illo inventore.</p>
+      <p class="mt-[1.2em] text-[16px] leading-[1.2] font-light text-light max-[810px]:text-[14px]">Veritatis 2024 et quasi architecto beatae vitae dicta. Sunt explicabo nemo, enim ipsam voluptatem. <b class="font-semibold text-green">Quia voluptas sit aspernatur aut odit aut fugit. Sed quia consequuntur magni dolores eos.</b></p>
+      <p class="mt-[1.2em] text-[16px] leading-[1.2] font-light text-light max-[810px]:text-[14px]">Qui ratione voluptatem sequi nesciunt neque porro quisquam est qui dolorem. Ipsum quia dolor sit amet consectetur adipisci velit. Numquam eius modi tempora incidunt ut labore et dolore magnam <b class="font-semibold text-green">aliquam quaerat voluptatem ut enim ad minima veniam</b>.</p>
+      <p class="mt-[1.2em] text-[16px] leading-[1.2] font-light text-light max-[810px]:text-[14px]">Quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur, quis autem vel eum iure. Reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur at vero eos.</p>
     </div>
   </section>
 
   <!-- ============ Photo ticker ============ -->
-  <div class="strip" data-reveal="fade">
+  <div class="strip mt-[95px] max-[810px]:mt-[70px]" data-reveal="fade">
     <PhotoTicker items={strip} label="Photos of Placeholder" />
   </div>
 
   <!-- ============ I do a lot. ============ -->
-  <section class="lot" id="lot">
-    <p class="lot__lead" data-reveal>Et harum quidem rerum.</p>
-    <p class="lot__p" data-reveal data-reveal-delay="0.05">
+  <section class="lot flex flex-col items-center pt-[50px] px-[var(--gutter)] pb-[75px] max-[810px]:pb-[50px]" id="lot">
+    {/* py-[1.2em] = the empty lines above/below on the live page */}
+    <p class="lot__lead text-[16px] leading-[1.2] font-light text-light text-center py-[1.2em] max-[810px]:text-[14px]" data-reveal>Et harum quidem rerum.</p>
+    <p class="lot__p w-[520px] max-w-full mt-[34px] text-[16px] leading-[1.2] font-light text-light max-[810px]:text-[14px]" data-reveal data-reveal-delay="0.05">
       Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint molestiae recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias (consequatur perferendis doloribus asperiores repellat), similique, sunt in culpa qui officia, deserunt mollitia animi id est laborum et dolorum fuga quidem rerum at 2 a.m.
     </p>
-    <div class="lot__link" data-reveal data-reveal-delay="0.1">
+    <div class="lot__link mt-[50px]" data-reveal data-reveal-delay="0.1">
       <TypewriterLink class="lot__play" href="/play" text="Play" />
     </div>
   </section>
@@ -53,76 +54,15 @@ const strip: TickerItem[] = [
 </BaseLayout>
 
 <style>
-  /* ---------- How I got here ---------- */
-  .story {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 160px var(--gutter) 0;
-    text-align: center;
-  }
-  .story__h {
-    font-family: var(--font-display);
-    font-weight: 400;
-    font-size: 120px;
-    line-height: 0.8;
-    letter-spacing: -0.06em;
-    color: #f5f5f5;
-    max-width: 75%;
-  }
-  .story__h em { font-style: italic; color: var(--green); }
+  /* ---------------------------------------------------------------------------
+     Everything else on this page is Tailwind utilities on the markup. What is
+     left here cannot be expressed as a utility — see the note on the rule.
+     ------------------------------------------------------------------------ */
 
-  .story__copy {
-    width: 520px;
-    max-width: 100%;
-    margin-top: 90px;
-    text-align: left;
-  }
-  .story__copy p,
-  .lot__p {
-    font-size: 16px;
-    line-height: 1.2;
-    font-weight: 300;
-    color: #f5f5f5;
-  }
-  .story__copy p + p { margin-top: 1.2em; }
-  .story__copy b { font-weight: 600; color: var(--green); }
-
-  /* ---------- ticker ---------- */
-  .strip { margin-top: 95px; }
-
-  /* ---------- I do a lot. ---------- */
-  .lot {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 50px var(--gutter) 75px;
-  }
-  .lot__lead {
-    font-size: 16px;
-    line-height: 1.2;
-    font-weight: 300;
-    color: #f5f5f5;
-    text-align: center;
-    padding: 1.2em 0; /* the empty lines above/below on the live page */
-  }
-  .lot__p {
-    width: 520px;
-    max-width: 100%;
-    margin-top: 34px;
-  }
-  .lot__link { margin-top: 50px; }
+  /* :global() into <TypewriterLink>, which already carries a `text-inherit`
+     utility of its own. Handing it a `text-green` class instead would put two
+     colour utilities in @layer utilities, where the winner is Tailwind's own
+     sort order and not the order of the class attribute — this unlayered rule
+     is the only way to be sure the link is green. */
   .lot__link :global(.lot__play) { color: var(--green); }
-
-  /* ---------- responsive ---------- */
-  @media (max-width: 809px) {
-    .story { padding-top: 130px; }
-    .story__h { font-size: clamp(56px, 22vw, 100px); max-width: 100%; }
-    .story__copy { margin-top: 60px; }
-    .story__copy p,
-    .lot__p,
-    .lot__lead { font-size: 14px; }
-    .strip { margin-top: 70px; }
-    .lot { padding-bottom: 50px; }
-  }
 </style>

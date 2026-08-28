@@ -12,21 +12,14 @@ interface Props {
 const { label, value, caption, class: className, ...rest } = Astro.props;
 ---
 
-<div {...rest} class:list={['stat', className]} data-reveal>
-  <span class="stat__label">{label}</span>
-  <p class="stat__value" set:html={value} />
-  {caption && <p class="stat__caption" set:html={caption} />}
+<div {...rest} class:list={['stat', 'flex flex-col items-center text-center gap-[22px]', className]} data-reveal>
+  <span class="stat__label inline-flex items-center h-[51px] px-[30px] rounded-pill bg-dark text-light text-[24px] font-normal tracking-[-0.02em] max-[950px]:h-[44px] max-[950px]:px-[20px] max-[950px]:text-[18px]">{label}</span>
+  <p class="stat__value font-display font-normal text-[86px] leading-[0.9] tracking-[-0.03em] text-ink max-[950px]:text-[60px]" set:html={value} />
+  {caption && <p class="stat__caption text-[14px] leading-[1.3] font-light tracking-[-0.02em] text-muted-2 max-w-[400px]" set:html={caption} />}
 </div>
 
 <style>
-  .stat { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 22px; }
-  .stat__label { display: inline-flex; align-items: center; height: 51px; padding: 0 30px; border-radius: var(--r-pill); background: var(--dark); color: #f5f5f5; font-size: 24px; font-weight: 400; letter-spacing: -0.02em; }
-  .stat__value { font-family: var(--font-display); font-weight: 400; font-size: 86px; line-height: 0.9; letter-spacing: -0.03em; color: var(--ink); }
+  /* value/caption arrive via set:html, so their inline tags cannot carry utilities */
   .stat__value :global(em) { font-style: italic; }
-  .stat__caption { font-size: 14px; line-height: 1.3; font-weight: 300; letter-spacing: -0.02em; color: var(--muted-2); max-width: 400px; }
   .stat__caption :global(b), .stat__caption :global(strong) { font-weight: 500; }
-  @media (max-width: 949px) {
-    .stat__value { font-size: 60px; }
-    .stat__label { font-size: 18px; height: 44px; padding: 0 20px; }
-  }
 </style>

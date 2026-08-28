@@ -12,12 +12,15 @@ const { cols = 2, gap = 16, class: className, style, min = 220, ...rest } = Astr
 const template = typeof cols === 'number' ? `repeat(${cols}, minmax(0, 1fr))` : cols;
 ---
 
-<div {...rest} class:list={['cs-grid', className]} style={`grid-template-columns:${template};gap:${typeof gap === 'number' ? `${gap}px` : gap};--grid-min:${min}px;${style ?? ''}`}>
+<div
+  {...rest}
+  class:list={[
+    'cs-grid',
+    /* `!` because the column template is an inline style set from the `cols` prop */
+    'max-[950px]:grid-cols-[repeat(auto-fit,minmax(min(var(--grid-min),100%),1fr))]!',
+    className,
+  ]}
+  style={`grid-template-columns:${template};gap:${typeof gap === 'number' ? `${gap}px` : gap};--grid-min:${min}px;${style ?? ''}`}
+>
   <slot />
 </div>
-
-<style>
-  @media (max-width: 949px) {
-    .cs-grid { grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min), 100%), 1fr)) !important; }
-  }
-</style>

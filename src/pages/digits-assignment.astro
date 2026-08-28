@@ -20,54 +20,54 @@ const v = (id: string) => `/assets/videos/${id}.mp4`;
   header="minimal"
   scrollTop={false}
 >
-  <div class="da">
+  <div class="da text-ink-2 font-body overflow-x-clip pb-[200px] max-[950px]:pb-[140px]">
     <!-- fixed logo tile (top centre) -->
-    <div class="da-logo">
-      <img src="/assets/images/heU6p27UbTCZTtOiAcT05SPEzk.png" alt="Placeholder logo" width="60" height="60" decoding="async" />
+    <div class="da-logo fixed top-[calc(var(--header-h)_+_28px)] max-[950px]:top-[calc(var(--header-h)_+_20px)] left-1/2 [transform:translateX(-50%)] w-[60px] h-[60px] max-[950px]:w-[48px] max-[950px]:h-[48px] z-50 pointer-events-none">
+      <img class="w-full h-full" src="/assets/images/heU6p27UbTCZTtOiAcT05SPEzk.png" alt="Placeholder logo" width="60" height="60" decoding="async" />
     </div>
 
     <!-- ============ 1. intro ============ -->
-    <section class="slide">
-      <div class="slide__inner" data-reveal data-fade>
-        <h1 class="da-h">Lorem ipsum dolor sit<br /><em class="accent">consectetur</em> &amp; adipiscing elit<br />sed do eiusmod tempor incididunt</h1>
+    <section class="slide min-h-svh grid place-items-center pt-[120px] px-[24px] pb-[80px] text-center max-[950px]:pt-[110px] max-[950px]:px-[20px] max-[950px]:pb-[60px]">
+      <div class="slide__inner relative" data-reveal data-fade>
+        <h1 class="da-h text-[50px] leading-[1.1] font-semibold tracking-[-0.06em] text-ink-2 text-balance max-[950px]:text-[clamp(32px,8.5vw,44px)] max-[950px]:tracking-[-0.05em]">Lorem ipsum dolor sit<br class="max-[950px]:hidden" /><em class="accent italic text-forest">consectetur</em> &amp; adipiscing elit<br class="max-[950px]:hidden" />sed do eiusmod tempor incididunt</h1>
       </div>
     </section>
 
     <!-- ============ 2. "well, that was tricky !!" ============ -->
-    <section class="slide">
-      <div class="slide__inner slide__inner--tricky" data-reveal data-fade>
-        <span class="tricky">sed, ut perspiciatis unde !!</span>
+    <section class="slide min-h-svh grid place-items-center pt-[120px] px-[24px] pb-[80px] text-center max-[950px]:pt-[110px] max-[950px]:px-[20px] max-[950px]:pb-[60px]">
+      <div class="slide__inner slide__inner--tricky relative max-[950px]:flex max-[950px]:flex-col max-[950px]:items-center max-[950px]:gap-[28px]" data-reveal data-fade>
+        <span class="tricky absolute left-[-230px] top-[-125px] inline-flex items-center h-[55px] px-[24px] rounded-[40px] bg-[#111] text-white text-[22px] leading-none font-medium tracking-[-0.04em] whitespace-nowrap max-[1200px]:left-[-120px] max-[1200px]:top-[-130px] max-[950px]:static max-[950px]:h-[46px] max-[950px]:px-[18px] max-[950px]:text-[18px]">sed, ut perspiciatis unde !!</span>
         <HandArrow name="Arrow4" class="tricky__arrow" width={62} />
-        <h2 class="da-h">dolor sit amet, consectetur<br /><em class="accent">adipiscing elit</em> sed do eiusmod<br />tempor incididunt ut labore.</h2>
+        <h2 class="da-h text-[50px] leading-[1.1] font-semibold tracking-[-0.06em] text-ink-2 text-balance max-[950px]:text-[clamp(32px,8.5vw,44px)] max-[950px]:tracking-[-0.05em]">dolor sit amet, consectetur<br class="max-[950px]:hidden" /><em class="accent italic text-forest">adipiscing elit</em> sed do eiusmod<br class="max-[950px]:hidden" />tempor incididunt ut labore.</h2>
       </div>
     </section>
 
     <!-- ============ 3. Accountant's side ============ -->
-    <section class="slide slide--lead">
-      <div class="slide__inner" data-reveal data-fade>
-        <h2 class="da-h">Ut ad<br /><span class="accent">Veniam</span> quis,</h2>
+    <section class="slide slide--lead min-h-svh grid place-items-center pt-[120px] px-[24px] pb-[80px] text-center max-[950px]:pt-[110px] max-[950px]:px-[20px] max-[950px]:pb-[60px]">
+      <div class="slide__inner relative" data-reveal data-fade>
+        <h2 class="da-h text-[50px] leading-[1.1] font-semibold tracking-[-0.06em] text-ink-2 text-balance max-[950px]:text-[clamp(32px,8.5vw,44px)] max-[950px]:tracking-[-0.05em]">Ut ad<br class="max-[950px]:hidden" /><span class="accent text-forest">Veniam</span> quis,</h2>
       </div>
     </section>
 
-    <div class="story">
-      <div class="story__text" data-reveal data-fade>
-        <p><span class="accent">Person Six</span> (lorem ipsum) dolor sit amet, consectetur adipiscing elit sed do eiusmod</p>
+    <div class="story w-[min(1240px,100%_-_2_*_var(--gutter))] mx-auto flex flex-col items-start">
+      <div class="story__text w-[620px] max-w-full mb-[60px] max-[950px]:w-full max-[950px]:mb-[32px]" data-reveal data-fade>
+        <p class="text-[20px] leading-[1.3] font-medium tracking-[-0.06em] text-[#6b6b6b] max-[950px]:text-[18px] max-[950px]:tracking-[-0.04em]"><span class="accent text-forest">Person Six</span> (lorem ipsum) dolor sit amet, consectetur adipiscing elit sed do eiusmod</p>
       </div>
-      <Panel>
+      <Panel class="mb-[165px] max-[950px]:mb-[96px]">
         <Video class="media" src={v('kzSYmaHDHwtkf7JIto8g9diIiw')} width=3010 height=1838 label="Placeholder video showing the first step of the flow" />
       </Panel>
 
-      <div class="story__text" data-reveal data-fade>
-        <p>Sed ut perspiciatis unde omnis iste natus: error sit voluptatem accusantium doloremque <strong>laudantium totam rem</strong>, aperiam eaque ipsa <strong>ab illo inventore</strong> veritatis quasi?</p>
-        <p>Nemo enim ipsam, voluptatem quia voluptas sit aspernatur, aut odit aut fugit,<br />sed quia <strong>consequuntur magni dolores eos ratione</strong>.</p>
-        <p><span class="accent">Ipsum in <strong>lorem sit amet.</strong></span></p>
+      <div class="story__text w-[620px] max-w-full mb-[60px] max-[950px]:w-full max-[950px]:mb-[32px]" data-reveal data-fade>
+        <p class="text-[20px] leading-[1.3] font-medium tracking-[-0.06em] text-[#6b6b6b] max-[950px]:text-[18px] max-[950px]:tracking-[-0.04em]">Sed ut perspiciatis unde omnis iste natus: error sit voluptatem accusantium doloremque <strong class="font-semibold">laudantium totam rem</strong>, aperiam eaque ipsa <strong class="font-semibold">ab illo inventore</strong> veritatis quasi?</p>
+        <p class="mt-[1.3em] text-[20px] leading-[1.3] font-medium tracking-[-0.06em] text-[#6b6b6b] max-[950px]:text-[18px] max-[950px]:tracking-[-0.04em]">Nemo enim ipsam, voluptatem quia voluptas sit aspernatur, aut odit aut fugit,<br class="max-[950px]:hidden" />sed quia <strong class="font-semibold">consequuntur magni dolores eos ratione</strong>.</p>
+        <p class="mt-[1.3em] text-[20px] leading-[1.3] font-medium tracking-[-0.06em] text-[#6b6b6b] max-[950px]:text-[18px] max-[950px]:tracking-[-0.04em]"><span class="accent text-forest">Ipsum in <strong class="font-semibold">lorem sit amet.</strong></span></p>
       </div>
-      <Panel>
+      <Panel class="mb-[165px] max-[950px]:mb-[96px]">
         <Video class="media" src={v('kfDD2llVHcAQPd8Re6cnyrFD30')} width=2486 height=1518 label="Placeholder video showing a form being filled in, a note added and a message composed for the next step" />
       </Panel>
 
-      <div class="story__text" data-reveal data-fade>
-        <p>Neque porro quisquam est qui, dolorem ipsum quia dolor, <strong>amet consectetur</strong> adipisci velit sed quia non, aut <strong>numquam</strong> eius modi tempora incidunt magnam.</p>
+      <div class="story__text w-[620px] max-w-full mb-[60px] max-[950px]:w-full max-[950px]:mb-[32px]" data-reveal data-fade>
+        <p class="text-[20px] leading-[1.3] font-medium tracking-[-0.06em] text-[#6b6b6b] max-[950px]:text-[18px] max-[950px]:tracking-[-0.04em]">Neque porro quisquam est qui, dolorem ipsum quia dolor, <strong class="font-semibold">amet consectetur</strong> adipisci velit sed quia non, aut <strong class="font-semibold">numquam</strong> eius modi tempora incidunt magnam.</p>
       </div>
       <Panel>
         <Video class="media" src={v('lRybdZOWniwjFqeBhjrdFIMeoI')} width=2466 height=1518 label="Placeholder video showing a tracked item: setting a reminder and assigning it to a teammate" />
@@ -75,39 +75,39 @@ const v = (id: string) => `/assets/videos/${id}.mp4`;
     </div>
 
     <!-- ============ 6. Client's side ============ -->
-    <section class="slide slide--lead">
-      <div class="slide__inner" data-reveal data-fade>
-        <h2 class="da-h">Sed, quia dolor<br /><span class="accent">ut labore</span> magnam</h2>
+    <section class="slide slide--lead min-h-svh grid place-items-center pt-[120px] px-[24px] pb-[80px] text-center max-[950px]:pt-[110px] max-[950px]:px-[20px] max-[950px]:pb-[60px]">
+      <div class="slide__inner relative" data-reveal data-fade>
+        <h2 class="da-h text-[50px] leading-[1.1] font-semibold tracking-[-0.06em] text-ink-2 text-balance max-[950px]:text-[clamp(32px,8.5vw,44px)] max-[950px]:tracking-[-0.05em]">Sed, quia dolor<br class="max-[950px]:hidden" /><span class="accent text-forest">ut labore</span> magnam</h2>
       </div>
     </section>
 
-    <div class="story story--client">
-      <div class="story__text story__text--wide" data-reveal data-fade>
-        <p>Lorem ipsum dolor sit. Amet consectetur adipiscing elit, sed do eiusmod, tempor incididunt ut labore magna aliqua. Ut enim ad minim veniam. Quis nostrud exercitation ullamco laboris nisi.</p>
-        <p>Duis aute irure dolor in reprehenderit voluptate. Velit esse cillum dolore eu fugiat nulla, pariatur excepteur sint occaecat cupidatat.</p>
+    <div class="story story--client w-[min(1240px,100%_-_2_*_var(--gutter))] mx-auto flex flex-col items-start pt-[75px] max-[950px]:pt-[40px]">
+      <div class="story__text story__text--wide w-[700px] max-w-full mb-[60px] max-[950px]:w-full max-[950px]:mb-[32px]" data-reveal data-fade>
+        <p class="text-[20px] leading-[1.3] font-medium tracking-[-0.06em] text-[#6b6b6b] max-[950px]:text-[18px] max-[950px]:tracking-[-0.04em]">Lorem ipsum dolor sit. Amet consectetur adipiscing elit, sed do eiusmod, tempor incididunt ut labore magna aliqua. Ut enim ad minim veniam. Quis nostrud exercitation ullamco laboris nisi.</p>
+        <p class="mt-[1.3em] text-[20px] leading-[1.3] font-medium tracking-[-0.06em] text-[#6b6b6b] max-[950px]:text-[18px] max-[950px]:tracking-[-0.04em]">Duis aute irure dolor in reprehenderit voluptate. Velit esse cillum dolore eu fugiat nulla, pariatur excepteur sint occaecat cupidatat.</p>
       </div>
-      <Panel variant="phone">
+      <Panel variant="phone" class="mb-[165px] max-[950px]:mb-[96px]">
         <Video class="media media--phone" src={v('XuzaPjV9ZQcJb3kA0KHD8s8beg')} width=776 height=1702 label="Placeholder video showing a person answering a question from a notification" />
       </Panel>
 
-      <div class="story__text" data-reveal data-fade>
-        <p>Person Seven lorem ipsum dolor sit amet consectetur elit.</p>
-        <p>Sed ut perspiciatis unde omnis iste natus error. Sit voluptatem accusantium, doloremque.<br />Laudantium totam rem. <span class="accent">Ipsum in <strong>10 seconds</strong>.</span></p>
+      <div class="story__text w-[620px] max-w-full mb-[60px] max-[950px]:w-full max-[950px]:mb-[32px]" data-reveal data-fade>
+        <p class="text-[20px] leading-[1.3] font-medium tracking-[-0.06em] text-[#6b6b6b] max-[950px]:text-[18px] max-[950px]:tracking-[-0.04em]">Person Seven lorem ipsum dolor sit amet consectetur elit.</p>
+        <p class="mt-[1.3em] text-[20px] leading-[1.3] font-medium tracking-[-0.06em] text-[#6b6b6b] max-[950px]:text-[18px] max-[950px]:tracking-[-0.04em]">Sed ut perspiciatis unde omnis iste natus error. Sit voluptatem accusantium, doloremque.<br class="max-[950px]:hidden" />Laudantium totam rem. <span class="accent text-forest">Ipsum in <strong class="font-semibold">10 seconds</strong>.</span></p>
       </div>
-      <Panel variant="plain">
+      <Panel variant="plain" class="mb-[165px] max-[950px]:mb-[96px]">
         <img class="media media--watch" src="/assets/images/f9TGXBmePwEmpwV3xZTTW6LsYLc.png" alt="Placeholder smartwatch screenshot showing a “Lorem ipsum dolor” prompt with three generic placeholder response options" width="442" height="496" loading="lazy" decoding="async" />
       </Panel>
 
-      <div class="story__text story__text--wide" data-reveal data-fade>
-        <p>Nemo enim ipsam voluptatem quia, voluptas sit aspernatur aut odit aut fugit. Sed quia consequuntur magni dolores, eos qui ratione "voluptatem sequi", nesciunt neque porro quisquam est qui dolorem ipsum quia.</p>
-        <p>Neque porro quisquam est qui dolorem ipsum quia dolor sit amet consectetur adipiscing.</p>
+      <div class="story__text story__text--wide w-[700px] max-w-full mb-[60px] max-[950px]:w-full max-[950px]:mb-[32px]" data-reveal data-fade>
+        <p class="text-[20px] leading-[1.3] font-medium tracking-[-0.06em] text-[#6b6b6b] max-[950px]:text-[18px] max-[950px]:tracking-[-0.04em]">Nemo enim ipsam voluptatem quia, voluptas sit aspernatur aut odit aut fugit. Sed quia consequuntur magni dolores, eos qui ratione "voluptatem sequi", nesciunt neque porro quisquam est qui dolorem ipsum quia.</p>
+        <p class="mt-[1.3em] text-[20px] leading-[1.3] font-medium tracking-[-0.06em] text-[#6b6b6b] max-[950px]:text-[18px] max-[950px]:tracking-[-0.04em]">Neque porro quisquam est qui dolorem ipsum quia dolor sit amet consectetur adipiscing.</p>
       </div>
-      <Panel variant="phone">
+      <Panel variant="phone" class="mb-[165px] max-[950px]:mb-[96px]">
         <Video class="media media--phone" src={v('H1BTGZZAe2hDJhMXUlAAgRKMwQ')} width=702 height=1532 label="Placeholder video showing a person choosing an option, tapping a fallback, and reviewing more pending items" />
       </Panel>
 
-      <div class="story__text story__text--narrow" data-reveal data-fade>
-        <p>Lorem ipsum dolor sit amet consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua enim ad minim veniam.</p>
+      <div class="story__text story__text--narrow w-[470px] max-w-full mb-[60px] max-[950px]:w-full max-[950px]:mb-[32px]" data-reveal data-fade>
+        <p class="text-[20px] leading-[1.3] font-medium tracking-[-0.06em] text-[#6b6b6b] max-[950px]:text-[18px] max-[950px]:tracking-[-0.04em]">Lorem ipsum dolor sit amet consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua enim ad minim veniam.</p>
       </div>
       <Panel>
         <img class="media" src="/assets/images/ni1rS3onvwMrh70qAhqrp564LSM.png" alt="Placeholder dashboard screenshot with a detail panel open: a response has been submitted and is ready for approval" width="3456" height="2112" loading="lazy" decoding="async" />
@@ -115,24 +115,29 @@ const v = (id: string) => `/assets/videos/${id}.mp4`;
     </div>
 
     <!-- ============ 8. closing ============ -->
-    <section class="outro">
-      <h2 class="outro__h" data-reveal data-fade>Lorem ipsum dolor sit<br />amet consectetur adipiscing elit, sed<br />do eiusmod.</h2>
-      <ul class="outro__card" data-reveal="up" data-fade>
-        <li>Lorem ipsum dolor sit? <span class="accent"><strong>Consectetur adipiscing.</strong></span></li>
-        <li>Sed do eiusmod tempor? <span class="accent"><strong>Incididunt ut labore et dolore.</strong></span></li>
-        <li>Magna aliqua enim? <span class="accent"><strong>Ad-minim.</strong></span></li>
-        <li>Veniam quis? <span class="accent"><strong>Nostrud exercitation &lt;30 seconds.</strong></span></li>
-        <li>Ullamco laboris nisi aliquip? <span class="accent"><strong>Ex ea commodo consequat.</strong></span></li>
+    <section class="outro flex flex-col items-center text-center pt-[280px] px-[24px] pb-0 max-[950px]:pt-[160px]">
+      <h2 class="outro__h text-[30px] leading-[1.1] font-semibold tracking-[-0.06em] text-ink-2 text-balance max-[950px]:text-[26px] max-[950px]:tracking-[-0.05em]" data-reveal data-fade>Lorem ipsum dolor sit<br class="max-[950px]:hidden" />amet consectetur adipiscing elit, sed<br class="max-[950px]:hidden" />do eiusmod.</h2>
+      <ul class="outro__card list-none w-[800px] max-w-full mt-[80px] px-[40px] py-[50px] rounded-[30px] bg-bg flex flex-col items-center gap-[16px] max-[950px]:mt-[48px] max-[950px]:px-[20px] max-[950px]:py-[32px] max-[950px]:rounded-[22px] max-[950px]:gap-[14px]" data-reveal="up" data-fade>
+        <li class="text-[20px] leading-[1.1] font-medium tracking-[-0.06em] text-ink-2 max-[950px]:text-[17px] max-[950px]:leading-[1.25] max-[950px]:tracking-[-0.04em]">Lorem ipsum dolor sit? <span class="accent text-forest"><strong class="font-semibold">Consectetur adipiscing.</strong></span></li>
+        <li class="text-[20px] leading-[1.1] font-medium tracking-[-0.06em] text-ink-2 max-[950px]:text-[17px] max-[950px]:leading-[1.25] max-[950px]:tracking-[-0.04em]">Sed do eiusmod tempor? <span class="accent text-forest"><strong class="font-semibold">Incididunt ut labore et dolore.</strong></span></li>
+        <li class="text-[20px] leading-[1.1] font-medium tracking-[-0.06em] text-ink-2 max-[950px]:text-[17px] max-[950px]:leading-[1.25] max-[950px]:tracking-[-0.04em]">Magna aliqua enim? <span class="accent text-forest"><strong class="font-semibold">Ad-minim.</strong></span></li>
+        <li class="text-[20px] leading-[1.1] font-medium tracking-[-0.06em] text-ink-2 max-[950px]:text-[17px] max-[950px]:leading-[1.25] max-[950px]:tracking-[-0.04em]">Veniam quis? <span class="accent text-forest"><strong class="font-semibold">Nostrud exercitation &lt;30 seconds.</strong></span></li>
+        <li class="text-[20px] leading-[1.1] font-medium tracking-[-0.06em] text-ink-2 max-[950px]:text-[17px] max-[950px]:leading-[1.25] max-[950px]:tracking-[-0.04em]">Ullamco laboris nisi aliquip? <span class="accent text-forest"><strong class="font-semibold">Ex ea commodo consequat.</strong></span></li>
       </ul>
-      <p class="outro__thanks" data-reveal data-fade>Lorem ipsum!</p>
+      <p class="outro__thanks mt-[330px] text-[60px] leading-[1.1] font-semibold tracking-[-0.06em] text-ink-2 max-[950px]:mt-[160px] max-[950px]:text-[44px]" data-reveal data-fade>Lorem ipsum!</p>
     </section>
 
     <!-- fixed bottom UI -->
-    <a class="da-figma" href={figma} target="_blank" rel="noopener">
+    <a
+      class="da-figma fixed left-[20px] bottom-[20px] z-50 inline-flex items-center gap-[10px] px-[20px] py-[8px] rounded-[40px] bg-forest text-white text-[16px] leading-[1.5] font-semibold tracking-[-0.02em] whitespace-nowrap [transition:background_0.2s_ease,transform_0.35s_var(--ease-spring)] hover:bg-[#166f51] active:[transform:scale(0.97)] max-[950px]:left-[16px] max-[950px]:bottom-[16px] max-[950px]:text-[14px] max-[950px]:px-[16px]"
+      href={figma}
+      target="_blank"
+      rel="noopener"
+    >
       View File
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M8 7h9v9"/></svg>
+      <svg class="flex-none" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M8 7h9v9"/></svg>
     </a>
-    <p class="da-scroll" aria-hidden="true">Scroll down!</p>
+    <p class="da-scroll fixed right-[20px] bottom-[20px] z-50 px-[20px] py-[8px] text-[16px] leading-[1.5] font-medium tracking-[-0.02em] text-muted pointer-events-none max-[950px]:right-[16px] max-[950px]:bottom-[16px] max-[950px]:text-[14px] max-[950px]:px-[12px]" aria-hidden="true">Scroll down!</p>
   </div>
 </BaseLayout>
 
@@ -159,114 +164,29 @@ const v = (id: string) => `/assets/videos/${id}.mp4`;
 </script>
 
 <style>
-  .da {
-    --da-ink: #262626;
-    --da-muted: #6b6b6b;
-    --da-green: #1b8360;
-    --da-col: 1240px;
-    color: var(--da-ink);
-    font-family: var(--font-body);
-    overflow-x: clip;
-    padding-bottom: 200px;
-  }
-  .da .accent, .da :global(.accent) { color: var(--da-green); }
-  .da strong { font-weight: 600; }
+  /* ---------------------------------------------------------------------------
+     Everything else on this page is Tailwind utilities on the markup. What is
+     left here cannot be expressed as a utility — see the note on each rule.
+     ------------------------------------------------------------------------ */
 
-  /* exit animation (pairs with the global [data-reveal] appear) */
+  /* exit animation (pairs with the global [data-reveal] appear).
+     :global() + JS-toggled state classes (.is-in / .is-out), and it has to stay
+     unlayered so it wins over the unlayered global `[data-reveal].is-in`. */
   .da :global([data-fade].is-in.is-out) {
     opacity: 0;
     transform: translateY(-14px) scale(0.96);
     transition-duration: 0.5s;
   }
 
-  /* ---------- fixed UI ---------- */
-  .da-logo {
-    position: fixed;
-    top: calc(var(--header-h) + 28px);
-    left: 50%;
-    transform: translateX(-50%);
-    width: 60px;
-    height: 60px;
-    z-index: 50;
-    pointer-events: none;
-  }
-  .da-logo img { width: 100%; height: 100%; border-radius: 14px; }
+  /* global.css has an UNLAYERED `main :is(img, video, iframe) { border-radius:
+     var(--radius-md) }`. Utilities live in @layer utilities and always lose to
+     unlayered CSS, so a `rounded-[14px]` class here would be overridden. */
+  .da-logo img { border-radius: 14px; }
 
-  .da-figma {
-    position: fixed;
-    left: 20px;
-    bottom: 20px;
-    z-index: 50;
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    padding: 8px 20px;
-    border-radius: 40px;
-    background: var(--da-green);
-    color: #fff;
-    font-size: 16px;
-    line-height: 1.5;
-    font-weight: 600;
-    letter-spacing: -0.02em;
-    white-space: nowrap;
-    transition: background 0.2s ease, transform 0.35s var(--ease-spring);
-  }
-  .da-figma:hover { background: #166f51; }
-  .da-figma:active { transform: scale(0.97); }
-  .da-figma svg { flex: none; }
-
-  .da-scroll {
-    position: fixed;
-    right: 20px;
-    bottom: 20px;
-    z-index: 50;
-    padding: 8px 20px;
-    font-size: 16px;
-    line-height: 1.5;
-    font-weight: 500;
-    letter-spacing: -0.02em;
-    color: #969696;
-    pointer-events: none;
-  }
-
-  /* ---------- headline slides ---------- */
-  .slide {
-    min-height: 100vh;
-    min-height: 100svh;
-    display: grid;
-    place-items: center;
-    padding: 120px 24px 80px;
-    text-align: center;
-  }
-  .slide__inner { position: relative; }
-  .da-h {
-    font-size: 50px;
-    line-height: 1.1;
-    font-weight: 600;
-    letter-spacing: -0.06em;
-    color: var(--da-ink);
-    text-wrap: balance;
-  }
-  .da-h em { font-style: italic; }
-
-  /* "well, that was tricky !!" pill + hand-drawn arrow (top-left of the heading) */
-  .tricky {
-    position: absolute;
-    left: -230px;
-    top: -125px;
-    display: inline-flex;
-    align-items: center;
-    height: 55px;
-    padding: 0 24px;
-    border-radius: 40px;
-    background: #111;
-    color: #fff;
-    font-size: 22px;
-    line-height: 1;
-    font-weight: 500;
-    letter-spacing: -0.04em;
-    white-space: nowrap;
-  }
+  /* :global() into <HandArrow>. Its own scoped `.hand-arrow { color: inherit }`
+     is likewise unlayered, so a `text-[#111]` utility on the component would
+     lose to it — the whole rule stays as CSS to keep the arrow's colour,
+     placement and flip exact. */
   .slide__inner--tricky :global(.tricky__arrow) {
     position: absolute;
     left: -276px;
@@ -276,101 +196,11 @@ const v = (id: string) => `/assets/videos/${id}.mp4`;
     transform: scaleY(-1);
   }
 
-  /* ---------- narrative ---------- */
-  .story {
-    width: min(var(--da-col), 100% - 2 * var(--gutter));
-    margin-inline: auto;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-  }
-  .story__text { width: 620px; max-width: 100%; margin-bottom: 60px; }
-  .story__text--wide { width: 700px; }
-  .story__text--narrow { width: 470px; }
-  .story__text p {
-    font-size: 20px;
-    line-height: 1.3;
-    font-weight: 500;
-    letter-spacing: -0.06em;
-    color: var(--da-muted);
-  }
-  .story__text p + p { margin-top: 1.3em; }
-  .story :global(.panel) { margin-bottom: 165px; }
-  .story :global(.panel:last-child) { margin-bottom: 0; }
-  .story--client { padding-top: 75px; }
-
-  /* ---------- closing ---------- */
-  .outro {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    padding: 280px 24px 0;
-  }
-  .outro__h {
-    font-size: 30px;
-    line-height: 1.1;
-    font-weight: 600;
-    letter-spacing: -0.06em;
-    color: var(--da-ink);
-    text-wrap: balance;
-  }
-  .outro__card {
-    list-style: none;
-    width: 800px;
-    max-width: 100%;
-    margin-top: 80px;
-    padding: 50px 40px;
-    border-radius: 30px;
-    background: #fafafa;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 16px;
-  }
-  .outro__card li {
-    font-size: 20px;
-    line-height: 1.1;
-    font-weight: 500;
-    letter-spacing: -0.06em;
-    color: var(--da-ink);
-  }
-  .outro__thanks {
-    margin-top: 330px;
-    font-size: 60px;
-    line-height: 1.1;
-    font-weight: 600;
-    letter-spacing: -0.06em;
-    color: var(--da-ink);
-  }
-
-  /* ---------- responsive ---------- */
   @media (max-width: 1199px) {
-    .tricky { left: -120px; top: -130px; }
     .slide__inner--tricky :global(.tricky__arrow) { left: -166px; top: -86px; }
   }
   @media (max-width: 949px) {
-    .da { padding-bottom: 140px; }
-    .da-logo { width: 48px; height: 48px; top: calc(var(--header-h) + 20px); }
     .da-logo img { border-radius: 11px; }
-    .da-figma { left: 16px; bottom: 16px; font-size: 14px; padding: 8px 16px; }
-    .da-scroll { right: 16px; bottom: 16px; font-size: 14px; padding: 8px 12px; }
-    .slide { padding: 110px 20px 60px; }
-    .da-h { font-size: clamp(32px, 8.5vw, 44px); letter-spacing: -0.05em; }
-    .da-h br { display: none; }
-    .slide__inner--tricky { display: flex; flex-direction: column; align-items: center; gap: 28px; }
-    .tricky { position: static; height: 46px; padding: 0 18px; font-size: 18px; }
     .slide__inner--tricky :global(.tricky__arrow) { display: none; }
-    .story__text, .story__text--wide, .story__text--narrow { width: 100%; margin-bottom: 32px; }
-    .story__text p { font-size: 18px; letter-spacing: -0.04em; }
-    .story__text p br { display: none; }
-    .story :global(.panel) { margin-bottom: 96px; }
-    .story--client { padding-top: 40px; }
-    .outro { padding-top: 160px; }
-    .outro__h { font-size: 26px; letter-spacing: -0.05em; }
-    .outro__h br { display: none; }
-    .outro__card { margin-top: 48px; padding: 32px 20px; border-radius: 22px; gap: 14px; }
-    .outro__card li { font-size: 17px; letter-spacing: -0.04em; line-height: 1.25; }
-    .outro__thanks { margin-top: 160px; font-size: 44px; }
   }
 </style>

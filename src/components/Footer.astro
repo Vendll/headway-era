@@ -8,96 +8,49 @@ interface Props {
   class?: string;
 }
 const { intro = true, class: className, ...rest } = Astro.props;
+
+// shared nav pill. The Resume pill carries its own background and, because the
+// old rule used `!important`, keeps it on hover too - so it opts out of hover:bg.
+const pill = 'inline-flex items-center h-10 px-5 rounded-sm text-nav-fg [transition:background_0.2s_ease] max-[950px]:h-9 max-[950px]:px-[14px] max-[950px]:text-[12px]';
+const link = `${pill} bg-nav-bg hover:bg-[#333]`;
 ---
 
-<footer {...rest} class:list={['footer', className]} data-footer>
-  <div class="footer__cta">
-    {intro && <p class="footer__still" data-reveal>Lorem ipsum?</p>}
-    <div class="footer__work">
-      <div class="footer__tag"><ArrowTag side="left" variant="blue" arrowWidth={80}>Ut enim ad minim quis</ArrowTag></div>
-      <h2 class="footer__title" data-reveal>Lorem <em>ipsum.</em></h2>
+<footer
+  {...rest}
+  class:list={[
+    'footer',
+    'relative overflow-hidden pt-40 px-4 pb-[90px] text-fg max-[950px]:pt-[120px] max-[950px]:pb-[120px]',
+    className,
+  ]}
+  data-footer
+>
+  <div class="footer__cta flex flex-col items-center text-center">
+    {intro && <p class="footer__still text-[14px] font-normal tracking-[-0.03em] text-fg-muted mb-[70px]" data-reveal>Lorem ipsum?</p>}
+    <div class="footer__work relative inline-block">
+      <div class="footer__tag absolute right-[-0.65em] top-[-1.15em] z-[1] max-[950px]:right-0 max-[950px]:top-[-2.4em] max-[950px]:origin-top-right max-[950px]:[transform:scale(0.7)]"><ArrowTag side="left" variant="blue" arrowWidth={80}>Ut enim ad minim quis</ArrowTag></div>
+      <h2 class="footer__title font-display font-normal text-[clamp(72px,10.5vw,200px)] leading-[0.9] tracking-[-0.04em] text-fg whitespace-nowrap" data-reveal>Lorem <em class="italic">ipsum.</em></h2>
     </div>
-    <ul class="footer__links" data-reveal data-reveal-delay="0.15">
-      <li><a href={`mailto:${site.email}`}>Email</a></li>
-      <li><a href={site.linkedin} target="_blank" rel="noopener">Profile</a></li>
-      <li><a class="footer__ig" href={site.instagram} target="_blank" rel="noopener">{site.instagramHandle}</a></li>
+    <ul class="footer__links list-none flex gap-5 mt-[26px] text-[14px] font-normal tracking-[-0.04em]" data-reveal data-reveal-delay="0.15">
+      <li><a class="[transition:opacity_0.2s_ease] hover:opacity-70" href={`mailto:${site.email}`}>Email</a></li>
+      <li><a class="[transition:opacity_0.2s_ease] hover:opacity-70" href={site.linkedin} target="_blank" rel="noopener">Profile</a></li>
+      <li><a class="footer__ig text-green [transition:opacity_0.2s_ease] hover:opacity-70" href={site.instagram} target="_blank" rel="noopener">{site.instagramHandle}</a></li>
     </ul>
   </div>
 
-  <div class="footer__bar">
-    <p class="footer__copy">{site.copyright}</p>
-    <nav class="footer__nav" aria-label="Footer">
-      <a href={nav[0].href}>Work</a>
-      <a href={nav[2].href}>About</a>
-      <a href={nav[1].href}>Play</a>
-      <a class="footer__nav-resume" href={site.resumeNav} target="_blank" rel="noopener">Resume</a>
+  <div class="footer__bar absolute left-4 right-4 bottom-[22px] flex justify-between items-center gap-4 max-[950px]:flex-col max-[950px]:items-start max-[950px]:pl-14 max-[950px]:gap-3">
+    <p class="footer__copy text-[16px] font-normal leading-[1.2] text-fg-muted max-[950px]:text-[13px]">{site.copyright}</p>
+    <nav class="footer__nav flex gap-1 font-mono text-[14px] font-medium tracking-[-0.01em]" aria-label="Footer">
+      <a class={link} href={nav[0].href}>Work</a>
+      <a class={link} href={nav[2].href}>About</a>
+      <a class={link} href={nav[1].href}>Play</a>
+      <a class:list={['footer__nav-resume', pill, 'bg-ink-3 text-[13px]']} href={site.resumeNav} target="_blank" rel="noopener">Resume</a>
     </nav>
   </div>
 </footer>
 
 <style>
-  .footer {
-    position: relative;
-    color: var(--fg);
-    padding: 160px 16px 90px;
-    overflow: hidden;
-  }
-  .footer__cta { display: flex; flex-direction: column; align-items: center; text-align: center; }
-  .footer__still { font-size: 14px; letter-spacing: -0.03em; color: var(--fg-muted); font-weight: 400; margin-bottom: 70px; }
-
-  .footer__work { position: relative; display: inline-block; }
-  .footer__title {
-    font-family: var(--font-display);
-    font-weight: 400;
-    font-size: clamp(72px, 10.5vw, 200px);
-    line-height: 0.9;
-    letter-spacing: -0.04em;
-    color: var(--fg);
-    white-space: nowrap;
-  }
-  .footer__title em { font-style: italic; }
-  .footer__tag {
-    position: absolute;
-    right: -0.65em;
-    top: -1.15em;
-    z-index: 1;
-  }
+  /* KEPT deliberately: `:global()` into <ArrowTag>'s internal <HandArrow>. The
+     arrow has no class prop of its own here, and HandArrow's unlayered
+     `.hand-arrow { color: inherit }` would beat a `text-blue` utility anyway. */
   .footer__tag :global(.atag__arrow) { color: var(--blue); }
-
-  .footer__links {
-    list-style: none;
-    display: flex;
-    gap: 20px;
-    margin-top: 26px;
-    font-size: 14px;
-    letter-spacing: -0.04em;
-    font-weight: 400;
-  }
-  .footer__ig { color: var(--green); }
-  .footer__links a { transition: opacity 0.2s ease; }
-  .footer__links a:hover { opacity: 0.7; }
-
-  .footer__bar {
-    position: absolute;
-    left: 16px;
-    right: 16px;
-    bottom: 22px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 16px;
-  }
-  .footer__copy { font-size: 16px; color: var(--fg-muted); font-weight: 400; line-height: 1.2; }
-  .footer__nav { display: flex; gap: 4px; font-family: var(--font-mono); font-size: 14px; font-weight: 500; letter-spacing: -0.01em; }
-  .footer__nav a { display: inline-flex; align-items: center; height: 40px; padding: 0 20px; background: var(--nav-bg); color: var(--nav-fg); border-radius: var(--r-sm); transition: background 0.2s ease; }
-  .footer__nav a:hover { background: #333; }
-  .footer__nav-resume { background: #252525 !important; font-size: 13px; }
-
-  @media (max-width: 949px) {
-    .footer { padding: 120px 16px 120px; }
-    .footer__tag { right: 0; top: -2.4em; transform: scale(0.7); transform-origin: top right; }
-    .footer__bar { flex-direction: column; align-items: flex-start; padding-left: 56px; gap: 12px; }
-    .footer__copy { font-size: 13px; }
-    .footer__nav a { height: 36px; padding: 0 14px; font-size: 12px; }
-  }
 </style>

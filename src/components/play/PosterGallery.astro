@@ -6,6 +6,10 @@
  * posters travel from scattered, 3D-rotated, faded start positions into a neat
  * 4 × 2 grid (220 × 310 slots, 8px gap, column-first order like the Framer
  * `flex-flow: column wrap` original).
+ *
+ * `--pw` / `--ph` / `--pgap` are set on the section (and re-set per breakpoint)
+ * and read by the grid and the posters. Each poster's start state is applied
+ * inline by the script; without JS the grid simply shows.
  */
 import type { Poster } from './types';
 
@@ -17,17 +21,36 @@ interface Props {
 const { posters, class: className, label = 'Placeholder gallery' } = Astro.props;
 ---
 
-<section class:list={['gallery', className]} data-gallery aria-label={label}>
-  <div class="gallery__pin">
-    <ul class="gallery__grid" data-gallery-grid>
+<section
+  class:list={[
+    'gallery relative w-full h-[400vh] pt-[40px] [--pw:220px] [--ph:310px] [--pgap:8px] max-[1440px]:[--pw:186px] max-[1440px]:[--ph:261px] max-[1300px]:[--pw:149px] max-[1300px]:[--ph:203px] max-[1300px]:h-[300vh] max-[810px]:[--pw:min(150px,44vw)] max-[810px]:[--ph:calc(var(--pw)*1.42)] max-[810px]:[--pgap:8px] max-[810px]:h-[300vh] max-[481px]:[--pw:min(110px,28vw)] max-[481px]:[--ph:calc(var(--pw)*1.42)]',
+    className,
+  ]}
+  data-gallery
+  aria-label={label}
+>
+  <div class="gallery__pin sticky top-0 h-svh w-full max-w-[1480px] mx-auto grid place-items-center overflow-hidden perspective-[800px] perspective-origin-center">
+    <ul
+      class="gallery__grid list-none grid grid-flow-col grid-rows-[repeat(2,var(--ph))] auto-cols-[var(--pw)] gap-[var(--pgap)] transform-3d px-[30px] max-[810px]:grid-flow-row max-[810px]:grid-rows-none max-[810px]:grid-cols-[repeat(2,var(--pw))] max-[810px]:auto-cols-auto max-[810px]:px-[20px] max-[481px]:flex max-[481px]:flex-wrap max-[481px]:justify-center max-[481px]:max-w-[calc(3*var(--pw)_+_2*var(--pgap)_+_40px)]"
+      data-gallery-grid
+    >
       {
         posters.map((p, i) => (
           <li
-            class="poster"
+            class="poster relative w-[var(--pw)] h-[var(--ph)] transform-3d will-change-[transform,opacity] backface-hidden cursor-pointer"
             data-poster
             style={`--i:${i};--fx:${p.from.x};--fy:${p.from.y};--fs:${p.from.s};--frz:${p.from.rz ?? 0};--frx:${p.from.rx ?? 0};--fry:${p.from.ry ?? 0}`}
           >
-            <img src={p.src} alt={p.alt} width={p.width} height={p.height} loading="eager" decoding="async" draggable="false" />
+            <img
+              src={p.src}
+              alt={p.alt}
+              width={p.width}
+              height={p.height}
+              loading="eager"
+              decoding="async"
+              draggable="false"
+              class="w-full h-full object-cover object-center select-none [-webkit-user-drag:none]"
+            />
           </li>
         ))
       }
@@ -116,83 +139,16 @@ const { posters, class: className, label = 'Placeholder gallery' } = Astro.props
 </script>
 
 <style>
-  .gallery {
-    --pw: 220px;
-    --ph: 310px;
-    --pgap: 8px;
-    position: relative;
-    width: 100%;
-    height: 400vh;
-    padding-top: 40px;
-  }
-  .gallery.is-static { height: auto; padding: 80px 0; }
+  /* Everything below is KEPT deliberately — see the migration contract.
+     All four rules are compound state-class selectors (`.is-static` /
+     `.is-settled` are toggled by the script above), and the hover transform
+     has to stay `!important` to beat the inline transform the script writes. */
 
-  .gallery__pin {
-    position: sticky;
-    top: 0;
-    height: 100vh;
-    height: 100svh;
-    width: 100%;
-    max-width: 1480px;
-    margin-inline: auto;
-    display: grid;
-    place-items: center;
-    overflow: hidden;
-    perspective: 800px;
-    perspective-origin: 50% 50%;
-  }
+  /* reduced-motion fallback: no pin, no 400vh scroll runway */
+  .gallery.is-static { height: auto; padding: 80px 0; }
   .gallery.is-static .gallery__pin { position: static; height: auto; overflow: visible; }
 
-  .gallery__grid {
-    list-style: none;
-    display: grid;
-    grid-auto-flow: column;
-    grid-template-rows: repeat(2, var(--ph));
-    grid-auto-columns: var(--pw);
-    gap: var(--pgap);
-    transform-style: preserve-3d;
-    padding: 0 30px;
-  }
-
-  .poster {
-    position: relative;
-    width: var(--pw);
-    height: var(--ph);
-    transform-style: preserve-3d;
-    will-change: transform, opacity;
-    backface-visibility: hidden;
-    cursor: pointer;
-    /* start state is applied inline by the script; without JS the grid simply shows */
-  }
-  .poster img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
-    user-select: none;
-    -webkit-user-drag: none;
-  }
+  /* hover lift, only once the grid has assembled */
   .gallery.is-settled .poster { transition: transform 0.4s var(--ease-spring); }
   .gallery.is-settled .poster:hover { transform: translate3d(0, -6px, 0) scale(1.03) !important; z-index: 2; }
-
-  @media (max-width: 1439px) {
-    .gallery { --pw: 186px; --ph: 261px; }
-  }
-  @media (max-width: 1299px) {
-    .gallery { --pw: 149px; --ph: 203px; height: 300vh; }
-  }
-  @media (max-width: 809px) {
-    .gallery { --pw: min(150px, 44vw); --ph: calc(var(--pw) * 1.42); --pgap: 8px; height: 300vh; }
-    .gallery__grid {
-      grid-auto-flow: row;
-      grid-template-rows: none;
-      grid-template-columns: repeat(2, var(--pw));
-      grid-auto-columns: auto;
-      padding: 0 20px;
-    }
-  }
-  @media (max-width: 480px) {
-    .gallery { --pw: min(110px, 28vw); --ph: calc(var(--pw) * 1.42); }
-    .gallery__grid { display: flex; flex-wrap: wrap; justify-content: center; max-width: calc(3 * var(--pw) + 2 * var(--pgap) + 40px); }
-  }
 </style>
