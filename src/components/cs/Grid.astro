@@ -1,0 +1,23 @@
+---
+/** Simple CSS grid wrapper: <Grid cols={3} gap={16}>…</Grid> */
+interface Props {
+  cols?: number | string;
+  gap?: number | string;
+  class?: string;
+  style?: string;
+  /** minimum column width for auto-collapsing on small screens */
+  min?: number;
+}
+const { cols = 2, gap = 16, class: className, style, min = 220, ...rest } = Astro.props;
+const template = typeof cols === 'number' ? `repeat(${cols}, minmax(0, 1fr))` : cols;
+---
+
+<div {...rest} class:list={['cs-grid', className]} style={`grid-template-columns:${template};gap:${typeof gap === 'number' ? `${gap}px` : gap};--grid-min:${min}px;${style ?? ''}`}>
+  <slot />
+</div>
+
+<style>
+  @media (max-width: 949px) {
+    .cs-grid { grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min), 100%), 1fr)) !important; }
+  }
+</style>

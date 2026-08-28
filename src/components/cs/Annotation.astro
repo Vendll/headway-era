@@ -1,0 +1,45 @@
+---
+/**
+ * Small annotation placed on top of a Figure: a dotted leader line ending in a dot, with a note.
+ * Position with percentages of the figure box. `side="right"` puts the text to the right of the line.
+ *
+ * <Annotation top="12%" left="72%" width={170} side="right">Lorem ipsum dolor sit amet…</Annotation>
+ */
+interface Props {
+  top: string;
+  left: string;
+  /** leader line length in px */
+  line?: number;
+  /** text block width in px */
+  width?: number;
+  side?: 'left' | 'right';
+  color?: string;
+  class?: string;
+  /** vertical leader (line goes down from the dot) */
+  vertical?: boolean;
+}
+const { top, left, line = 120, width = 160, side = 'right', color = 'var(--accent-cs, var(--purple-2))', class: className, vertical = false, ...rest } = Astro.props;
+---
+
+<div {...rest} class:list={['annot', `annot--${side}`, { 'annot--v': vertical }, className]} style={`top:${top};left:${left};--line:${line}px;--w:${width}px;--c:${color}`}>
+  <span class="annot__line" aria-hidden="true"></span>
+  <div class="annot__text"><slot /></div>
+</div>
+
+<style>
+  .annot { position: absolute; display: flex; align-items: flex-start; gap: 10px; z-index: 2; pointer-events: none; }
+  .annot--left { flex-direction: row-reverse; transform: translateX(-100%); }
+  .annot__line { position: relative; width: var(--line); height: 0; border-top: 2px dotted var(--c); margin-top: 6px; flex: none; }
+  .annot__line::before, .annot__line::after { content: ''; position: absolute; top: -4px; width: 6px; height: 6px; border-radius: 50%; background: var(--c); }
+  .annot__line::before { left: -3px; }
+  .annot__line::after { right: -3px; }
+  .annot__text { width: var(--w); font-size: 12px; line-height: 1.25; font-weight: 400; letter-spacing: -0.01em; color: #5b5b5b; }
+  .annot__text :global(ul) { list-style: disc; padding-left: 1.1em; margin-top: 4px; }
+  .annot__text :global(strong) { display: block; font-weight: 500; color: #151515; margin-bottom: 4px; }
+  .annot__text :global(p) { margin: 0; }
+  .annot--v { flex-direction: column; align-items: center; }
+  .annot--v .annot__line { width: 0; height: var(--line); border-top: 0; border-left: 2px dotted var(--c); margin: 0; }
+  .annot--v .annot__line::before { top: -3px; left: -4px; }
+  .annot--v .annot__line::after { top: auto; bottom: -3px; left: -4px; }
+  @media (max-width: 949px) { .annot { display: none; } }
+</style>

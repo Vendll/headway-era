@@ -1,0 +1,200 @@
+---
+/**
+ * Top navigation bar: links left, centred logo, Resume right.
+ *
+ *   default – full bar (links + logo + Resume)
+ *   minimal – logo only (standalone pages)
+ */
+import { site, nav } from '@/data/site';
+import '@/styles/tailwind.css';
+import MobileNav from '@/components/MobileNav';
+
+interface Props {
+  variant?: 'default' | 'minimal';
+  position?: 'fixed' | 'absolute';
+  /** landing state: logo alone, bar assembles around it as the page scrolls */
+  assemble?: boolean;
+}
+const { variant = 'default', position = 'fixed', assemble = false } = Astro.props;
+
+/** current path, normalised so "/play.html", "/play/" and "/index.html" all match */
+const path = Astro.url.pathname.replace(/\.html$/, '').replace(/\/index$/, '/').replace(/(.)\/+$/, '$1') || '/';
+const isActive = (href: string) => (href.split('#')[0].replace(/\/+$/, '') || '/') === path;
+---
+
+<header
+  class:list={['site-nav', `site-nav--${position}`, `site-nav--${variant}`, { 'site-nav--assemble': assemble }]}
+  data-header
+  data-nav-assemble={assemble ? '' : undefined}
+>
+  {
+    variant !== 'minimal' && (
+      <div class="site-nav__burger">
+        <MobileNav client:load items={nav} resumeHref={site.resumeNav} activePath={path} />
+      </div>
+    )
+  }
+
+  {
+    variant !== 'minimal' && (
+      <nav class="site-nav__links" aria-label="Primary">
+        {nav.map((n) => (
+          <a class:list={['site-nav__link', { 'is-active': isActive(n.href) }]} href={n.href} aria-current={isActive(n.href) ? 'page' : undefined}>
+            {n.label}
+          </a>
+        ))}
+      </nav>
+    )
+  }
+
+  <a class="site-nav__logo" href="/" aria-label="Home">
+    <img src={site.logo} alt="Logo" width="556" height="88" />
+  </a>
+
+  {
+    variant !== 'minimal' && (
+      <a class="site-nav__cta" href={site.resumeNav} target="_blank" rel="noopener">
+        Resume
+      </a>
+    )
+  }
+</header>
+
+<style>
+  .site-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 60;
+    height: var(--header-h);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 0 24px;
+    font-family: var(--font-mono);
+    font-size: 14px;
+    line-height: 1.2;
+    letter-spacing: -0.03em;
+    color: var(--fg);
+  }
+  .site-nav--absolute { position: absolute; }
+
+  /* --nav-t: 0 = bare landing state, 1 = assembled bar.
+     Defaults to 1 so the nav is complete and usable if the script never runs. */
+  .site-nav { --nav-t: 1; }
+  .site-nav::before,
+  .site-nav::after {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    pointer-events: none;
+  }
+  /* background fill */
+  .site-nav::before {
+    inset: 0;
+    background: var(--page-bg);
+    opacity: var(--nav-t);
+  }
+  /* hairline rule - draws outward from under the logo rather than fading */
+  .site-nav::after {
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 1px;
+    background: var(--rule);
+    transform: scaleX(var(--nav-t));
+    transform-origin: 50% 50%;
+  }
+
+  /* ---- assemble-on-scroll (home only) ---- */
+  /* interpolates from the open landing height down to --header-h, so the
+     assembled bar always matches the height every other page uses at this
+     breakpoint (60px desktop, 92px mobile) instead of a hardcoded 60px. */
+  .site-nav--assemble {
+    --nav-h-open: 96px;
+    height: calc(var(--nav-h-open) - (var(--nav-h-open) - var(--header-h)) * var(--nav-t));
+  }
+  .site-nav--assemble .site-nav__logo img { height: calc(40px - 12px * var(--nav-t)); }
+  .site-nav--assemble .site-nav__links {
+    opacity: var(--nav-t);
+    transform: translateX(calc(-16px * (1 - var(--nav-t))));
+  }
+  /* the CTA is deliberately exempt from the scrub - it stays visible and
+     clickable at every scroll position, including the bare landing state */
+  /* nothing invisible should be clickable */
+  .site-nav--assemble.is-bare .site-nav__links { pointer-events: none; }
+  /* keyboard users tabbing in get the assembled bar immediately */
+  .site-nav--assemble:focus-within { --nav-t: 1 !important; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .site-nav--assemble { --nav-t: 1 !important; }
+  }
+
+  .site-nav__burger { display: none; }
+  .site-nav__links { display: flex; align-items: center; gap: 22px; }
+  .site-nav__link {
+    color: var(--fg-muted);
+    white-space: nowrap;
+    transition: color 0.2s ease;
+  }
+  .site-nav__link:hover,
+  .site-nav__link.is-active { color: var(--fg); }
+
+  /* absolutely centred so the mark stays put however long the link list gets */
+  .site-nav__logo {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    align-items: center;
+  }
+  .site-nav__logo img {
+    display: block;
+    height: 28px;
+    width: auto;
+    /* the mark is 6.32:1 - at its 48px open size it needs 304px, so this must
+       stay above that or max-width clamps the width and distorts it */
+    max-width: min(340px, 45vw);
+  }
+
+  .site-nav__cta {
+    display: inline-flex;
+    align-items: center;
+    height: 32px;
+    padding: 0 14px;
+    border: 1px solid var(--brand);
+    border-radius: var(--r-sm);
+    background: var(--brand);
+    /* --ink is not theme-swapped, so the label stays dark on the orange fill on
+       both light and dark pages: 7.95:1, which white-on-orange (2.20:1) is not */
+    color: var(--ink);
+    white-space: nowrap;
+    transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  }
+  .site-nav__cta:hover {
+    background: var(--brand-2);
+    border-color: var(--brand-2);
+    color: var(--ink);
+  }
+
+  @media (max-width: 949px) {
+    .site-nav { padding: 0 16px; font-size: 12px; }
+    .site-nav__links { gap: 16px; }
+    .site-nav__logo img { height: 24px; }
+  }
+
+  /* stack: logo on top, links beneath — no JS menu needed */
+  /* the sheet takes the links, so the bar is a single row again:
+     burger | centred logo | Resume */
+  @media (max-width: 640px) {
+    .site-nav { padding: 0 16px; }
+    .site-nav__burger { display: block; }
+    .site-nav__links { display: none; }
+    .site-nav__logo img { height: 28px; max-width: 62vw; }
+    .site-nav--assemble .site-nav__logo img { height: calc(34px - 6px * var(--nav-t)); }
+    .site-nav__cta { height: 28px; padding: 0 12px; }
+  }
+</style>

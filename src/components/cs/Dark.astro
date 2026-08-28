@@ -1,0 +1,23 @@
+---
+/**
+ * Dark (or custom-coloured) block, 1008px wide, padding 50/50/80 — used for TL;DR, key learnings, reflections.
+ */
+interface Props {
+  bg?: string;
+  color?: string;
+  class?: string;
+  style?: string;
+  id?: string;
+  /** full content width instead of 1008px */
+  wide?: boolean;
+}
+const { bg, color, class: className, style, id, wide = false, ...rest } = Astro.props;
+---
+
+<div {...rest} id={id} class:list={['cs-dark', { 'cs-dark--wide': wide }, className]} style={`${bg ? `background:${bg};` : ''}${color ? `color:${color};` : ''}${style ?? ''}`} data-reveal="up">
+  <slot />
+</div>
+
+<style>
+  .cs-dark--wide { width: 100%; }
+</style>

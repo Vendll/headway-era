@@ -1,0 +1,491 @@
+---
+import CaseStudyLayout from '@/layouts/CaseStudyLayout.astro';
+import Section from '@/components/cs/Section.astro';
+import Row from '@/components/cs/Row.astro';
+import Grid from '@/components/cs/Grid.astro';
+import Stat from '@/components/cs/Stat.astro';
+import ArrowTag from '@/components/ArrowTag.astro';
+import Video from '@/components/Video.astro';
+import FocusCard from '@/components/flex-d/FocusCard.astro';
+import ChallengeCard from '@/components/flex-d/ChallengeCard.astro';
+
+const toc = [
+  { id: 'intro', label: 'Section One' },
+  { id: 'design-focus', label: 'Section Two' },
+  { id: 'impact', label: 'Section Three' },
+  { id: 'snapshots', label: 'Section Four' },
+  { id: 'prototype', label: 'Section Five' },
+  { id: 'challenges', label: 'Section Six' },
+  { id: 'figma-casestudy', label: 'Section Seven' },
+  { id: 'reflection', label: 'Section Eight' },
+];
+
+const figmaEmbed = '#';
+const figmaLink = '#';
+
+/** Design-snapshot posters (5472×3078), in page order. */
+const posters = [
+  { src: '/assets/images/A7od4bciLicxZeoKVyuOKwXzB6w.png', alt: 'Placeholder product screenshot' },
+  { src: '/assets/images/UPNhDSBH279GxO7MTzkI2QNceX0.png', alt: 'Placeholder mascot illustration' },
+  { src: '/assets/images/fvdUu0dxoagJk6oOlucIUn9zEY.png', alt: 'Placeholder typography specimen' },
+  { src: '/assets/images/f32RGtdoweLcRWOgmdNADqr54.png', alt: 'Placeholder interface screenshot' },
+  { src: '/assets/images/i0JZNIZzOnkVdWWkg1Z5pIRkpf4.png', alt: 'Placeholder wearable screenshot' },
+  { src: '/assets/images/aMq6Km3OzApvCg2XyypV7w8p0vQ.png', alt: 'Placeholder component library image' },
+];
+---
+
+<CaseStudyLayout
+  eyebrow="Project Four"
+  title="A <em>lorem ipsum dolor</em> sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore magna"
+  tags="Category One, Category Two, Category Three, Category Four"
+  year="2025"
+  toc={toc}
+  accent="#5B2BF5"
+  class="flexd"
+>
+  <!-- ============ Hero: violet box with the wordmark + stickers ============ -->
+  <div slot="hero" class="cs-hero flexd-hero" data-reveal="up">
+    <img
+      class="flexd-hero__img"
+      src="/assets/images/2PuOsJBSQPuprBpxp1Lq35tCVM.png"
+      alt="Placeholder wordmark image"
+      width="5485"
+      height="1870"
+      decoding="async"
+      fetchpriority="high"
+    />
+  </div>
+
+  <!-- ============ Introduction ============ -->
+  <Section id="intro" label="Section One" inset>
+    <Row label="Label One">
+      <p>
+        Project Four is a lorem ipsum dolor sit amet consectetur adipiscing elit, sed do eiusmod tempor in 2025. Ut enim ad minim veniam quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat duis aute irure dolor in reprehenderit.
+      </p>
+      <p>
+        The lorem ipsum dolor sit amet consectetur, adipiscing elit, sed do eiusmod, and tempor-incididunt labore et dolore magna aliqua enim ad minim. Veniam quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat duis aute irure dolor in reprehenderit voluptate velit.
+      </p>
+      <p>Excepteur sint occaecat cupidatat non proident sunt in culpa qui. Officia deserunt mollit anim id est laborum sed ut perspiciatis unde omnis iste natus.</p>
+    </Row>
+    <Row label="Label Two"><p>Job Title (2 people)</p></Row>
+    <Row label="Label Three"><p>10 weeks</p></Row>
+  </Section>
+
+  <!-- ============ Design focus: pinned horizontal scroller ============ -->
+  <Section id="design-focus" class="focus" label="Section Two">
+    <div class="focus__wrap" data-hscroll>
+      <div class="focus__sticky" data-hscroll-sticky>
+        <h2 class="flexd-h2" data-reveal>Lorem ipsum dolor amet ?</h2>
+
+        <div class="focus__track" data-hscroll-track>
+          <FocusCard num="01" title="Consectetur, adipiscing-elit sed eiusmod" tone="dark">
+            <p>Sed ut perspiciatis unde omnis, iste natus, error sit voluptatem accusantium doloremque laudantium totam rem aperiam eaque ipsa. Quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo nemo enim.</p>
+          </FocusCard>
+          <FocusCard tone="media" src="/assets/images/A7od4bciLicxZeoKVyuOKwXzB6w.png" alt="Placeholder product screenshot" pos="18% 50%" />
+          <FocusCard num="02" title="Ipsum et dolore in magna aliqua" tone="light">
+            <p>Nemo enim ipsam voluptatem quia voluptas, sit aspernatur aut odit. Fugit sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt neque porro quisquam est dolorem ipsum.</p>
+          </FocusCard>
+          <FocusCard tone="media" src="/assets/images/NlzlHTLaZvmsO2p3LJ3ceVlax0.png" alt="Placeholder interface screenshot" pos="62% 50%" />
+          <FocusCard num="03" title="Voluptate velit esse cillum dolore fugiat" tone="light">
+            <p>Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur omnis iste natus.</p>
+          </FocusCard>
+        </div>
+
+        <img class="focus__mascot" src="/assets/images/Iur3fI6xDvWZvJo6NxSVERQtY4.png" alt="Placeholder mascot illustration" width="680" height="978" loading="lazy" decoding="async" />
+      </div>
+    </div>
+  </Section>
+
+  <!-- ============ Preview: sticky poster stack ============ -->
+  <Section id="snapshots" class="snap" label="Section Four">
+    <h2 class="flexd-h2" data-reveal>Lorem Ipsum</h2>
+
+    <div class="snap__note">
+      <p class="snap__hint" data-reveal>* Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore magna aliqua.</p>
+      <div class="snap__tag">
+        <ArrowTag side="left" variant="dark" arrowWidth={80} arrowColor="#151515">Lorem, Dolor a<br /><em>amet elit!</em></ArrowTag>
+      </div>
+    </div>
+
+    <div class="posters">
+      {posters.map((p, i) => (
+        <figure class="poster" style={`--i:${i}`}>
+          <img src={p.src} alt={p.alt} width="5472" height="3078" loading={i === 0 ? 'eager' : 'lazy'} decoding="async" />
+        </figure>
+      ))}
+    </div>
+  </Section>
+
+  <!-- ============ Prototype ============ -->
+  <Section id="prototype" label="Section Five">
+    <h2 class="flexd-h2" data-reveal>Consectetur adipiscing</h2>
+    <div class="proto" data-reveal="up">
+      <div class="proto__phone">
+        <Video class="proto__video" src="/assets/videos/sa72uap2GpaVotwCXym51CV4mA.mp4" fit="cover" label="Placeholder prototype walkthrough video" />
+      </div>
+    </div>
+  </Section>
+
+  <!-- ============ Impact ============ -->
+  <Section id="impact" class="impact" label="Section Three">
+    <Grid cols={2} gap={40} class="impact__grid">
+      <Stat label="Lorem ipsum" value="50+ items" caption="Lorem-ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor, incididunt ut labore, et dolore, magna aliqua enim." />
+      <Stat label="Dolor sit" value="Lorem + ipsum" caption="Excepteur sint occaecat cupidatat non proident sunt, in culpa, qui officia, deserunt mollit, anim laborum." />
+    </Grid>
+    <div class="impact__center">
+      <Stat label="Amet elit" value="Consectetur ipsum" caption="Tempor incididunt ut, labore-dolore magna aliqua veniam quis nostrud exercitation, ullamco, laboris nisi aliquip." />
+    </div>
+  </Section>
+
+  <!-- ============ Challenges ============ -->
+  <Section id="challenges" label="Section Six">
+    <div class="tricky" data-reveal="up">
+      <div class="tricky__head">
+        <h2 class="tricky__title">
+          Lorem ipsum<br />dolor sit
+          <img class="tricky__sticker" src="/assets/images/Iur3fI6xDvWZvJo6NxSVERQtY4.png" alt="" aria-hidden="true" loading="lazy" decoding="async" />
+        </h2>
+      </div>
+      <div class="tricky__cards">
+        <div class="tricky__col">
+          <ChallengeCard title="Lorem Ipsum Dolor Sit Amet Consectetur Adipiscing" bg="#F0562F" tilt={-7}>
+            <p>Duis aute irure dolor in reprehenderit voluptate velit esse cillum. Dolore eu fugiat nulla pariatur excepteur sint occaecat cupidatat non proident sunt in culpa qui officia deserunt.</p>
+          </ChallengeCard>
+          <ChallengeCard title="Adipiscing Elit-Sed &amp; Eiusmod Tempor" bg="#8200E1">
+            <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque. Laudantium totam rem aperiam eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo nemo enim ipsam voluptatem quia voluptas.</p>
+          </ChallengeCard>
+        </div>
+        <div class="tricky__col tricky__col--2">
+          <ChallengeCard title="Magna Aliqua: Veniam Nostrud" bg="#D503FF">
+            <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium. Voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident similique sunt in culpa qui officia deserunt mollit anim.</p>
+          </ChallengeCard>
+          <ChallengeCard title="Tempor Incididunt &amp; Labore Dolore" bg="#6026FF" mascot="/assets/images/flexd-mascot-roast.png" mascotAlt="Placeholder mascot illustration">
+            <p>Et harum quidem rerum facilis est et expedita distinctio nam libero tempore cum soluta. Nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus omnis voluptas assumenda est omnis dolor repellendus temporibus.</p>
+          </ChallengeCard>
+        </div>
+      </div>
+    </div>
+  </Section>
+
+  <!-- ============ Detailed case study (Figma embed) ============ -->
+  <Section id="figma-casestudy" label="Section Seven">
+    <h2 class="flexd-h2" data-reveal>Consectetur, adipiscing elit sed eiusmod.</h2>
+    <div class="figma" data-reveal="up">
+      <iframe class="figma__frame" src={figmaEmbed} title="Project Four — Lorem ipsum dolor (placeholder embed)" width="1080" height="650" loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade"></iframe>
+      <a class="btn figma__btn" href={figmaLink} target="_blank" rel="noopener">
+        Open the full prototype
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M8 7h9v9"/></svg>
+      </a>
+    </div>
+  </Section>
+
+  <!-- ============ Reflection ============ -->
+  <Section id="reflection" label="Section Eight">
+    <h2 class="flexd-h2" data-reveal>Lorem ipsum dolor</h2>
+    <Grid cols={3} gap={32} class="learn">
+      <div class="learn__card" data-reveal="up">
+        <p><strong>Lorem ipsum dolor sit amet.</strong> Consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua enim ad minim veniam quis nostrud exercitation ullamco laboris nisi ut aliquip.</p>
+      </div>
+      <div class="learn__card" data-reveal="up" data-reveal-delay="0.06">
+        <p><strong>Duis aute irure dolor.</strong> Ex ea commodo consequat duis aute irure dolor in reprehenderit voluptate velit esse cillum. Dolore eu fugiat nulla pariatur excepteur sint occaecat, cupidatat non proident sunt culpa.</p>
+      </div>
+      <div class="learn__card" data-reveal="up" data-reveal-delay="0.12">
+        <p><strong>Officia deserunt mollit anim.</strong> Id est laborum sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium totam rem aperiam eaque ipsa quae ab illo inventore.</p>
+      </div>
+    </Grid>
+  </Section>
+</CaseStudyLayout>
+
+<script>
+  // Pinned horizontal scroller — pin the section and slide the card track sideways as the page scrolls.
+  const wrap = document.querySelector<HTMLElement>('[data-hscroll]');
+  const sticky = wrap?.querySelector<HTMLElement>('[data-hscroll-sticky]');
+  const track = wrap?.querySelector<HTMLElement>('[data-hscroll-track]');
+
+  if (wrap && sticky && track) {
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const small = window.matchMedia('(max-width: 949px)');
+    const clamp = (v: number) => Math.min(1, Math.max(0, v));
+    /** scroll distance (px) per px of horizontal travel — the live section runs ~300vh */
+    const PACE = 1.5;
+    let travel = 0;
+    let range = 1;
+
+    const isStatic = () => reduce.matches || small.matches;
+
+    const measure = () => {
+      if (isStatic()) {
+        wrap.classList.add('is-static');
+        wrap.style.height = '';
+        track.style.transform = '';
+        return;
+      }
+      wrap.classList.remove('is-static');
+      track.style.transform = '';
+      travel = Math.max(0, track.getBoundingClientRect().width - sticky.clientWidth);
+      const vh = window.innerHeight;
+      range = Math.max(1, Math.round(travel * PACE));
+      wrap.style.height = `${vh + range}px`;
+      update();
+    };
+
+    const update = () => {
+      if (isStatic()) return;
+      const p = clamp(-wrap.getBoundingClientRect().top / range);
+      track.style.transform = `translate3d(${-Math.round(p * travel)}px,0,0)`;
+    };
+
+    let ticking = false;
+    const onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        update();
+        ticking = false;
+      });
+    };
+
+    measure();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', measure);
+    reduce.addEventListener('change', measure);
+    small.addEventListener('change', measure);
+    // re-measure once the web fonts / images have settled (card widths are fixed, but be safe)
+    window.addEventListener('load', measure, { once: true });
+  }
+</script>
+
+<style>
+  /* ---------- shared bits ---------- */
+  .flexd-h2 {
+    font-size: 24px;
+    line-height: 1.2;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+  }
+
+  /* ---------- hero ---------- */
+  .flexd-hero {
+    background: #6026ff;
+    min-height: 680px;
+    padding: 40px;
+  }
+  .flexd-hero__img { width: 78.6%; max-width: 880px; height: auto; }
+
+  /* ---------- design focus: pinned horizontal scroller ---------- */
+  .focus { --focus-inset: 220px; }
+  .focus__wrap { position: relative; min-height: 100vh; margin-top: -38px; }
+  .focus__sticky {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    height: 100svh;
+    overflow: hidden;
+    padding-top: min(128px, 12vh);
+  }
+  .focus__track {
+    display: flex;
+    gap: 8px;
+    width: max-content;
+    padding-left: var(--focus-inset);
+    padding-right: 40px;
+    margin-top: min(116px, 10vh);
+    will-change: transform;
+  }
+  .focus__mascot {
+    position: absolute;
+    right: 30px;
+    bottom: 18vh;
+    width: 84px;
+    height: auto;
+    pointer-events: none;
+    animation: flexi-bob 2.6s ease-in-out infinite alternate;
+    transform-origin: 50% 90%;
+  }
+  @keyframes flexi-bob {
+    from { transform: translateY(0) rotate(-2deg); }
+    to { transform: translateY(-14px) rotate(3deg); }
+  }
+
+  /* static fallback: reduced motion / small screens → native horizontal strip */
+  .focus__wrap.is-static { min-height: 0; height: auto !important; }
+  .focus__wrap.is-static .focus__sticky { position: static; height: auto; overflow: visible; padding-top: 0; }
+  .focus__wrap.is-static .focus__track {
+    width: auto;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding: 0 0 12px;
+    margin-top: 40px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+  }
+  .focus__wrap.is-static .focus__track > :global(*) { scroll-snap-align: start; }
+  .focus__wrap.is-static .focus__mascot { position: static; width: 64px; margin: 24px 0 0 auto; }
+
+  /* ---------- preview: sticky note row + stacking posters ---------- */
+  .snap { position: relative; }
+  .snap__note {
+    position: sticky;
+    top: 60px;
+    z-index: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 24px;
+    padding: 0 48px 0 50px;
+    margin-top: 70px;
+  }
+  .snap__hint {
+    max-width: 310px;
+    font-size: 14px;
+    line-height: 1.45;
+    font-weight: 300;
+    letter-spacing: -0.02em;
+    color: var(--muted-2);
+  }
+  .snap__tag { margin-top: -22px; }
+  .posters { position: relative; margin-top: 110px; padding-bottom: 20px; }
+  .poster {
+    position: sticky;
+    top: clamp(80px, 19vh, 180px);
+    z-index: 1;
+    width: 996px;
+    max-width: 100%;
+    margin: 0 auto 60px;
+    background: #151515;
+  }
+  .poster:last-child { margin-bottom: 0; }
+  .poster img { width: 100%; height: auto; display: block; }
+
+  /* ---------- prototype ---------- */
+  .proto {
+    margin-top: 38px;
+    background: var(--bg-2);
+    padding: 88px 24px;
+    display: grid;
+    place-items: center;
+    border-radius: var(--r-lg);
+  }
+  .proto__phone {
+    width: 214px;
+    height: 464px;
+    background: #fff;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.02);
+  }
+  .proto :global(.proto__video) { width: 100%; height: 100%; object-fit: cover; }
+
+  /* ---------- impact ---------- */
+  .impact :global(.impact__grid) { margin-top: 56px; }
+  .impact__center { display: flex; justify-content: center; margin-top: 110px; }
+
+  /* ---------- challenges ---------- */
+  .tricky {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 40px;
+    background: #1b1b1b;
+    color: #fff;
+    min-height: 630px;
+    padding: 64px 70px 70px 50px;
+    margin-top: 38px;
+    overflow: hidden;
+    border-radius: var(--r-lg);
+  }
+  .tricky__title {
+    font-family: var(--font-champ);
+    font-weight: 700;
+    font-size: 54px;
+    line-height: 1.08;
+    letter-spacing: 0;
+    color: #f8f5ff;
+  }
+  .tricky__title { position: relative; display: inline-block; }
+  .tricky__sticker {
+    position: absolute;
+    left: 1.5em;
+    top: -0.3em;
+    width: 0.5em;
+    height: auto;
+    transform: rotate(-70deg);
+    pointer-events: none;
+  }
+  .tricky__cards { display: flex; gap: 16px; align-items: flex-start; }
+  .tricky__col { display: flex; flex-direction: column; gap: 16px; width: 270px; }
+  .tricky__col--2 { margin-top: 14px; }
+
+  /* ---------- figma embed ---------- */
+  .figma {
+    margin-top: 46px;
+    background: var(--bg-2);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    border-radius: var(--r-lg);
+  }
+  .figma__frame {
+    display: block;
+    width: 100%;
+    max-width: 1080px;
+    height: auto;
+    aspect-ratio: 1080 / 650;
+    border-radius: var(--r-md);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    background: #fff;
+  }
+  .figma :global(.figma__btn) { height: 52px; padding: 0 20px; }
+
+  /* ---------- reflection ---------- */
+  :global(.learn) { margin-top: 52px; }
+  .learn__card {
+    background: var(--bg-2);
+    padding: 22px 20px 24px;
+    border-radius: var(--r-md);
+    min-height: 210px;
+  }
+  .learn__card p {
+    font-size: 14px;
+    line-height: 1.55;
+    font-weight: 300;
+    letter-spacing: -0.02em;
+    color: var(--ink-2);
+  }
+  .learn__card strong { font-weight: 600; color: var(--ink); }
+
+  /* ---------- responsive ---------- */
+  @media (max-width: 1499px) {
+    .focus { --focus-inset: 120px; }
+  }
+  @media (max-width: 1199px) {
+    .flexd-hero { min-height: clamp(360px, 52vw, 680px); padding: 24px; }
+    .flexd-hero__img { width: 90%; }
+    .focus { --focus-inset: 24px; }
+    .snap__note { padding: 0; }
+    .tricky { grid-template-columns: 1fr; padding: 40px 32px 48px; min-height: 0; }
+    .tricky__cards { flex-wrap: wrap; }
+  }
+  @media (max-width: 949px) {
+    .focus__wrap { margin-top: 0; }
+    .snap__note { position: static; flex-direction: column; margin-top: 40px; }
+    .snap__tag { margin-top: 20px; align-self: flex-end; }
+    .posters { margin-top: 48px; }
+    .poster { position: relative; top: auto; margin-bottom: 24px; }
+    .proto { padding: 48px 16px; }
+    .impact__center { margin-top: 70px; }
+    .tricky__title { font-size: clamp(36px, 10vw, 54px); }
+    .tricky__cards { flex-direction: column; gap: 16px; }
+    .tricky__col { width: 100%; }
+    .tricky__col--2 { margin-top: 0; }
+    .tricky :global(.trick) { --tilt: 0deg; }
+  }
+  @media (max-width: 640px) {
+    .flexd-h2 { font-size: 21px; }
+    .tricky { padding: 32px 20px 40px; }
+    .figma { padding: 12px; }
+    .learn__card { min-height: 0; }
+  }
+</style>

@@ -1,0 +1,203 @@
+---
+/**
+ * A pinned centred headline that splits apart (the first half slides left,
+ * the second half slides right) once the paintings
+ * start scrolling in underneath. Each painting sits in a 400 × 400 sticky slot
+ * (top: 200px) so they stack on top of each other; the card inside tilts/scales
+ * in (scale 1.4, rotateX −40°) as its slot travels up to the pinned position.
+ */
+import type { Painting } from './types';
+
+interface Props {
+  paintings: Painting[];
+  class?: string;
+  id?: string;
+}
+const { paintings, class: className, id } = Astro.props;
+---
+
+<section id={id} class:list={['paint', className]} data-paint aria-label="Placeholder images">
+  <div class="paint__pin" data-paint-pin>
+    <h2 class="paint__line">
+      <span class="paint__a">Sed, ut lorem</span>
+      {' '}
+      <span class="paint__b">Et ipsum sit!</span>
+    </h2>
+  </div>
+
+  <div class="paint__stack">
+    <span class="paint__trigger" data-paint-trigger aria-hidden="true"></span>
+    {
+      paintings.map((p, i) => (
+        <div class="paint__slot" data-paint-slot style={`--i:${i}`}>
+          <figure class="paint__card" data-paint-card style={`--size:${p.size ?? 0.885};--tilt:${p.tilt ?? -40}`}>
+            <img src={p.src} alt={p.alt} width={p.width} height={p.height} loading="lazy" decoding="async" style={`aspect-ratio:${p.width} / ${p.height}`} />
+          </figure>
+        </div>
+      ))
+    }
+  </div>
+</section>
+
+<script>
+  const sections = document.querySelectorAll<HTMLElement>('[data-paint]');
+  const clamp01 = (v: number) => Math.min(1, Math.max(0, v));
+  const easeOut = (t: number) => 1 - Math.pow(1 - t, 2);
+
+  for (const section of sections) {
+    const pin = section.querySelector<HTMLElement>('[data-paint-pin]');
+    const trigger = section.querySelector<HTMLElement>('[data-paint-trigger]');
+    const slots = Array.from(section.querySelectorAll<HTMLElement>('[data-paint-slot]'));
+    const cards = slots.map((s) => s.querySelector<HTMLElement>('[data-paint-card]')!).filter(Boolean);
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!cards.length) continue;
+
+    const tilts = cards.map((c) => Number(getComputedStyle(c).getPropertyValue('--tilt')) || -40);
+    const stickyTop = () => (window.innerWidth < 810 ? 120 : 200);
+
+    // t = this card's own arrival progress; next = the following card's progress (fades this one out)
+    const render = (card: HTMLElement, t: number, tilt: number, next = 0) => {
+      const e = easeOut(t);
+      const s = 1.4 - 0.4 * e;
+      const rx = tilt * (1 - e);
+      card.style.transform = `perspective(1200px) scale(${s.toFixed(4)}) rotateX(${rx.toFixed(2)}deg)`;
+      const fadeIn = clamp01(t / 0.45);
+      const fadeOut = 1 - clamp01((next - 0.45) / 0.4);
+      card.style.opacity = Math.min(fadeIn, fadeOut).toFixed(3);
+    };
+
+    if (reduce) {
+      pin?.classList.add('is-split');
+      cards.forEach((c, i) => render(c, 1, tilts[i], i < cards.length - 1 ? 1 : 0));
+      continue;
+    }
+
+    const update = () => {
+      const vh = window.innerHeight;
+      const top = stickyTop();
+      // 1. split the line once the trigger (700px into the stack) has scrolled into / past the viewport
+      if (pin && trigger) pin.classList.toggle('is-split', trigger.getBoundingClientRect().top < vh);
+      // 2. tilt/scale each card in as its (untransformed) slot travels up to the sticky offset
+      const ts = slots.map((slot) => clamp01((vh - slot.getBoundingClientRect().top) / (vh - top)));
+      ts.forEach((t, i) => render(cards[i], t, tilts[i], ts[i + 1] ?? 0));
+    };
+
+    let ticking = false;
+    const onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        update();
+        ticking = false;
+      });
+    };
+    update();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', update);
+  }
+</script>
+
+<style>
+  .paint {
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: clip;
+  }
+
+  /* pinned split line */
+  .paint__pin {
+    position: sticky;
+    top: 0;
+    z-index: 9;
+    width: 100%;
+    height: 100vh;
+    height: 100svh;
+    pointer-events: none;
+    display: grid;
+    place-items: center;
+    --split: 238px;
+  }
+  .paint__line {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    width: 100%;
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.2;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    color: #e3e3e3;
+    margin: 0;
+  }
+  .paint__a,
+  .paint__b {
+    display: block;
+    width: 86px;
+    flex: none;
+    white-space: nowrap;
+    transition: transform 0.9s var(--ease-spring);
+    will-change: transform;
+  }
+  .paint__a { text-align: right; }
+  .paint__b { text-align: left; }
+  .paint__pin.is-split .paint__a { transform: translateX(calc(-1 * var(--split))); }
+  .paint__pin.is-split .paint__b { transform: translateX(var(--split)); }
+
+  /* sticky-stacking paintings */
+  .paint__stack {
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 250px;
+    padding: 1000px 0 180px;
+  }
+  .paint__trigger {
+    position: absolute;
+    top: 700px;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    pointer-events: none;
+  }
+  .paint__slot {
+    position: sticky;
+    top: 200px;
+    z-index: calc(1 + var(--i));
+    width: 400px;
+    height: 400px;
+    max-width: calc(100% - 48px);
+  }
+  .paint__card {
+    width: 100%;
+    height: 100%;
+    border-radius: 4px;
+    display: grid;
+    place-items: center;
+    will-change: transform, opacity;
+    transform-origin: 50% 50%;
+    /* tilt/scale/opacity start state is applied inline by the script */
+  }
+  .paint__card img {
+    width: calc(var(--size) * 100%);
+    height: auto;
+    border-radius: 4px;
+    object-fit: cover;
+  }
+
+  @media (max-width: 1299px) {
+    .paint__stack { padding: 1000px 0 150px; }
+  }
+  @media (max-width: 809px) {
+    .paint__pin { --split: clamp(96px, 17vw, 238px); }
+    .paint__stack { gap: 160px; padding: 700px 0 120px; }
+    .paint__trigger { top: 450px; }
+    .paint__slot { top: 120px; width: min(400px, 100% - 48px); height: auto; aspect-ratio: 1; }
+  }
+</style>

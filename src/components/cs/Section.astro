@@ -1,0 +1,23 @@
+---
+/**
+ * A case-study section: optional mono eyebrow label + content.
+ * `id` is used by the sidebar scroll-spy. `inset` narrows the content to the 880px inner column.
+ */
+interface Props {
+  id?: string;
+  label?: string;
+  inset?: boolean;
+  class?: string;
+  style?: string;
+}
+const { id, label, inset = false, class: className, style, ...rest } = Astro.props;
+---
+
+<section {...rest} id={id} class:list={['cs-section', { 'cs-section--inset': inset }, className]} data-toc-section={id ? '' : undefined} style={style}>
+  {label && <p class="cs-label" data-reveal="fade">{label}</p>}
+  <slot />
+</section>
+
+<style>
+  .cs-section--inset { width: 880px; max-width: 100%; margin-inline: auto; }
+</style>

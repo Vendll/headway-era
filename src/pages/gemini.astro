@@ -1,0 +1,526 @@
+---
+import CaseStudyLayout from '@/layouts/CaseStudyLayout.astro';
+import Video from '@/components/Video.astro';
+import ArrowTag from '@/components/ArrowTag.astro';
+import Section from '@/components/cs/Section.astro';
+import Row from '@/components/cs/Row.astro';
+import Callout from '@/components/cs/Callout.astro';
+import Dark from '@/components/cs/Dark.astro';
+import Figure from '@/components/cs/Figure.astro';
+import Grid from '@/components/cs/Grid.astro';
+import Card from '@/components/cs/Card.astro';
+import Flow from '@/components/gemini/Flow.astro';
+
+const toc = [
+  { id: 'introduction', label: 'Section One' },
+  { id: 'problem', label: 'Section Two' },
+  { id: 'primary-research', label: 'Section Three' },
+  { id: 'core-flows', label: 'Section Four' },
+  { id: 'impact', label: 'Section Five' },
+  { id: 'future-enhancements', label: 'Section Six' },
+  { id: 'reflection', label: 'Section Seven' },
+];
+
+const articleUrl = '#';
+
+const impacts = [
+  {
+    title: '30%<br />lorem ipsum dolor',
+    body: 'Lorem ipsum dolor sit amet consectetur adipiscing elit sed 1–2 eiusmod tempor incididunt ut labore et dolore magna aliqua enim minim.',
+  },
+  {
+    title: 'Sit amet<br />elit',
+    body: 'Ut enim ad minim veniam quis nostrud exercitation ullamco laboris nisi ut aliquip, commodo, consequat, duis.',
+  },
+  {
+    title: '50%<br />sed do eiusmod',
+    body: 'Duis aute irure dolor in reprehenderit voluptate velit esse, cillum fugiat nulla pariatur excepteur sint occaecat.',
+  },
+];
+
+const future = [
+  { icon: '/assets/images/gemini/icon-tone-presets.png', title: 'Lorem ipsum', body: 'Lorem, Ipsum, Dolor Sit, Consectetur, adipiscing elit sed.' },
+  { icon: '/assets/images/gemini/icon-constraint-editing.png', title: 'Adipiscing-based elementum', body: '“Lorem ipsum dolor sit amet” or “Consectetur adipiscing elit sed.”' },
+  { icon: '/assets/images/gemini/icon-writing-memory.png', title: 'Consectetur adipiscing elit', body: 'Nulla vitae elit’s libero pharetra augue.' },
+  { icon: '/assets/images/gemini/icon-language-flexibility.png', title: 'Euismod semper', body: 'Vestibulum id ligula porta felis euismod semper nulla vitae elit.' },
+];
+
+const reflections = [
+  'Lorem ipsum dolor sit amet consectetur adipiscing, elit sed.',
+  'Eiusmod tempor incididunt ut labore dolore.',
+  'Magna + aliqua enim ad minim veniam.',
+  'Quis nostrud exercitation ullamco laboris, nisi aliquip.',
+];
+---
+
+<CaseStudyLayout
+  accent="#1710E6"
+  eyebrow="Project Three"
+  title="<em>Lorem ipsum dolor</em> sit amet consectetur adipiscing elit sed do eiusmod tempor"
+  tags="Category One, Category Two, Category Three"
+  year="2026"
+  toc={toc}
+  class="gemini"
+>
+  <div slot="hero" class="g-hero" data-reveal>
+    <Video class="g-hero__vid" src="/assets/videos/qLleBeKiE3FL1Hr9VFEvmCExPg.mp4" label="Demo: lorem ipsum dolor sit amet consectetur adipiscing elit sed do" />
+  </div>
+
+  <div class="gemini-body">
+    <!-- ============ Introduction ============ -->
+    <Section id="introduction" label="Section One" inset class="g-intro">
+      <Row label="Label One">
+        <p>
+          Lorem ipsum dolor sit amet consectetur, adipiscing, elit sed. Do eiusmod tempor incididunt ut labore et dolore magna aliqua, enim ad minim, veniam quis nostrud. Exercitation ullamco laboris, nisi aliquip ex ea commodo.
+        </p>
+        <p><strong>Duis aute irure, dolor in reprehenderit, voluptate velit esse cillum fugiat nulla.</strong></p>
+      </Row>
+      <Row label="Label Two">
+        <p>24 hours</p>
+      </Row>
+
+      <Callout class="g-callout" bg="rgba(0, 126, 255, 0.2)" border="rgba(0, 126, 255, 0.5)" color="#262626" title="Lorem ipsum? Dolor.">
+        <p>
+          Lorem ipsum dolor sit 24h amet consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore magna. <strong>Ut enim ad minim veniam quis nostrud exercitation ullamco laboris nisi ut aliquip ex</strong> in 2026. Duis aute irure dolor in reprehenderit, velit esse cillum fugiat.
+          <a href={articleUrl} target="_blank" rel="noopener">Read the article here</a>
+        </p>
+      </Callout>
+    </Section>
+
+    <!-- ============ Problem space (Quick TL;DR) ============ -->
+    <Section id="problem" class="g-problem">
+      <div class="g-tldr-tag">
+        <ArrowTag side="left" variant="blue" arrowWidth={105} arrowColor="#1710E6">Lorem<br />Ipsum</ArrowTag>
+      </div>
+
+      <Dark wide class="g-dark">
+        <p class="cs-label">Label Four</p>
+        <div class="g-prob">
+          <div class="g-prob__desc cs-body">
+            <h3 class="g-dark__h">Lorem ipsum sit <em>amet</em>.</h3>
+            <div class="g-prob__list">
+              <p><strong>Lorem ipsum dolor sit:</strong></p>
+              <ul>
+                <li>Lorem ipsum dolor sit amet consectetur adipiscing</li>
+                <li>Elit sed do</li>
+                <li>Eiusmod tempor incididunt</li>
+                <li>Ut labore et dolore</li>
+              </ul>
+            </div>
+          </div>
+          <div class="g-prob__media">
+            <Video class="g-prob__vid" src="/assets/videos/KcVXKtlWBMhwAXIWJDfVYhgPDKE.mp4" label="Placeholder video: lorem ipsum dolor sit amet consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore magna" />
+          </div>
+        </div>
+
+        <p class="cs-label">Label Five</p>
+        <div class="g-sol">
+          <h3 class="g-dark__h g-dark__h--sm">Lorem ipsum dolor sit amet consectetur?</h3>
+          <div class="g-sol__body cs-body">
+            <p>A lorem-ipsum dolor sit amet consectetur adipiscing elit.</p>
+            <ol>
+              <li>Sed do eiusmod tempor incididunt, labore, dolore, magna.</li>
+              <li>Ut enim minim veniam quis, nostrud, ullamco, laboris.</li>
+            </ol>
+            <p><strong>Duis aute irure dolor in reprehenderit, voluptate velit esse cillum fugiat nulla pariatur.</strong></p>
+          </div>
+        </div>
+      </Dark>
+    </Section>
+
+    <!-- ============ Primary research ============ -->
+    <Section id="primary-research" class="g-research">
+      <div class="cs-inner">
+        <p class="cs-label g-research__label" data-reveal="fade">Section Three</p>
+        <Row label="Label Three" lg class="g-research__row">
+          <div class="g-research__body">
+            <p>
+              Lorem ipsum dolor
+              <span class="g-hl g-hl--reddit">
+                Lorem<img src="/assets/images/UXfKvddTfTvrnyHpkoXnvWNQdI.png" alt="" width="54" height="21" loading="lazy" decoding="async" />
+                <img class="g-note" src="/assets/images/Berh5Wni94qHMwbkI0KX6uT8KrE.png" alt="Placeholder note" width="92" height="31" loading="lazy" decoding="async" />
+              </span>
+              sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et magna.
+            </p>
+            <p><strong>Lorem ipsum dolor:</strong></p>
+            <ul>
+              <li>Sed do eiusmod tempor incididunt ut labore aliqua?</li>
+              <li>Ut enim ad minim veniam quis nostrud?</li>
+              <li>Exercitation ullamco laboris nisi aliquip?</li>
+            </ul>
+            <p><strong>Dolor Sit</strong></p>
+            <ul>
+              <li>Lorem ipsum’s dolor “sit amet.”</li>
+              <li>Duis aute “irure dolor.”</li>
+            </ul>
+          </div>
+        </Row>
+      </div>
+
+      <div class="g-figs">
+        <Figure
+          class="g-fig g-fig--reddit"
+          src="/assets/images/YkGijlXSjxSYMldiMgulkoiPrA.png"
+          alt="Placeholder screenshot of comment replies"
+          caption="Fig. Placeholder responses"
+        />
+        <Figure
+          class="g-fig g-fig--sketch"
+          src="/assets/images/PTFYalKLrCWNF9iLCnF3LioPNQ.png"
+          alt="Placeholder sketch image"
+          caption="Fig. Placeholder sketches"
+        />
+      </div>
+    </Section>
+
+    <!-- ============ Core Flows ============ -->
+    <Section id="core-flows" class="g-flows">
+      <Flow label="Flow #1" title="Lorem Ipsum" video="/assets/videos/MDY70p8PtphTH1LAZtGTbyDWttg.mp4" radius={12} videoLabel="Placeholder video: lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor">
+        <p>Lorem ipsum dolor sit amet consectetur adipiscing, elit <strong>Lorem</strong> sed do eiusmod tempor.</p>
+        <p><strong>Lorem ipsum dolor:</strong></p>
+        <ul>
+          <li>Ipsum</li>
+          <li>Dolor (sit amet consectetur adipiscing)</li>
+          <li>Elit sed do</li>
+          <li>Eiusmod tempor incididunt</li>
+        </ul>
+        <p><strong>Ut labore et dolore magna aliqua enim ad minim veniam quis nostrud exercitation ullamco</strong></p>
+      </Flow>
+
+      <Flow label="Flow #2" title="Dolor Sit" video="/assets/videos/ak2XsRd8kCqNG5NBkS0oTZt6TXc.mp4" videoLabel="Placeholder video: lorem ipsum dolor sit amet consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore">
+        <p>Lorem ipsum dolor sit amet consectetur, adipiscing elit sed do eiusmod.</p>
+        <p><strong>Dolor sit amet:</strong></p>
+        <ul class="tight">
+          <li>Lorem - ipsum dolor sit amet consectetur adipiscing elit sed do</li>
+          <li>Eiusmod</li>
+          <li>Tempor incididunt ut</li>
+        </ul>
+        <p><strong>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip commodo.</strong></p>
+      </Flow>
+    </Section>
+
+    <!-- ============ Expected Impact ============ -->
+    <Section id="impact" label="Section Five" inset class="g-impact">
+      <Grid cols={3} gap={8}>
+        {
+          impacts.map((c) => (
+            <Card variant="dark" title={c.title} titleSize={26}>
+              <p>{c.body}</p>
+            </Card>
+          ))
+        }
+      </Grid>
+    </Section>
+
+    <!-- ============ Future enhancements ============ -->
+    <Section id="future-enhancements" label="Section Six" inset class="g-future">
+      <Grid cols={2} gap="10px 21px">
+        {
+          future.map((f) => (
+            <Card variant="light" title={f.title} icon={f.icon}>
+              <p>{f.body}</p>
+            </Card>
+          ))
+        }
+      </Grid>
+    </Section>
+
+    <!-- ============ Reflection ============ -->
+    <Section id="reflection" class="g-reflection">
+      <Dark wide class="g-refl">
+        <p class="cs-label">Section Seven</p>
+        <div class="g-refl__grid">
+          <p class="g-refl__big">
+            Lorem ipsum:<br /><br />
+            Lorem ipsum dolor’s amet.<br />
+            Ut <em class="g-hl g-hl--reads">lorem<img src="/assets/images/CG7vYXLXXagMEQVHe1eGtn0NnU.png" alt="" width="56" height="23" loading="lazy" decoding="async" /></em> sit amet.
+          </p>
+          <ol class="g-refl__list">
+            {reflections.map((r, i) => <li data-reveal="up" data-reveal-delay={String(i * 0.05)}><span>{r}</span></li>)}
+          </ol>
+        </div>
+      </Dark>
+    </Section>
+  </div>
+</CaseStudyLayout>
+
+<style>
+  /* ---------- hero ---------- */
+  .g-hero {
+    position: relative;
+    width: 100%;
+    height: min(72vh, 580px);
+    background: #040404;
+    overflow: hidden;
+    margin: 12px 0 20px;
+  }
+  .g-hero :global(.g-hero__vid) {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .gemini-body :global(strong) { font-weight: 600; }
+
+  /* ---------- introduction ---------- */
+  .g-intro :global(.cs-row) { padding: 18px 0; }
+  .g-intro :global(.cs-row__body strong) { color: var(--muted-2); }
+
+  .gemini-body :global(.g-callout) {
+    margin-top: 18px;
+    padding: 24px 40px;
+    border-radius: 8px;
+  }
+  .gemini-body :global(.g-callout .callout__title) {
+    font-size: 18px;
+    line-height: 1.4;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    margin-bottom: 1.4em;
+  }
+  .gemini-body :global(.g-callout p) {
+    font-size: 16px;
+    line-height: 1.4;
+    letter-spacing: -0.02em;
+  }
+  .gemini-body :global(.g-callout strong) { font-weight: 600; }
+  .gemini-body :global(.g-callout a) {
+    color: var(--blue);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    transition: opacity 0.2s ease;
+  }
+  .gemini-body :global(.g-callout a:hover) { opacity: 0.75; }
+
+  /* ---------- Quick TL;DR tag + dark block ---------- */
+  .g-tldr-tag {
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 224px;
+    margin-bottom: 10px;
+    position: relative;
+    z-index: 1;
+  }
+  .g-tldr-tag :global(.tag-box) {
+    width: 128px;
+    text-align: center;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    padding: 5px 0;
+  }
+  .g-tldr-tag :global(.atag__arrow) { margin-top: 22px; }
+
+  .gemini-body :global(.g-dark .cs-label) { margin-bottom: 34px; }
+  .g-dark__h {
+    font-size: 24px;
+    line-height: 1.3;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    color: #f5f5f5;
+  }
+  .g-dark__h em { font-style: italic; }
+  .g-dark__h--sm { font-size: 20px; letter-spacing: -0.02em; }
+
+  .g-prob {
+    display: grid;
+    grid-template-columns: minmax(0, 46fr) minmax(0, 54fr);
+    align-items: start;
+    margin-bottom: 34px;
+  }
+  .g-prob__desc { display: flex; flex-direction: column; gap: 36px; }
+  .g-prob__list :global(p),
+  .g-prob__list :global(li) {
+    color: #f5f5f5;
+    font-size: 16px;
+    line-height: 1.5;
+    letter-spacing: -0.01em;
+  }
+  .g-prob__list :global(ul) { margin-top: 1.5em; padding-left: 1.2em; }
+  .g-prob__list :global(li) { margin: 0; }
+  .g-prob__media {
+    background: rgba(38, 38, 38, 0.3);
+    border-radius: 24px 24px 0 0;
+    padding: 32px 40px;
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
+  }
+  .g-prob__media :global(.g-prob__vid) { width: 225px; height: auto; border-radius: 12px; }
+
+  .g-sol {
+    display: grid;
+    grid-template-columns: 40% minmax(0, 1fr);
+    gap: 50px;
+    padding-right: 50px;
+    align-items: start;
+  }
+  .g-sol__body :global(p),
+  .g-sol__body :global(li) {
+    color: #f5f5f5;
+    font-size: 16px;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+  }
+  .g-sol__body :global(ol) { margin: 1.3em 0; padding-left: 1.4em; }
+  .g-sol__body :global(li) { line-height: 1.4; margin: 0; }
+  .g-sol__body :global(p + p) { margin-top: 1.3em; }
+
+  /* ---------- primary research ---------- */
+  .g-research__label { margin-bottom: 24px; }
+  .gemini-body :global(.g-research__row) { padding: 0; }
+  .gemini-body :global(.g-research__row .cs-row__body) { min-height: 291px; display: flex; align-items: center; }
+  .g-research__body { position: relative; width: 100%; }
+  .g-research__body :global(p),
+  .g-research__body :global(li) { line-height: 1.4; }
+  .g-research__body :global(p + p),
+  .g-research__body :global(ul + p) { margin-top: 1.4em; }
+  .g-research__body :global(ul) { margin-top: 1.4em; padding-left: 1.3em; }
+  .g-research__body :global(li) { margin: 0; }
+
+  /* hand-drawn highlight marks + Brisa note */
+  .g-hl { position: relative; display: inline-block; }
+  .g-hl > img { position: absolute; pointer-events: none; max-width: none; }
+  .g-hl--reddit > img { width: 54px; height: 21px; left: -4px; top: 0; }
+  .g-note {
+    position: absolute;
+    left: 40px;
+    top: -44px;
+    width: 92px;
+    height: auto;
+    max-width: none;
+    pointer-events: none;
+  }
+
+  .g-figs {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 10px;
+    margin-top: 60px;
+  }
+  .g-figs :global(.cs-figure) { height: 50vh; min-height: 320px; padding: 0; }
+  .g-figs :global(.cs-figure__caption) { margin-top: 16px; }
+  .gemini-body :global(.g-fig--reddit .fig__media) { width: 80%; }
+  .gemini-body :global(.g-fig--sketch .fig__media) { width: 70%; max-height: 90%; object-fit: contain; }
+
+  /* ---------- expected impact ---------- */
+  .g-impact :global(.cs-card) { border-radius: 8px; min-height: 253px; }
+  .g-impact :global(.cs-card__head) { margin-bottom: 42px; }
+  .g-impact :global(.cs-card__title) {
+    font-size: 26px;
+    line-height: 1.4;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    color: #fafafa;
+  }
+  .g-impact :global(.cs-card__body p) {
+    font-size: 14px;
+    line-height: 1.4;
+    letter-spacing: -0.02em;
+    color: #e3e3e3;
+  }
+
+  /* ---------- future enhancements ---------- */
+  .g-future > :global(.cs-label) { margin-bottom: 36px; }
+  .g-future :global(.cs-card) {
+    align-items: center;
+    min-height: 145px;
+    padding: 24px;
+    gap: 24px;
+    background: var(--bg-2);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+  }
+  .g-future :global(.cs-card__icon) { width: 64px; height: 64px; border-radius: var(--r-xs); background: #fff; }
+  .g-future :global(.cs-card__icon img) { width: 24px; height: 24px; }
+  .g-future :global(.cs-card__head) { margin-bottom: 0; }
+  .g-future :global(.cs-card__title) {
+    font-size: 16px;
+    line-height: 1.45;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    color: var(--ink-2);
+  }
+  .g-future :global(.cs-card__body p) {
+    font-size: 16px;
+    line-height: 1.45;
+    letter-spacing: -0.02em;
+    font-weight: 400;
+    color: var(--muted-2);
+  }
+
+  /* ---------- reflection ---------- */
+  .gemini-body :global(.g-refl) { padding: 50px 70px; }
+  .gemini-body :global(.g-refl .cs-label) { margin-bottom: 24px; }
+  .g-refl__grid {
+    display: grid;
+    grid-template-columns: 327px minmax(0, 1fr);
+    align-items: start;
+  }
+  .g-refl__big {
+    font-size: 20px;
+    line-height: 1.3;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    color: #f5f5f5;
+    position: relative;
+    max-width: 327px;
+  }
+  .g-refl__big em { font-style: italic; }
+  .g-hl--reads > img { width: 56px; height: 23px; left: -3px; top: -1px; z-index: 1; }
+  .g-refl__list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    counter-reset: item;
+  }
+  .g-refl__list li {
+    counter-increment: item;
+    display: flex;
+    gap: 12px;
+    background: rgba(38, 38, 38, 0.3);
+    border-radius: 8px;
+    padding: 24px 40px;
+    font-size: 14px;
+    line-height: 1.3;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    color: #e3e3e3;
+  }
+  .g-refl__list li::before { content: counter(item) '.'; min-width: 12px; }
+
+  /* ---------- responsive ---------- */
+  @media (max-width: 1299px) {
+    .g-hero { height: min(45vh, 650px); }
+    .g-tldr-tag { padding-right: 120px; }
+  }
+  @media (max-width: 1199px) {
+    .gemini-body :global(.g-refl) { padding: 32px 24px 40px; }
+    .g-refl__grid { grid-template-columns: 280px minmax(0, 1fr); gap: 30px; }
+  }
+  @media (max-width: 949px) {
+    .g-hero { margin-top: 0; }
+    .g-tldr-tag { padding-right: 20px; }
+    .g-prob { grid-template-columns: 1fr; gap: 32px; }
+    .g-prob__media { border-radius: 8px; padding: 32px 24px; }
+    .g-prob__media :global(.g-prob__vid) { width: 125px; }
+    .g-sol { grid-template-columns: 1fr; gap: 20px; padding-right: 0; }
+    .gemini-body :global(.g-research__row .cs-row__body) { min-height: 0; }
+    .g-figs { grid-template-columns: 1fr; margin-top: 40px; }
+    .g-figs :global(.cs-figure) { height: auto; min-height: 0; padding: 24px; }
+    .g-impact :global(.cs-card) { min-height: 0; }
+    .g-impact :global(.cs-card__head) { margin-bottom: 24px; }
+    .g-impact :global(.cs-card__title) { font-size: 22px; }
+    .g-future :global(.cs-card) { min-height: 0; }
+    .gemini-body :global(.g-refl) { padding: 30px 20px; }
+    .g-refl__grid { grid-template-columns: 1fr; gap: 34px; }
+    .g-refl__list li { padding: 16px 24px; }
+  }
+  @media (max-width: 640px) {
+    .g-hero { height: 45vh; }
+    .g-tldr-tag :global(.atag__arrow) { width: 80px; margin-top: 16px; }
+    .g-dark__h { font-size: 22px; }
+  }
+</style>

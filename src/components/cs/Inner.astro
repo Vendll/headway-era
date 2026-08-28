@@ -1,0 +1,7 @@
+---
+/** 880px inner column (120px inset inside the 1120px content column). */
+interface Props { class?: string; style?: string }
+const { class: className, style, ...rest } = Astro.props;
+---
+
+<div {...rest} class:list={['cs-inner', className]} style={style}><slot /></div>

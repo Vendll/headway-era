@@ -1,0 +1,73 @@
+---
+import '@/styles/global.css';
+import { site } from '@/data/site';
+import SiteHeader from '@/components/SiteHeader.astro';
+import ScrollTop from '@/components/ScrollTop.astro';
+
+interface Props {
+  title?: string;
+  description?: string;
+  /** page theme → colour tokens */
+  theme?: 'light' | 'dark' | 'white';
+  /** header variant: default (links + logo + Resume), minimal (logo only), none */
+  header?: 'default' | 'minimal' | 'none';
+  /** header positioning: fixed (stays) or absolute (scrolls away with the hero) */
+  headerPosition?: 'fixed' | 'absolute';
+  /** landing state: logo alone, bar assembles around it on scroll (home) */
+  headerAssemble?: boolean;
+  scrollTop?: boolean;
+  bodyClass?: string;
+  /** disable Lenis smooth scroll for this page */
+  noSmooth?: boolean;
+}
+
+const {
+  title = site.title,
+  description = site.description,
+  theme = 'light',
+  header = 'default',
+  headerPosition = 'fixed',
+  headerAssemble = false,
+  scrollTop = true,
+  bodyClass = '',
+  noSmooth = false,
+} = Astro.props;
+
+const canonical = new URL(Astro.url.pathname, site.url).href;
+---
+
+<!doctype html>
+<html lang="en" data-theme={theme} data-no-smooth={noSmooth ? '' : undefined}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" href={site.favicon} type="image/png" />
+    <meta name="robots" content="max-image-preview:large" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={new URL(site.ogImage, site.url).href} />
+    <meta property="og:url" content={canonical} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={new URL(site.ogImage, site.url).href} />
+    <link rel="preload" href="/fonts/Gambetta-Variable.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/Switzer-Variable.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/or3yQ6H-1_WfwkMZI_qYPLs1a-t7PU0AbeE9KJ5W7ihaO_CS.woff2" as="font" type="font/woff2" crossorigin />
+    <slot name="head" />
+  </head>
+  <body class={bodyClass} id="top">
+    {header !== 'none' && <SiteHeader variant={header} position={headerPosition} assemble={headerAssemble} />}
+    <main id="main">
+      <slot />
+    </main>
+    {scrollTop && <ScrollTop />}
+    <script>
+      import '@/scripts/main.ts';
+    </script>
+  </body>
+</html>

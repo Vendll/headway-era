@@ -1,0 +1,35 @@
+---
+/**
+ * One row inside the dark TL;DR block: mono label, then a 2-column grid
+ * (24px heading with an accent span | body copy).
+ *
+ * <TldrItem label="Problem" heading="Lorem ipsum dolor sit amet a <span class='accent'>consectetur elit</span>">…body…</TldrItem>
+ */
+interface Props {
+  label: string;
+  heading: string;
+  class?: string;
+}
+const { label, heading, class: className, ...rest } = Astro.props;
+---
+
+<div {...rest} class:list={['tldr', className]}>
+  <p class="cs-label">{label}</p>
+  <div class="tldr__grid">
+    <h3 class="tldr__h" set:html={heading} />
+    <div class="tldr__body cs-body"><slot /></div>
+  </div>
+</div>
+
+<style>
+  .tldr + .tldr { margin-top: 56px; }
+  .tldr .cs-label { margin-bottom: 26px; }
+  .tldr__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 45px; }
+  .tldr__h { font-size: 24px; line-height: 1.2; font-weight: 500; letter-spacing: -0.02em; color: #f5f5f5; }
+  .tldr__h :global(.accent) { color: var(--accent-cs, var(--purple-2)); }
+  .tldr__h :global(em) { font-style: italic; }
+  .tldr__body :global(p), .tldr__body :global(li) { color: #e3e3e3; }
+  @media (max-width: 949px) {
+    .tldr__grid { grid-template-columns: 1fr; gap: 20px; }
+  }
+</style>

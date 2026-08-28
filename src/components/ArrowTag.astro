@@ -1,0 +1,42 @@
+---
+/**
+ * A small serif "sticker" label with a hand-drawn arrow next to it.
+ *
+ *   <ArrowTag side="right" variant="white">Don't you want<br>to <em>know more</em></ArrowTag>
+ *
+ * side  – which side the arrow sits on (the arrow points away from the box, curving downwards)
+ * variant – box colours: blue (blue bg, light text) | white (light bg, blue text) | dark (dark bg, light text, green italics)
+ * arrowStyle – extra CSS for the arrow (rotate/flip/size)
+ */
+import HandArrow from './HandArrow.astro';
+
+interface Props {
+  side?: 'left' | 'right';
+  variant?: 'blue' | 'white' | 'dark';
+  class?: string;
+  arrowClass?: string;
+  arrowStyle?: string;
+  arrowWidth?: number;
+  arrowColor?: string;
+}
+const { side = 'right', variant = 'blue', class: className, arrowClass, arrowStyle = '', arrowWidth = 100, arrowColor, ...rest } = Astro.props;
+---
+
+<div {...rest} class:list={['atag', `atag--${side}`, className]} data-reveal>
+  <span class:list={['tag-box', `tag-box--${variant}`]}><slot /></span>
+  <HandArrow class:list={['atag__arrow', arrowClass]} width={arrowWidth} style={`${arrowColor ? `color:${arrowColor};` : ''}${arrowStyle}`} />
+</div>
+
+<style>
+  .atag {
+    display: inline-flex;
+    align-items: flex-start;
+    gap: 8px;
+    position: relative;
+  }
+  .atag--left { flex-direction: row-reverse; }
+  .atag .atag__arrow { flex: none; margin-top: 6px; }
+  /* Arrow6 naturally curves from the top-right down to the bottom-left (points down-left);
+     mirror it when it sits on the right so it points away from the box. */
+  .atag--right .atag__arrow { transform: scaleX(-1); }
+</style>

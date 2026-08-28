@@ -1,0 +1,489 @@
+---
+import CaseStudyLayout from '@/layouts/CaseStudyLayout.astro';
+import ArrowTag from '@/components/ArrowTag.astro';
+import Section from '@/components/cs/Section.astro';
+import Row from '@/components/cs/Row.astro';
+import Inner from '@/components/cs/Inner.astro';
+import Dark from '@/components/cs/Dark.astro';
+import TldrItem from '@/components/cs/TldrItem.astro';
+import Statement from '@/components/cs/Statement.astro';
+import Figure from '@/components/cs/Figure.astro';
+import Grid from '@/components/cs/Grid.astro';
+
+const toc = [
+  { id: 'introduction', label: 'Section One' },
+  { id: 'tl-dr', label: 'Section Two' },
+  { id: 'primary-research', label: 'Section Three' },
+  { id: 'sec-research', label: 'Section Four' },
+  { id: 'problem-statement', label: 'Section Five' },
+  { id: 'core-flows', label: 'Section Six' },
+  { id: 'design-system', label: 'Section Seven' },
+  { id: 'future-enhancements', label: 'Section Eight' },
+  { id: 'reflection', label: 'Section Nine' },
+];
+
+const problemHeading =
+  "Lorem ipsum dolor sit amet consectetur adipiscing elit. Sed do eiusmod <span class='accent'>3 tempor incididunt labore</span> et dolore magna aliqua ut enim ad minim veniam.";
+
+const facts = [
+  {
+    html: 'Lorem ipsum dolor <strong>~20–30% sit amet consectetur adipiscing elit sed do</strong> (Source Name). Ut eiusmod tempor incididunt ut labore, et dolore magna aliqua enim ad minim veniam quis nostrud.',
+  },
+  {
+    html: 'Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod.<br />Tempor incididunt ut, <strong>37% labore et dolore magna aliqua ut enim ad minim veniam quis nostrud</strong>, et exercitation ullamco laboris nisi ut aliquip ex ea commodo.',
+  },
+  {
+    html: 'Lorem dolor sit amet <strong>23% consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore dolore</strong>, et magna aliqua ut enim ad minim veniam quis nostrud. (Source Name, The lorem ipsum report)',
+  },
+];
+
+const competitors = [
+  {
+    name: 'Product One',
+    logo: '/assets/images/nx9pxOs1zAQy5KY8T7wtzpKkFA.png',
+    w: 754,
+    h: 287,
+    works: 'Lorem ipsum dolor sit, amet consectetur adipiscing elit.',
+    missing: 'Consectetur elit, sed do eiusmod tempor incididunt ut labore et magna.',
+  },
+  {
+    name: 'Product Two',
+    logo: '/assets/images/nf8Ig8D8v13og9KOIpQqYHGVE.png',
+    w: 647,
+    h: 268,
+    works: 'Dolor sit amet consectetur adipiscing elit sed, do eiusmod, tempor.',
+    missing: "Labore et dolore magna aliqua, ut enim ad minim veniam.",
+  },
+  {
+    name: 'Product Three',
+    logo: '/assets/images/bUSrr81ABEAXsEUu4WwuQLZpmA.png',
+    w: 1276,
+    h: 388,
+    works: 'Ipsum dolor, sit amet consectetur, adipiscing elit.',
+    missing: "Tempor incididunt, ut labore et dolore magna.",
+  },
+  {
+    name: 'Product Four',
+    logo: '/assets/images/PHerNcxkNm90falVGJmzumM0.png',
+    w: 1092,
+    h: 268,
+    works: 'Consectetur, adipiscing elit sed do eiusmod tempor.',
+    missing: 'Enim ad minim veniam quis nostrud exercitation, ullamco laboris nisi ut aliquip.',
+  },
+];
+
+const flows = [
+  {
+    num: 'Flow #1',
+    title: 'Lorem Ipsum',
+    p1: "Lorem ipsum dolor sit amet consectetur adipiscing elit, sed do eiusmod tempor incididunt, ut labore et dolore magna aliqua ut enim ad minim.",
+    p2: 'Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor, incididunt, ut labore, et dolore, magna aliqua enim. Ad minim veniam quis nostrud, exercitation ullamco laboris nisi ut aliquip ex ea "commodo consequat" duis. Aute irure dolor in reprehenderit voluptate velit. Esse cillum dolore eu fugiat nulla pariatur, excepteur sint occaecat cupidatat non proident, sunt culpa officia.',
+    video: '/assets/videos/uGNNU56piHUH41aR287ifwKCcIk.mp4',
+    alt: 'Placeholder prototype walkthrough video',
+  },
+  {
+    num: 'Flow #2',
+    title: 'Dolor Amet',
+    p1: "Consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua enim.",
+    p2: 'Sed ut perspiciatis unde omnis iste natus error sit voluptatem, accusantium doloremque laudantium, totam rem aperiam eaque ipsa quae. Ab illo inventore veritatis et quasi architecto beatae vitae has 2 dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit, aut fugit sed quia consequuntur magni. Dolores eos qui ratione voluptatem sequi nesciunt, neque porro quisquam est qui dolorem ipsum quia dolor sit amet consectetur.',
+    video: '/assets/videos/zCDa5nuPD8S1tLyqABTmiIDiw.mp4',
+    alt: 'Placeholder interface walkthrough video',
+  },
+  {
+    num: 'Flow #3',
+    title: 'Consectetur Elit',
+    p1: 'Adipiscing elit sed do eiusmod, tempor incididunt ut labore et dolore magna aliqua enim.',
+    p2: 'Ut enim ad minima veniam quis nostrum exercitationem ullam corporis suscipit laboriosam. Nisi ut aliquid ex ea commodi consequatur quis autem vel. Eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur vel illum. At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti. Atque corrupti quos dolores et quas molestias excepturi sint, occaecati cupiditate provident. Similique sunt in culpa qui officia deserunt mollitia animi laborum.',
+    video: '/assets/videos/HtO3q74mZXGgHDTNjXR5cVsPg.mp4',
+    alt: 'Placeholder workflow walkthrough video',
+  },
+];
+
+const future = [
+  {
+    icon: '/assets/images/jjX2RutqooYIv6AmQ8QlkLaAk.png',
+    title: 'Lorem ipsum',
+    text: 'Dolor sit amet consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua enim ad.',
+  },
+  {
+    icon: '/assets/images/qzqHHpxQUgh3TDEycw5Zr31Dq0.png',
+    title: 'Dolor sit amet elit',
+    text: "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+  },
+  {
+    icon: '/assets/images/PFCmck0BZ7opHkXq5rzJP8yxec.png',
+    title: 'Consectetur elit',
+    text: 'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore, eu fugiat nulla pariatur excepteur sint occaecat non cupidatat.',
+  },
+];
+---
+
+<CaseStudyLayout
+  eyebrow="Project Two"
+  title="Lorem <em>consectetur adipiscing</em> elit sed do eiusmod tempor incididunt ut labore dolore"
+  tags="Category One, Category Two, Category Three, Category Four"
+  year="2025"
+  toc={toc}
+  accent="#FACD1A"
+  class="slate"
+>
+  <!-- ============ Hero ============ -->
+  <div slot="hero" class="cs-hero slate-hero" data-reveal="up">
+    <img
+      src="/assets/images/OUiNs97sLahNgur9RlCpeOOsEoY.png"
+      alt="Placeholder product screenshot"
+      width="2880"
+      height="2112"
+      decoding="async"
+      fetchpriority="high"
+    />
+  </div>
+
+  <!-- ============ Introduction ============ -->
+  <Section id="introduction" label="Section One" inset>
+    <Row label="Label One">
+      <p>Lorem ipsum dolor sit amet consectetur. Adipiscing elit sed do eiusmod, tempor incididunt ut labore et dolore magna aliqua enim ad minim.</p>
+      <p>Ut enim ad <strong>minim veniam quis nostrud exercitation, ullamco laboris nisi ut aliquip ex ea commodo consequat duis</strong>, aute irure dolor in reprehenderit velit voluptate.</p>
+    </Row>
+    <Row label="Label Two">
+      <p>Lorem ipsum (2 dolor) sit amet consectetur adipiscing, elit sed do eiusmod tempor incididunt ut labore et dolore.</p>
+    </Row>
+    <Row label="Label Three">
+      <p>5 weeks</p>
+    </Row>
+  </Section>
+
+  <!-- ============ TL;DR ============ -->
+  <Section id="tl-dr" class="slate-tldr">
+    <div class="slate-tldr__tag">
+      <ArrowTag side="left" variant="dark" arrowColor="var(--blue)" arrowWidth={80}>Lorem<br /><em>Ipsum</em></ArrowTag>
+    </div>
+    <Dark>
+      <TldrItem label="Label Four" heading={problemHeading}>
+        <ul class="facts" role="list">
+          {
+            facts.map((f, i) => (
+              <li class="fact" data-reveal="up" data-reveal-delay={String(i * 0.08)}>
+                <img class="fact__icon" src="/assets/images/qWwGHHBgQHfzM38Kd3z2GMbmsQ.png" alt="" width="512" height="512" loading="lazy" decoding="async" />
+                <p class="fact__text" set:html={f.html} />
+              </li>
+            ))
+          }
+        </ul>
+      </TldrItem>
+      <TldrItem label="Label Five" heading="Lorem ipsum dolor sit amet consectetur?">
+        <p>Lorem ipsum dolor sit amet <strong>consectetur adipiscing, elit sed, do eiusmod tempor</strong>, incididunt ut labore et dolore magna aliqua.</p>
+        <ol>
+          <li>Lorem ipsum. Dolor sit. Amet consectetur adipiscing</li>
+          <li>Sed do eiusmod tempor incididunt labore.</li>
+          <li>Ut labore et dolore magna aliqua enim.</li>
+        </ol>
+      </TldrItem>
+    </Dark>
+  </Section>
+
+  <!-- ============ Primary research ============ -->
+  <Section id="primary-research" label="Section Three" class="research">
+    <Inner>
+      <Row label="Label Six">
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor incididunt labore. Ut labore et dolore magna aliqua, enim ad minim veniam quis nostrud exercitation, ullamco laboris nisi ut aliquip ex ea commodo consequat aute duis.</p>
+      </Row>
+      <Row label="Label Seven">
+        <p>Lorem ipsum dolor sit amet <strong>Consectetur</strong>, adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua ut enim ad minim veniam.</p>
+        <p>Quis nostrud exercitation ullamco laboris nisi, ut aliquip ex ea commodo consequat duis aute irure dolor in reprehenderit voluptate velit esse cillum.</p>
+      </Row>
+    </Inner>
+
+    <figure class="whyser" data-reveal="up">
+      <div class="cs-figure whyser__box">
+        <img
+          class="whyser__shot whyser__shot--a"
+          src="/assets/images/kaucHe5n4Xx3zoq0gFAH1Qf68.png"
+          alt="Placeholder interface screenshot"
+          width="3006"
+          height="1168"
+          loading="lazy"
+          decoding="async"
+        />
+        <img
+          class="whyser__shot whyser__shot--b"
+          src="/assets/images/Egcw1liJ1g9S1HAAR8MPF48oLg.png"
+          alt="Placeholder settings screenshot"
+          width="3260"
+          height="1360"
+          loading="lazy"
+          decoding="async"
+        />
+      </div>
+      <figcaption class="cs-figure__caption">Fig. Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore.</figcaption>
+    </figure>
+  </Section>
+
+  <!-- ============ Secondary research ============ -->
+  <Section id="sec-research" label="Section Four" inset>
+    <Row label="Label Eight">
+      <p>Lorem ipsum dolor sit amet consectetur adipiscing, sed, do, eiusmod, tempor, et incididunt, ut labore et dolore magna aliqua ut enim ad minim veniam quis nostrud exercitation ullamco laboris.</p>
+    </Row>
+
+    <Grid cols={2} gap={16} class="comp" min={260}>
+      {
+        competitors.map((c, i) => (
+          <article class="comp__card cs-card cs-card--outline" data-reveal="up" data-reveal-delay={String(i * 0.06)}>
+            <img class="comp__logo" src={c.logo} alt={`${c.name} logo`} width={c.w} height={c.h} loading="lazy" decoding="async" />
+            <div class="cs-body comp__body">
+              <p><strong>Lorem ipsum:</strong> {c.works}</p>
+              <p><strong>Dolor sit amet consectetur elit:</strong> {c.missing}</p>
+            </div>
+          </article>
+        ))
+      }
+    </Grid>
+  </Section>
+
+  <!-- ============ Problem statement ============ -->
+  <Section>
+    <Statement id="problem-statement" label="Section Five" bg="#FACD1A" color="#151515" class="slate-statement">
+      "Lorem ipsum dolor <strong>sit amet consectetur adipiscing elit sed do eiusmod</strong> tempor incididunt ut labore et dolore, magna aliqua, ut enim ad minim veniam quis nostrud exercitation?"
+    </Statement>
+  </Section>
+
+  <!-- ============ Core flows ============ -->
+  <Section id="core-flows" class="flows">
+    {
+      flows.map((f) => (
+        <div class="flow">
+          <Inner class="flow__text">
+            <p class="cs-label flow__num" data-reveal="fade">{f.num}</p>
+            <h3 class="cs-h cs-h--lg flow__title" data-reveal="up">{f.title}</h3>
+            <div class="cs-body flow__body" data-reveal="up">
+              <p>{f.p1}</p>
+              <p>{f.p2}</p>
+            </div>
+          </Inner>
+          <Figure video src={f.video} alt={f.alt} width={870} radius={12} border class="flow__fig" />
+        </div>
+      ))
+    }
+  </Section>
+
+  <!-- ============ Design system ============ -->
+  <Section id="design-system" label="Section Seven">
+    <Inner>
+      <Row label="Label Nine">
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt, ut labore magna. Aliqua ut enim, ad minim veniam. Quis nostrud exercitation ullamco laboris nisi, aliquip, ex, ea, commodo consequat. Duis aute irure dolor in reprehenderit, voluptate velit esse in Flow 1 cillum dolore in Flow 3 eu fugiat nulla pariatur.</p>
+      </Row>
+    </Inner>
+    <Figure
+      src="/assets/images/O4s9s6XFoPrQFOmcd7hAAvORpo.png"
+      alt="Placeholder design system collage"
+      pad="0"
+      class="ds-fig"
+      caption="Fig. Lorem ipsum dolor sit amet consectetur, adipiscing elit, sed do eiusmod tempor incididunt labore."
+    />
+  </Section>
+
+  <!-- ============ Future enhancements ============ -->
+  <Section id="future-enhancements" label="Section Eight" inset class="future-sec">
+    <ul class="future" role="list">
+      {
+        future.map((f, i) => (
+          <li class="future__card" data-reveal="up" data-reveal-delay={String(i * 0.06)}>
+            <img class="future__icon" src={f.icon} alt="" width="800" height="800" loading="lazy" decoding="async" />
+            <div class="future__main">
+              <h3 class="future__title">{f.title}</h3>
+              <p class="cs-p">{f.text}</p>
+            </div>
+          </li>
+        ))
+      }
+    </ul>
+  </Section>
+
+  <!-- ============ Reflection ============ -->
+  <Section id="reflection">
+    <Dark wide class="reflect" style="padding:50px">
+      <p class="cs-label" data-reveal="fade">Section Nine</p>
+      <div class="reflect__grid">
+        <h3 class="cs-h cs-h--lg reflect__h" data-reveal="up">Lorem ipsum dolor</h3>
+        <div class="cs-body reflect__body" data-reveal="up">
+          <p>Lorem ipsum dolor sit amet consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua, ut enim ad minim veniam quis nostrud exercitation ullamco laboris. Nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu.</p>
+          <p>Fugiat nulla pariatur excepteur sint occaecat, cupidatat non proident sunt in culpa qui officia. Deserunt mollit anim id est laborum, sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium. Totam rem aperiam eaque ipsa quae ab illo.</p>
+        </div>
+      </div>
+    </Dark>
+    <p class="mobile-note">Note: Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt.</p>
+  </Section>
+</CaseStudyLayout>
+
+<style>
+  /* ---------- hero: yellow box, dashboard overflowing the bottom edge ---------- */
+  .slate-hero {
+    display: block;
+    position: relative;
+    background: var(--yellow);
+    height: 726px;
+    min-height: 0;
+    overflow: hidden;
+  }
+  .slate-hero img {
+    position: absolute;
+    left: 50%;
+    top: 175px;
+    width: 810px;
+    max-width: 90%;
+    transform: translateX(-50%);
+  }
+
+  /* ---------- TL;DR ---------- */
+  .slate-tldr__tag {
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 180px;
+    margin-bottom: 10px;
+  }
+  .slate-tldr__tag :global(.tag-box) { line-height: 0.85; }
+  .slate-tldr__tag :global(.tag-box em) { color: #f5f5f5; }
+  .slate-tldr :global(.tldr__grid) { grid-template-columns: 380px minmax(0, 1fr); }
+  .slate-tldr :global(.tldr__h) { font-size: 20px; }
+
+  .slate-tldr .facts {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .slate-tldr .facts .fact {
+    display: flex;
+    align-items: flex-start;
+    gap: 24px;
+    margin: 0;
+    padding: 32px 24px;
+    background: #1f1f1f;
+    border-radius: 8px;
+  }
+  .fact__icon { width: 26px; height: 26px; flex: none; margin-top: 3px; }
+  .slate-tldr .facts .fact .fact__text {
+    font-size: 14px;
+    line-height: 1.3;
+    font-weight: 300;
+    letter-spacing: -0.01em;
+    color: #969696;
+    margin: 0;
+  }
+  .slate-tldr .facts .fact .fact__text :global(strong) { font-weight: 500; color: #f5f5f5; }
+
+  /* ---------- Whyser figure: two overlapping screenshots ---------- */
+  .whyser { margin-top: 40px; }
+  .whyser__box {
+    display: block;
+    padding: 0;
+    aspect-ratio: 1120 / 474;
+    overflow: hidden;
+  }
+  .whyser__shot {
+    position: absolute;
+    width: 69.6%;
+    height: auto;
+    border-radius: 6px;
+    box-shadow: 0 6px 30px rgba(0, 0, 0, 0.08);
+    background: #fff;
+  }
+  .whyser__shot--a { left: 11%; top: 19.6%; }
+  .whyser__shot--b { left: 19%; top: 38.8%; }
+
+  /* ---------- Competitive analysis cards ---------- */
+  .comp { margin-top: 24px; }
+  .comp__card {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    padding: 24px;
+    background: #fcfcfc;
+  }
+  .comp__logo { height: 32px; width: auto; }
+  .comp .comp__body :global(strong) { font-weight: 600; color: var(--ink-2); }
+
+  /* ---------- Problem statement: full content width ---------- */
+  .slate :global(.slate-statement) { width: 100%; }
+  .slate :global(.slate-statement .statement__text) { max-width: 1000px; }
+
+  /* ---------- Core flows ---------- */
+  .flow + .flow { margin-top: 80px; }
+  .flow__num { margin-bottom: 26px; }
+  .flow__title { margin-bottom: 14px; }
+  .flow__fig { margin-top: 40px; }
+  .flow__fig :global(.fig__media) { background: #fafafa; }
+
+  /* ---------- Design system figure ---------- */
+  .ds-fig { margin-top: 40px; }
+
+  /* ---------- Future enhancements ---------- */
+  .future {
+    list-style: none;
+    width: 760px;
+    max-width: 100%;
+    margin: 20px auto 0;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .future__card {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 24px;
+    background: var(--bg-2);
+    border-radius: 8px;
+  }
+  .future__icon { width: 100px; height: 100px; flex: none; border-radius: var(--r-md); }
+  .future__main { display: flex; flex-direction: column; gap: 12px; padding-top: 2px; }
+  .future__title { font-size: 16px; line-height: 1.3; font-weight: 500; letter-spacing: -0.02em; color: var(--ink); }
+
+  /* ---------- Reflection ---------- */
+  .reflect .cs-label { margin-bottom: 26px; }
+  .reflect__grid {
+    display: grid;
+    grid-template-columns: 292px minmax(0, 630px);
+    column-gap: 48px;
+  }
+  .reflect__h { color: #f5f5f5; }
+  .reflect__body :global(p) { font-size: 16px; line-height: 1.3; }
+
+  .mobile-note {
+    display: none;
+    margin-top: 40px;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 300;
+    letter-spacing: -0.02em;
+    color: var(--muted-2);
+  }
+
+  /* ---------- responsive ---------- */
+  @media (max-width: 1199px) {
+    .slate-hero { height: auto; aspect-ratio: 1120 / 726; }
+    .slate-hero img { top: 24%; width: 72%; max-width: none; }
+    .slate-tldr :global(.tldr__grid) { grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr); }
+    .slate-tldr__tag { padding-right: 60px; }
+  }
+  @media (max-width: 949px) {
+    .slate-tldr__tag { padding-right: 16px; }
+    .slate-tldr :global(.tldr__grid) { grid-template-columns: 1fr; }
+    .slate-tldr .facts .fact { padding: 20px; gap: 16px; }
+    .whyser__box { aspect-ratio: 1120 / 560; }
+    .whyser__shot { width: 78%; }
+    .whyser__shot--a { left: 4%; top: 12%; }
+    .whyser__shot--b { left: 18%; top: 36%; }
+    .reflect__grid { grid-template-columns: 1fr; row-gap: 20px; }
+    .flow + .flow { margin-top: 56px; }
+    .mobile-note { display: block; }
+  }
+  @media (max-width: 640px) {
+    .slate-hero img { width: 84%; top: 22%; }
+    .future__card { padding: 16px; gap: 14px; }
+    .future__icon { width: 60px; height: 60px; }
+    .comp__card { gap: 20px; padding: 20px; }
+  }
+</style>

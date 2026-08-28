@@ -1,0 +1,83 @@
+---
+/**
+ * Project Three case study — one "Flow #n" block: mono label + heading + copy on the left,
+ * a light grey box with the phone prototype video on the right.
+ *
+ * <Flow label="Flow #1" title="Lorem Ipsum" video="/assets/videos/x.mp4" radius={12} videoLabel="…">…copy…</Flow>
+ */
+import Video from '@/components/Video.astro';
+
+interface Props {
+  label: string;
+  title: string;
+  video: string;
+  videoLabel?: string;
+  /** border radius of the video inside the box */
+  radius?: number;
+  class?: string;
+}
+const { label, title, video, videoLabel, radius = 0, class: className } = Astro.props;
+---
+
+<div class:list={['flow', className]}>
+  <div class="flow__text">
+    <p class="cs-label">{label}</p>
+    <h3 class="flow__h">{title}</h3>
+    <div class="flow__body cs-body"><slot /></div>
+  </div>
+  <div class="flow__media" data-reveal>
+    <Video class="flow__vid" src={video} label={videoLabel} style={`border-radius:${radius}px`} />
+  </div>
+</div>
+
+<style>
+  .flow {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 10px;
+    align-items: start;
+  }
+  .flow + .flow { margin-top: 72px; }
+  .flow__text { padding-right: 120px; min-width: 0; }
+  .flow__text .cs-label { margin-bottom: 24px; }
+  .flow__h {
+    font-size: 20px;
+    line-height: 1.3;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    margin-bottom: 16px;
+  }
+  .flow__body :global(p),
+  .flow__body :global(li) {
+    font-size: 14px;
+    line-height: 1.4;
+    letter-spacing: -0.02em;
+    color: var(--muted-2);
+  }
+  .flow__body :global(strong) { font-weight: 600; }
+  .flow__body :global(p + p),
+  .flow__body :global(ul + p) { margin-top: 1.4em; }
+  .flow__body :global(ul) { margin-top: 1.4em; padding-left: 1.3em; }
+  .flow__body :global(ul.tight) { margin-top: 0; }
+  .flow__body :global(li) { margin: 0; }
+  .flow__media {
+    background: var(--bg-2);
+    padding: 30px 0;
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
+  }
+  .flow__media :global(.flow__vid) { width: 448px; max-width: 100%; height: auto; }
+
+  @media (max-width: 1199px) {
+    .flow__text { padding-right: 40px; }
+  }
+  @media (max-width: 949px) {
+    .flow { grid-template-columns: 1fr; gap: 24px; }
+    .flow + .flow { margin-top: 56px; }
+    .flow__text { padding-right: 0; }
+    .flow__media { padding: 20px; }
+    .flow__media :global(.flow__vid) { width: 100%; }
+  }
+</style>

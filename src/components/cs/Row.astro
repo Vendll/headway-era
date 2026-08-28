@@ -1,0 +1,15 @@
+---
+/** Two-column definition row: bold label (292px) on the left, body text on the right. */
+interface Props {
+  label: string;
+  class?: string;
+  /** larger label (20px) */
+  lg?: boolean;
+}
+const { label, class: className, lg = false, ...rest } = Astro.props;
+---
+
+<div {...rest} class:list={['cs-row', className]} data-reveal="up">
+  <p class:list={['cs-h', 'cs-row__label', { 'cs-h--lg': lg }]} set:html={label} />
+  <div class="cs-row__body cs-body"><slot /></div>
+</div>

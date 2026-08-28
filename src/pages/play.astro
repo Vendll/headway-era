@@ -1,0 +1,104 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Footer from '@/components/Footer.astro';
+import PosterGallery from '@/components/play/PosterGallery.astro';
+import PaintStack from '@/components/play/PaintStack.astro';
+import type { Poster, Painting } from '@/components/play/types';
+import { site } from '@/data/site';
+
+// DOM order = column-first grid order (row 1 / row 2 alternate), as on the live site.
+// `from` = scattered start state relative to the poster's final grid slot (px / deg).
+const posters: Poster[] = [
+  { src: '/assets/images/xzy31PLISJqrPEg8pOuron7bQQs.png', alt: 'Placeholder poster', width: 792, height: 1127, from: { x: -300, y: -240, s: 0.3, rz: 6, rx: 24, ry: -47 } },
+  { src: '/assets/images/jdroOKmoeJV2sH84I8emhWWfW4.png', alt: 'Placeholder poster', width: 1080, height: 1330, from: { x: -380, y: 180, s: 0.3, rz: -14, rx: 0, ry: -70 } },
+  { src: '/assets/images/f1hDCjCe21HGuecRCVXnpmxrzVU.png', alt: 'Placeholder poster', width: 792, height: 1127, from: { x: 210, y: -320, s: 0.3, rz: -25, rx: -32, ry: -24 } },
+  { src: '/assets/images/KuvV4YQ29vhX86phKmbyoqjV4.png', alt: 'Placeholder poster', width: 792, height: 1127, from: { x: -140, y: 280, s: 0.4, rz: 0, rx: 20, ry: 4 } },
+  { src: '/assets/images/1bd4Ma80FjeGuTTPXIIyRtcA9xs.png', alt: 'Placeholder poster', width: 792, height: 1127, from: { x: 170, y: -280, s: 0.4, rz: 28, rx: -62, ry: 25 } },
+  { src: '/assets/images/e1GEuzm9kXD7W8VMpoQx8h2lg.png', alt: 'Placeholder poster', width: 792, height: 1127, from: { x: 60, y: 140, s: 0.4, rz: 0, rx: -18, ry: 0 } },
+  { src: '/assets/images/50bEvyrTq1xX98mGwhtTqI8xnJo.png', alt: 'Placeholder poster', width: 1702, height: 2254, from: { x: 260, y: -220, s: 0.2, rz: 0, rx: -56, ry: 0 } },
+  { src: '/assets/images/0ZsjcoB3SI5JxK5FOasVqJn7w.png', alt: 'Placeholder poster', width: 792, height: 1127, from: { x: 320, y: 240, s: 0.2, rz: 19, rx: 40, ry: -20 } },
+];
+
+const paintings: Painting[] = [
+  { src: '/assets/images/Iw4SiYwb4Q5RIFy5zmPVmfGOEhs.png', alt: 'Placeholder painting', width: 796, height: 1120, size: 0.6, tilt: -50 },
+  { src: '/assets/images/y4oZlcmx1ObRGWGmZIocg7AfyJo.png', alt: 'Placeholder painting', width: 812, height: 518 },
+  { src: '/assets/images/XtHWy4OsN4hRiUm6vVxeDiKpCvQ.png', alt: 'Placeholder painting', width: 580, height: 576 },
+  { src: '/assets/images/xwGYU9h5kMPnGrrSqCwqcRgG0j0.png', alt: 'Placeholder painting', width: 830, height: 836 },
+  { src: '/assets/images/wOmaxi44gwccjvacTHsuJOe5GH4.png', alt: 'Placeholder painting', width: 618, height: 628 },
+  { src: '/assets/images/ABGdELjqUju4FWXk9jCs8HFjjg.png', alt: 'Placeholder painting', width: 560, height: 566 },
+];
+---
+
+<BaseLayout title={site.title} theme="dark" header="default">
+  <!-- ============ Hero ============ -->
+  <section class="hero" id="hero">
+    <h1 class="hero__h" data-reveal><span class="hero__accent">Lorem</span> ipsum dolor</h1>
+    <div class="hero__copy">
+      <p class="hero__p" data-reveal data-reveal-delay="0.1">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi aliquip.
+      </p>
+      <p class="hero__p" data-reveal data-reveal-delay="0.15">
+        Duis aute irure dolor, in reprehenderit voluptate velit esse. Cillum dolore eu fugiat nulla pariatur, excepteur sint occaecat cupidatat non proident, sunt in culpa, officia, deserunt. Mollit anim id est laborum omnis.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============ Poster gallery (scattered → grid) ============ -->
+  <PosterGallery posters={posters} />
+
+  <!-- ============ Paint stack ============ -->
+  <PaintStack id="paint" paintings={paintings} />
+
+  <Footer />
+</BaseLayout>
+
+<style>
+  .hero {
+    width: 100%;
+    max-width: 1246px;
+    margin-inline: auto;
+    min-height: calc(140px + 70vh);
+    padding: 140px 24px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 70px;
+    text-align: center;
+  }
+  .hero__h {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: clamp(64px, 8.4vw, 144px); /* 144px ≥1714, 132px @1440 (Framer breakpoints) */
+    line-height: 0.8;
+    letter-spacing: -0.06em;
+    color: #f5f5f5;
+    width: 70%;
+    max-width: 872px;
+  }
+  .hero__accent { color: var(--green); }
+  .hero__copy {
+    width: 520px;
+    max-width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    text-align: left;
+  }
+  .hero__p {
+    font-size: 16px;
+    line-height: 1.2;
+    font-weight: 300;
+    letter-spacing: -0.02em;
+    color: #f5f5f5;
+  }
+
+  @media (max-width: 1299px) {
+    .hero { padding-top: 120px; min-height: calc(120px + 70vh); gap: 50px; }
+  }
+  @media (max-width: 809px) {
+    .hero { padding: 110px 20px 0; min-height: 0; gap: 40px; }
+    .hero__h { width: 100%; font-size: clamp(56px, 16vw, 96px); }
+    .hero__copy { padding: 0; }
+  }
+</style>

@@ -1,0 +1,880 @@
+---
+import CaseStudyLayout from '@/layouts/CaseStudyLayout.astro';
+import ArrowTag from '@/components/ArrowTag.astro';
+import Section from '@/components/cs/Section.astro';
+import Row from '@/components/cs/Row.astro';
+import Inner from '@/components/cs/Inner.astro';
+import Dark from '@/components/cs/Dark.astro';
+import TldrItem from '@/components/cs/TldrItem.astro';
+import Statement from '@/components/cs/Statement.astro';
+import Figure from '@/components/cs/Figure.astro';
+import Grid from '@/components/cs/Grid.astro';
+import Card from '@/components/cs/Card.astro';
+import Stat from '@/components/cs/Stat.astro';
+import Note from '@/components/superreply/Note.astro';
+import Cursor from '@/components/superreply/Cursor.astro';
+import Dashboard from '@/components/superreply/Dashboard.astro';
+
+const toc = [
+  { id: 'introduction', label: 'Section One' },
+  { id: 'tldr', label: 'Section Two' },
+  { id: 'preview', label: 'Section Three' },
+  { id: 'user-research', label: 'Section Four' },
+  { id: 'problem-statement', label: 'Section Five' },
+  { id: 'core-flows', label: 'Section Six' },
+  { id: 'brand-identity', label: 'Section Seven' },
+  { id: 'impact', label: 'Section Nine' },
+  { id: 'key-learnings', label: 'Section Ten' },
+];
+
+const groups = [
+  {
+    num: '01',
+    title: 'Group One',
+    points: ['Consectetur adipiscing elit sed eiusmod.', 'Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua veniam quis nostrud.'],
+  },
+  {
+    num: '02',
+    title: 'Group Two<br />Placeholder',
+    points: ['Excepteur sint occaecat, cupidatat non proident.', "Sunt in culpa qui officia deserunt mollit anim laborum."],
+  },
+  {
+    num: '03',
+    title: 'Group Three / Sub<br />Group Label',
+    points: ['Voluptatem accusantium doloremque.', 'Sed ut perspiciatis unde, omnis iste natus, error sit voluptatem accusantium doloremque.'],
+  },
+];
+
+const learnings = [
+  { title: 'Adipiscing Elit ≠<br />Eiusmod Tempor', body: 'Lorem ipsum dolor sit amet consectetur adipiscing, elit sed, do eiusmod tempor incididunt labore.' },
+  { title: 'Ipsum Dolor Consectetur', body: 'Ut enim ad minim 5 veniam quis nostrud, exercitation ullamco laboris nisi ut aliquip ex ea commodo.' },
+  { title: 'Tempor Incididunt Labore Dolore', body: 'Duis aute irure dolor in reprehenderit voluptate velit esse cillum dolore eu fugiat nulla.' },
+];
+
+const stepShot = '/assets/images/djJdc6k2i5Ime1kmzF32WltW4.png';
+const stepAlt =
+  'Placeholder product screenshot';
+---
+
+<CaseStudyLayout
+  accent="#8D01FF"
+  eyebrow="Project One"
+  title="Lorem ipsum <em>dolor sit</em> amet consectetur adipiscing elit sed do eiusmod tempor."
+  description="Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor."
+  tags="Category One, Category Two, Category Three, Category Four"
+  year="2024"
+  toc={toc}
+  class="superreply"
+>
+  <!-- ============ Hero ============ -->
+  <div slot="hero" class="sr-hero" data-reveal="up">
+    <img
+      src="/assets/images/gAtztWfqOBOUmmIsslCnlYYMK4.png"
+      alt="Placeholder product screenshot"
+      width="1564"
+      height="906"
+      decoding="async"
+      fetchpriority="high"
+    />
+  </div>
+
+  <div class="sr-body">
+    <!-- ============ Introduction ============ -->
+    <Section id="introduction" label="Section One" inset>
+      <Row label="Lorem ipsum dolor?">
+        <p>Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore</p>
+        <p>Dolore magna aliqua ut enim ad minim veniam quis nostrud exercitation.</p>
+      </Row>
+      <Row label="Lorem Ipsum">
+        <p>Job Title (and consectetur adipiscing elit)<br />0 → 1, lorem-ipsum</p>
+      </Row>
+      <Row label="Consectetur">
+        <p><strong>6 weeks</strong> lorem ipsum dolor</p>
+      </Row>
+    </Section>
+
+    <!-- ============ TL;DR ============ -->
+    <Section id="tldr" class="sr-tldr">
+      <div class="sr-tldr__tag">
+        <ArrowTag side="left" variant="blue" arrowWidth={105} arrowColor="#1710E6">Lorem<br />Ipsum</ArrowTag>
+      </div>
+      <Dark class="sr-dark">
+        <TldrItem label="Lorem" heading="Lorem ipsum dolor sit amet<br />ut <span class='accent'>consectetur adipiscing</span>">
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipiscing elit sed 2–4 eiusmod tempor incididunt ut labore et dolore, magna, aliqua, enim. Ad minim veniam quis nostrud exercitation. Ullamco laboris nisi ut aliquip ex ea commodo. Duis aute irure dolor reprehenderit. In voluptate velit esse cillum dolore.
+          </p>
+        </TldrItem>
+        <TldrItem label="Ipsum" heading="Consectetur adipiscing, elit sed do eiusmod tempor ut <span class='accent'>incididunt labore</span>">
+          <p>Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore, dolore, magna aliqua.</p>
+          <p>Sed do eiusmod tempor incididunt:</p>
+          <ul>
+            <li>Lorem <strong>ipsum dolor sit</strong> amet consectetur adipiscing</li>
+            <li>Adipiscing <strong>elit sed</strong> do 5 eiusmod tempor, ut in labore 10 dolore</li>
+            <li>Enim <strong>ipsum</strong> veniam quis nostrud exercitation ullamco laboris nisi aliquip</li>
+            <li>Duis aute irure dolor <strong>reprehenderit voluptate velit</strong>, esse cillum dolore, fugiat nulla</li>
+          </ul>
+        </TldrItem>
+      </Dark>
+    </Section>
+
+    <!-- ============ Preview ============ -->
+    <Section id="preview" label="Section Three" class="sr-preview">
+      <h2 class="cs-h sr-preview__h" data-reveal="up">Lorem ipsum dolor sit amet</h2>
+      <Figure
+        video
+        src="/assets/videos/ThKe0cQVVPaMiAS4dDq2xMPaHMs.mp4"
+        alt="Placeholder product screen recording"
+        containerWidth={1080}
+        pad="80px 0"
+        width={918}
+        radius={8}
+        border
+        class="sr-preview__fig"
+      />
+    </Section>
+
+    <!-- ============ User research ============ -->
+    <Section id="user-research" label="Section Four" class="sr-research">
+      <Inner>
+        <Row label="Consectetur adipiscing elit">
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore dolore.</p>
+        </Row>
+
+        <img
+          class="sr-illus"
+          src="/assets/images/vF2uuni209xr7xgdE14jmNV0zOA.png"
+          alt="Placeholder illustration"
+          width="3400"
+          height="1368"
+          loading="lazy"
+          decoding="async"
+          data-reveal="up"
+        />
+
+        <p class="sr-groups-h" data-reveal="fade">Lorem ipsum:</p>
+        <Grid cols={3} gap={16} class="sr-groups" min={240}>
+          {
+            groups.map((g, i) => (
+              <Card variant="dark" title={g.title} num={g.num} data-reveal-delay={String(i * 0.06)}>
+                <ul>
+                  {g.points.map((p) => (
+                    <li>{p}</li>
+                  ))}
+                </ul>
+              </Card>
+            ))
+          }
+        </Grid>
+
+        <Row label="Sed do eiusmod tempor incididunt" class="sr-learned">
+          <p>Ut enim ad minim veniam quis nostrud 7+ exercitation, ullamco laboris nisi, ut aliquip ex commodo.</p>
+          <ul>
+            <li>2-4 lorem ipsum dolor sit amet consectetur</li>
+            <li>Adipiscing 5-10% elit sed = do eiusmod</li>
+            <li>Tempor incididunt ut labore et dolore <strong>magna aliqua</strong></li>
+            <li>5 enim ad 7 minim veniam quis <strong>nostrud exercitation ullamco laboris nisi</strong></li>
+          </ul>
+          <p>
+            Duis aute irure dolor in reprehenderit voluptate velit esse cillum dolore eu:<br />
+            <strong>fugiat nulla pariatur excepteur sint occaecat cupidatat proident.</strong>
+          </p>
+        </Row>
+
+        <Row label="Ut enim ad minim?" class="sr-gap-row">
+          <div class="sr-gap" data-reveal="up">
+            <div class="sr-gap__col">
+              <div class="sr-gap__box sr-gap__box--hi">Consectetur Elit</div>
+              <span class="sr-gap__link" aria-hidden="true"></span>
+              <div class="sr-gap__box">Incididunt Laborum</div>
+              <span class="sr-gap__link" aria-hidden="true"></span>
+              <div class="sr-gap__box">Exercitation Nisi</div>
+            </div>
+            <Cursor class="sr-gap__cursor" rotate={-34} />
+            <p class="sr-gap__note">Nostrud exercitation ullamco laboris nisi ut aliquip.</p>
+          </div>
+        </Row>
+      </Inner>
+    </Section>
+
+    <!-- ============ Problem statement ============ -->
+    <Section>
+      <Statement id="problem-statement" label="Section Five" class="sr-statement">
+        "Lorem ipsum dolor sit amet consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua enim?"
+      </Statement>
+    </Section>
+
+    <!-- ============ Core flows ============ -->
+    <Section id="core-flows" class="sr-flows">
+      <!-- Flow #1: onboarding -->
+      <Inner class="sr-flow__text">
+        <p class="cs-label sr-flow__num" data-reveal="fade">Item #1</p>
+        <h3 class="cs-h sr-flow__h" data-reveal="up">Consectetur</h3>
+        <p class="cs-p" data-reveal="up">
+          Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua enim. Ad minim veniam quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat duis aute irure dolor in 2 reprehenderit voluptate velit esse cillum dolore.
+        </p>
+      </Inner>
+      <div class="sr-fig sr-fig--onboard" data-reveal="up">
+        <div class="sr-fig__card">
+          <img
+            src="/assets/images/HbQr9uUX1NFmMc28MLI48fAB8I.png"
+            alt="Placeholder product screenshot"
+            width="3024"
+            height="1900"
+            loading="lazy"
+            decoding="async"
+          />
+        </div>
+        <Note top={304} left={825} line={72} width={175}>
+          <p><strong>Lorem Ipsum Dolor</strong></p>
+          <ul>
+            <li>Sed do eiusmod tempor incididunt labore.</li>
+            <li>Consectetur adipiscing elit sed do eiusmod.</li>
+          </ul>
+        </Note>
+      </div>
+
+      <!-- Dashboard -->
+      <Inner class="sr-flow__text">
+        <h3 class="cs-h sr-flow__h" data-reveal="up">Adipiscing elit eiusmod</h3>
+        <p class="cs-p" data-reveal="up">
+          Lorem ipsum dolor sit amet consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore. Magna aliqua ut enim ad minim veniam quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat duis. Duis aute "irure dolor" in reprehenderit voluptate velit esse cillum dolore eu fugiat nulla pariatur excepteur sint occaecat cupidatat non proident sunt culpa.
+        </p>
+      </Inner>
+      <div class="sr-fig sr-fig--dash" data-reveal="up">
+        <Dashboard />
+        <Note top={109} left={842} line={48} width={183}>Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt.</Note>
+        <Note top={200} left={582} line={308} width={183}>
+          Lorem ipsum dolor sit amet consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam quis nostrud exercitation ullamco laboris, nisi ut aliquip ex ea commodo consequat.
+        </Note>
+      </div>
+      <div class="sr-fig sr-fig--dash" data-reveal="up">
+        <Dashboard />
+        <Note top={435} left={830} line={60} width={183}>Consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna.</Note>
+        <Note top={593} left={824} line={66} width={183}>Aliqua enim ad minim veniam quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</Note>
+      </div>
+
+      <!-- Flow #2: templates -->
+      <Inner class="sr-flow__text">
+        <p class="cs-label sr-flow__num" data-reveal="fade">Item #2</p>
+        <h3 class="cs-h sr-flow__h" data-reveal="up">Tempor incididunt</h3>
+        <p class="cs-p" data-reveal="up">
+          Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod, tempor incididunt, ut labore, et dolore magna aliqua. Enim ad minim veniam quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat, duis aute irure dolor in reprehenderit voluptate velit esse cillum dolore eu fugiat nulla pariatur excepteur sint occaecat cupidatat.
+        </p>
+      </Inner>
+      <div class="sr-fig sr-fig--templates" data-reveal="up">
+        <img
+          src="/assets/images/dg1DHGzqPMIbl1PVw9GhAXt9bqM.png"
+          alt="Placeholder product screenshot"
+          width="1491"
+          height="1040"
+          loading="lazy"
+          decoding="async"
+        />
+        <Cursor class="sr-fig__cursor" size={26} rotate={30} />
+      </div>
+
+      <!-- Creating an automation: sticky-stacked step figures -->
+      <Inner class="sr-flow__text">
+        <h3 class="cs-h sr-flow__h" data-reveal="up">Dolore magna Aliqua</h3>
+        <p class="cs-p" data-reveal="up">
+          Lorem ipsum dolor sit amet consectetur adipiscing elit 5-step sed, do eiusmod tempor, incididunt ut labore, et dolore magna, aliqua enim ad minim veniam quis nostrud exercitation ullamco laboris nisi. Ut aliquip ex ea commodo consequat duis aute irure dolor in reprehenderit voluptate velit esse cillum dolore eu fugiat nulla in 10 pariatur excepteur.
+        </p>
+      </Inner>
+      <div class="sr-steps">
+        <div class="sr-step" data-reveal="up">
+          <h4 class="sr-step__h">Step <em>#1</em></h4>
+          <img class="sr-step__img" style="left:259px" src={stepShot} alt={stepAlt} width="1504" height="978" loading="lazy" decoding="async" />
+          <Note vertical top={42} left={313} line={30} width={225} lineOffset={40}>
+            Lorem ipsum dolor sit amet consectetur adipiscing elit sed. Do eiusmod tempor incididunt ut labore et dolore magna aliqua enim ad minim.
+          </Note>
+          <Note side="left" top={269} left={329} line={121} width={130}>Veniam quis nostrud exercitation ullamco laboris nisi, ut aliquip, ex ea commodo consequat duis aute irure.</Note>
+        </div>
+
+        <div class="sr-step" data-reveal="up">
+          <h4 class="sr-step__h">Step <em>#3</em></h4>
+          <img class="sr-step__img" style="left:110px" src={stepShot} alt="" width="1504" height="978" loading="lazy" decoding="async" />
+          <Note top={338} left={603} line={298} width={166}>Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod.</Note>
+          <Note top={432} left={603} line={298} width={166}>
+            <p>'Lorem ipsum dolor' sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt labore.</p>
+            <p>Ut enim ad minim, veniam quis nostrud exercitation ullamco laboris nisi ut aliquip commodo. Duis aute irure dolor in reprehenderit voluptate velit esse cillum dolore fugiat.</p>
+          </Note>
+        </div>
+
+        <div class="sr-step" data-reveal="up">
+          <h4 class="sr-step__h">Step <em>#5</em></h4>
+          <img class="sr-step__img" style="left:74px" src={stepShot} alt="" width="1504" height="978" loading="lazy" decoding="async" />
+          <Note top={219} left={799} line={66} width={170}>Sed do eiusmod, tempor, incididunt ut labore et dolore magna aliqua.</Note>
+          <Note top={356} left={741} line={124} width={170}>
+            Lorem ipsum dolor sit amet consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore, et dolore magna aliqua enim, ad minim veniam quis nostrud exercitation ullamco laboris nisi aliquip ex ea commodo.
+          </Note>
+          <Note top={481} left={790} line={134} width={170}>Duis aute irure dolor in reprehenderit voluptate velit esse cillum dolore eu fugiat nulla.</Note>
+          <Note top={582} left={745} line={179} width={170}>Excepteur sint occaecat cupidatat non proident sunt in culpa qui officia deserunt.</Note>
+        </div>
+      </div>
+
+      <!-- Automations table -->
+      <Inner class="sr-flow__text">
+        <h3 class="cs-h sr-flow__h" data-reveal="up">Veniam exercitation ullamco</h3>
+        <p class="cs-p" data-reveal="up">
+          Lorem ipsum dolor sit amet consectetur adipiscing elit, sed do eiusmod, tempor incididunt ut labore et dolore magna aliqua.<br />
+          Enim ad minim veniam, quis nostrud, exercitation ullamco laboris nisi ut aliquip, ex ea commodo consequat duis aute irure dolor in reprehenderit voluptate velit esse cillum dolore.
+        </p>
+      </Inner>
+      <div class="sr-fig sr-fig--table" data-reveal="up">
+        <img
+          class="sr-table"
+          src="/assets/images/gqDPmojyL22OPYUqiFT3urLzgU.png"
+          alt="Placeholder product screenshot"
+          width="2824"
+          height="1834"
+          loading="lazy"
+          decoding="async"
+        />
+        <img class="sr-table__drop" src="/assets/images/HlAzmMXVc55PMrGOoSWR3PxMGIQ.png" alt="Placeholder UI detail" width="318" height="412" loading="lazy" decoding="async" />
+        <span class="sr-table__lead" aria-hidden="true"></span>
+        <img
+          class="sr-table__toasts"
+          src="/assets/images/nkzK6FtHMWJlAcDiJJOb63vDViQ.png"
+          alt="Placeholder notification messages"
+          width="800"
+          height="420"
+          loading="lazy"
+          decoding="async"
+        />
+      </div>
+    </Section>
+
+    <!-- ============ Brand identity ============ -->
+    <Section id="brand-identity" class="sr-brand-sec">
+      <div class="sr-brand" data-reveal="up">
+        <div class="sr-brand__text">
+          <p class="cs-label">Section Seven</p>
+          <h2 class="cs-h sr-brand__h">Ut labore et dolore magna</h2>
+          <p class="cs-p">
+            Lorem ipsum dolor sit amet consectetur, adipiscing elit sed do eiusmod tempor incididunt labore. Et dolore magna aliqua, enim ad minim veniam quis nostrud exercitation ullamco laboris, nisi ut aliquip ex ea commodo consequat. Duis aute irure, dolor, in reprehenderit voluptate velit esse cillum dolore eu fugiat nulla pariatur excepteur.
+          </p>
+        </div>
+        <div class="sr-brand__grid">
+          <div class="sr-brand__col">
+            <div class="sr-brand__logo">
+              <img src="/assets/images/LgCF9NV0EP7pZf5Dq1vUCKDFXEg.png" alt="Placeholder logo" width="1412" height="255" loading="lazy" decoding="async" />
+            </div>
+            <div class="sr-brand__phone">
+              <img src="/assets/images/vKJRutiuBofzlT6AxxNbIZQPmAE.png" alt="Placeholder device photo" width="4000" height="2668" loading="lazy" decoding="async" />
+            </div>
+          </div>
+          <div class="sr-brand__col">
+            <div class="sr-brand__laptop">
+              <img
+                src="/assets/images/QPiJ3QAy5gEcDNpL87mTfQ.png"
+                alt="Placeholder marketing site screenshot"
+                width="2552"
+                height="1478"
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
+            <div class="sr-brand__poster">
+              <img
+                src="/assets/images/ceOmvvQzNOiZ1XdTmpjDVJgqGk.png"
+                alt="Placeholder social media graphics"
+                width="1280"
+                height="1346"
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </Section>
+
+    <!-- ============ Outcome ============ -->
+    <Section label="Section Eight" class="sr-outcome">
+      <div class="sr-outcome__grid">
+        <div class="sr-outcome__col">
+          <h3 class="cs-h" data-reveal="up">Lorem ipsum dolor amet?</h3>
+          <div class="sr-users" data-reveal="up">
+            <img
+              class="sr-users__a"
+              src="/assets/images/gHT3li4bTrJ5BsDLBZcvqFdByk0.png"
+              alt="Placeholder testimonial card"
+              width="1144"
+              height="1284"
+              loading="lazy"
+              decoding="async"
+            />
+            <img
+              class="sr-users__b"
+              src="/assets/images/59WFsCDgPUCNNe2KyhNdLVylw.png"
+              alt="Placeholder testimonial card"
+              width="1158"
+              height="594"
+              loading="lazy"
+              decoding="async"
+            />
+            <img
+              class="sr-users__c"
+              src="/assets/images/qpHU5oNwJmaY3i4IHkN2Q0efOx8.png"
+              alt="Placeholder testimonial card"
+              width="1152"
+              height="1230"
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
+        </div>
+        <div class="sr-outcome__col">
+          <h3 class="cs-h" data-reveal="up">Sed do eiusmod tempor?</h3>
+          <div class="sr-client" data-reveal="up">
+            <img
+              src="/assets/images/ZrhgCBwklSKkdiRfg3irCBkgo.png"
+              alt="Placeholder testimonial card"
+              width="1284"
+              height="1126"
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
+        </div>
+      </div>
+    </Section>
+
+    <!-- ============ Impact ============ -->
+    <Section id="impact" label="Section Nine" class="sr-impact">
+      <div class="sr-impact__grid">
+        <Stat label="Lorem Ipsum" value="6 weeks" caption="Lorem ipsum dolor sit <b>6 weeks</b>,<br />consectetur 100+ adipiscing elit 60 sed." />
+        <Stat label="Dolor Sit Amet" value="100,000+" caption="Adipiscing <b>100,000+ elit sed</b><br />do eiusmod tempor incididunt labore." />
+        <Stat
+          class="sr-impact__wide"
+          label="Consectetur Adipiscing Elit"
+          value="5 lorem ipsum"
+          caption="Lorem ipsum dolor sit <b>5-step amet</b>,<br />consectetur adipiscing elit sed<br /><b>eiusmod tempor incididunt 10 labore.</b>"
+        />
+      </div>
+    </Section>
+
+    <!-- ============ Key learnings ============ -->
+    <Section id="key-learnings" class="sr-learn-sec">
+      <Dark wide class="sr-learn">
+        <p class="cs-label" data-reveal="fade">Section Ten</p>
+        <h2 class="sr-learn__h" data-reveal="up">Ut enim ad minim veniam quis nostrud sed</h2>
+        <Grid cols={3} gap={30} class="sr-learn__grid" min={240}>
+          {
+            learnings.map((l, i) => (
+              <Card variant="grey" title={l.title} data-reveal-delay={String(i * 0.06)}>
+                <p>{l.body}</p>
+              </Card>
+            ))
+          }
+        </Grid>
+      </Dark>
+      <p class="sr-mobile-note">Note: Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor.</p>
+    </Section>
+  </div>
+</CaseStudyLayout>
+
+<style>
+  /* ---------- hero: purple box, laptop sitting on its bottom edge ---------- */
+  .sr-hero {
+    position: relative;
+    width: 100%;
+    height: clamp(420px, 72vh, 727px);
+    background: var(--purple);
+    overflow: hidden;
+    border-radius: var(--r-lg);
+    margin-bottom: 40px;
+  }
+  .sr-hero img {
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    height: 89%;
+    width: auto;
+    max-width: none;
+    transform: translateX(-50%);
+  }
+
+  .sr-body :global(.cs-body strong) { font-weight: 600; }
+
+  /* ---------- TL;DR ---------- */
+  .sr-tldr__tag {
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 224px;
+    margin-bottom: 10px;
+    position: relative;
+    z-index: 1;
+  }
+  .sr-tldr__tag :global(.tag-box) {
+    width: 128px;
+    text-align: center;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    padding: 5px 0;
+  }
+  .sr-tldr__tag :global(.atag__arrow) { margin-top: 22px; }
+  .sr-body :global(.sr-dark) { width: 1080px; }
+  .sr-body :global(.sr-dark .tldr__h .accent) { color: var(--purple-2); }
+  .sr-body :global(.sr-dark .tldr__body li) { margin: 0.2em 0; }
+  .sr-body :global(.sr-dark .tldr__body ul) { margin-top: 1em; }
+
+  /* ---------- preview ---------- */
+  .sr-preview__h { margin-bottom: 40px; }
+  .sr-body :global(.sr-preview__fig .fig__media) { background: #fafafa; aspect-ratio: 3440 / 2160; }
+
+  /* ---------- user research ---------- */
+  .sr-illus { width: 100%; height: auto; margin-top: 60px; }
+  .sr-groups-h {
+    font-size: 16px;
+    line-height: 1.4;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    margin-top: 60px;
+  }
+  .sr-body :global(.sr-groups) { margin-top: 18px; }
+  .sr-body :global(.sr-groups .cs-card) { min-height: 253px; }
+  .sr-body :global(.sr-groups .cs-card__main) { justify-content: space-between; }
+  .sr-body :global(.sr-groups .cs-card__head) { margin-bottom: 24px; }
+  .sr-body :global(.sr-groups .cs-card__num) { opacity: 0.5; }
+  .sr-body :global(.sr-learned) { margin-top: 60px; }
+  .sr-body :global(.sr-gap-row) { margin-top: 40px; }
+
+  /* "Where was the gap?" diagram */
+  .sr-gap {
+    position: relative;
+    width: 433px;
+    max-width: 100%;
+    height: 240px;
+    margin-left: 85px;
+  }
+  .sr-gap__col {
+    width: 253px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .sr-gap__box {
+    border-radius: var(--r-sm);
+    height: 63px;
+    display: grid;
+    place-items: center;
+    background: var(--dark);
+    color: #f5f5f5;
+    font-size: 16px;
+    line-height: 1.6;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    text-align: center;
+  }
+  .sr-gap__box--hi { height: 82px; background: var(--purple); }
+  .sr-gap__link {
+    display: block;
+    width: 2px;
+    height: 16px;
+    margin: 0 auto;
+    border-left: 2px dotted rgba(141, 1, 255, 0.8);
+  }
+  .sr-gap :global(.sr-gap__cursor) { position: absolute; top: 63px; left: 242px; }
+  .sr-gap__note {
+    position: absolute;
+    top: 58px;
+    right: 17px;
+    width: 119px;
+    font-size: 14px;
+    line-height: 1.3;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    color: var(--muted-2);
+  }
+
+  /* ---------- problem statement: full content width ---------- */
+  .sr-body :global(.sr-statement) { width: 100%; }
+
+  /* ---------- core flows ---------- */
+  .sr-body :global(.sr-flow__text) { margin-top: 80px; }
+  .sr-body :global(.sr-flows > .sr-flow__text:first-child) { margin-top: 0; }
+  .sr-flow__num { margin-bottom: 26px; }
+  .sr-flow__h { margin-bottom: 14px; }
+
+  .sr-fig {
+    position: relative;
+    width: 100%;
+    background: var(--bg-2);
+    border-radius: var(--r-lg);
+    margin-top: 40px;
+  }
+  .sr-fig--onboard { height: 640px; }
+  .sr-fig__card {
+    position: absolute;
+    left: 100px;
+    top: 100px;
+    width: 760px;
+    height: 439px;
+    border-radius: 8px;
+    background: #fff;
+    overflow: hidden;
+  }
+  .sr-fig__card img { width: 100%; height: auto; }
+
+  .sr-fig--dash { height: 818px; padding: 100px 0 100px 90px; }
+  .sr-fig--dash + .sr-fig--dash { margin-top: 60px; }
+
+  .sr-fig--templates { height: 669px; display: grid; place-items: center; }
+  .sr-fig--templates img { width: 760px; max-width: 100%; height: auto; }
+  .sr-fig :global(.sr-fig__cursor) { position: absolute; left: 649px; top: 417px; }
+
+  /* sticky-stacked "Step #n" figures */
+  .sr-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 200px;
+    margin-top: 40px;
+  }
+  .sr-step {
+    position: sticky;
+    top: 60px;
+    height: 761px;
+    background: var(--bg-2);
+    border-radius: var(--r-lg);
+    overflow: hidden;
+  }
+  .sr-step__h {
+    position: absolute;
+    top: 30px;
+    left: 40px;
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: 48px;
+    line-height: 53px;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+  }
+  .sr-step__h em { font-style: italic; }
+  .sr-step__img {
+    position: absolute;
+    top: 134px;
+    width: 752px;
+    height: auto;
+    border-radius: 6px;
+    box-shadow: 0 2px 24px rgba(0, 0, 0, 0.06);
+  }
+
+  .sr-fig--table { padding: 40px 10px; display: flex; justify-content: center; }
+  .sr-table { width: 759px; max-width: 100%; height: auto; border-radius: 8px; }
+  .sr-table__drop { position: absolute; top: 80px; left: 65px; width: 81px; height: auto; }
+  .sr-table__toasts { position: absolute; bottom: 177px; left: 888px; width: 195px; height: auto; }
+  .sr-table__lead {
+    position: absolute;
+    top: 86px;
+    left: 159px;
+    width: 92px;
+    border-top: 2px dotted #8d01ff;
+    opacity: 0.85;
+  }
+  .sr-table__lead::before {
+    content: '';
+    position: absolute;
+    left: -3px;
+    top: -4px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #8d01ff;
+  }
+
+  /* ---------- brand identity ---------- */
+  .sr-brand {
+    width: 1040px;
+    max-width: 100%;
+    margin-inline: auto;
+    background: var(--bg-2);
+    border-radius: var(--r-lg);
+    padding: 54px 12px 50px;
+  }
+  .sr-brand__text { padding: 0 124px 0 100px; }
+  .sr-brand__text .cs-label { margin-bottom: 30px; }
+  .sr-brand__h { margin-bottom: 20px; }
+  .sr-brand__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 80px;
+  }
+  .sr-brand__col { display: flex; flex-direction: column; gap: 12px; height: 642px; }
+  .sr-brand__logo { height: 112px; display: grid; place-items: center; }
+  .sr-brand__logo img { width: 84%; height: auto; }
+  .sr-brand__phone { flex: 1; background: var(--purple); border-radius: var(--r-md); overflow: hidden; }
+  .sr-brand__phone img { width: 100%; height: 100%; object-fit: cover; }
+  .sr-brand__laptop,
+  .sr-brand__poster {
+    position: relative;
+    flex: 1;
+    min-height: 0;
+    overflow: hidden;
+  }
+  .sr-brand__laptop { background: var(--purple); border-radius: var(--r-md); overflow: hidden; }
+  .sr-brand__poster { background: #262626; border-radius: var(--r-md); overflow: hidden; }
+  .sr-brand__laptop img,
+  .sr-brand__poster img {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: auto;
+    max-width: none;
+  }
+  .sr-brand__laptop img { bottom: 1px; height: 208px; }
+  .sr-brand__poster img { bottom: -87px; height: 326px; }
+
+  /* ---------- outcome ---------- */
+  .sr-outcome__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 50px;
+    align-items: stretch;
+  }
+  .sr-outcome__col { display: flex; flex-direction: column; }
+  .sr-outcome__col .cs-h { margin-bottom: 20px; }
+  .sr-users {
+    position: relative;
+    flex: 1;
+    min-height: 525px;
+    background: var(--bg-2);
+    border-radius: var(--r-md);
+  }
+  .sr-users img { position: absolute; height: auto; }
+  .sr-users__a { width: 228px; top: 40px; left: 35px; }
+  .sr-users__b { width: 228px; bottom: 39px; left: 35px; }
+  .sr-users__c { width: 227px; top: 51%; left: 272px; transform: translateY(-50%); }
+  .sr-client {
+    border-radius: var(--r-lg);
+    flex: 1;
+    background: var(--bg-2);
+    padding: 50px;
+    display: flex;
+    align-items: center;
+  }
+  .sr-client img { width: 100%; height: auto; }
+
+  /* ---------- impact ---------- */
+  .sr-impact__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 16px;
+  }
+  .sr-body :global(.sr-impact__grid .stat) {
+    justify-content: center;
+    gap: 36px;
+    min-height: 330px;
+    padding: 50px 40px;
+  }
+  .sr-body :global(.sr-impact__grid .stat__label) { min-width: 326px; justify-content: center; }
+  .sr-body :global(.sr-impact__wide) { grid-column: 1 / -1; }
+
+  /* ---------- key learnings ---------- */
+  .sr-body :global(.sr-learn) { padding: 50px; }
+  .sr-body :global(.sr-learn .cs-label) { margin-bottom: 36px; }
+  .sr-learn__h {
+    font-size: 18px;
+    line-height: 1.3;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    color: #f5f5f5;
+    margin-bottom: 32px;
+  }
+  .sr-body :global(.sr-learn__grid .cs-card) { min-height: 210px; padding: 20px; }
+  .sr-body :global(.sr-learn__grid .cs-card__main) { justify-content: space-between; }
+  .sr-body :global(.sr-learn__grid .cs-card__head) { margin-bottom: 24px; }
+  .sr-body :global(.sr-learn__grid .cs-card__body p) { color: #e3e3e3; }
+
+  .sr-mobile-note {
+    display: none;
+    margin-top: 40px;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 300;
+    letter-spacing: -0.02em;
+    color: var(--muted-2);
+  }
+
+  /* ---------- responsive ---------- */
+  /* 1200–1499px: the content column is narrower than the 1120px these fixed-layout figures were designed for,
+     so scale them (layout-affecting `zoom`, set from the column width by the script below). */
+  @media (min-width: 1200px) and (max-width: 1499px) {
+    .sr-fig--onboard, .sr-fig--dash, .sr-fig--templates, .sr-step, .sr-fig--table { zoom: var(--fig-zoom, 1); }
+  }
+  @media (max-width: 1299px) {
+    .sr-tldr__tag { padding-right: 120px; }
+  }
+  @media (max-width: 1199px) {
+    .sr-hero { height: auto; aspect-ratio: 1120 / 727; }
+    .sr-hero img { height: auto; width: 89%; max-width: 89%; }
+    .sr-fig--onboard { height: auto; padding: 60px 24px; }
+    .sr-fig__card { position: relative; left: auto; top: auto; width: 760px; max-width: 100%; height: auto; margin-inline: auto; }
+    .sr-fig--dash { height: auto; padding: 60px 24px; display: flex; justify-content: center; }
+    .sr-fig--templates { height: auto; padding: 60px 24px; }
+    .sr-fig :global(.sr-fig__cursor) { display: none; }
+    .sr-steps { gap: 40px; }
+    .sr-step { position: relative; top: auto; height: auto; padding: 100px 24px 40px; }
+    .sr-step__h { top: 24px; left: 24px; }
+    .sr-step__img { position: relative; top: auto; left: auto !important; width: 100%; max-width: 752px; margin-inline: auto; display: block; }
+    .sr-fig--table { padding: 40px 24px 40px; }
+    .sr-table__drop, .sr-table__toasts, .sr-table__lead { display: none; }
+    .sr-brand__text { padding: 0 24px; }
+    .sr-users__c { left: auto; right: 35px; }
+  }
+  @media (max-width: 949px) {
+    .sr-tldr__tag { padding-right: 20px; }
+    .sr-groups-h { margin-top: 40px; }
+    .sr-body :global(.sr-groups .cs-card) { min-height: 0; }
+    .sr-gap { margin-left: 0; height: auto; width: 100%; }
+    .sr-gap__col { width: 253px; max-width: 100%; }
+    .sr-gap :global(.sr-gap__cursor) { display: none; }
+    .sr-gap__note { position: static; width: auto; margin-top: 16px; }
+    .sr-body :global(.sr-flow__text) { margin-top: 56px; }
+    .sr-step { padding: 80px 16px 24px; }
+    .sr-step__h { font-size: 36px; line-height: 1; }
+    .sr-brand { padding: 32px 16px; }
+    .sr-brand__text { padding: 0; }
+    .sr-brand__grid { grid-template-columns: 1fr; margin-top: 40px; }
+    .sr-brand__col { height: auto; }
+    .sr-brand__phone { aspect-ratio: 504 / 518; }
+    .sr-brand__laptop, .sr-brand__poster { aspect-ratio: 504 / 315; flex: none; }
+    .sr-brand__laptop img { height: auto; width: 72%; }
+    .sr-brand__poster img { height: auto; width: 62%; bottom: -14%; }
+    .sr-outcome__grid { grid-template-columns: 1fr; gap: 40px; }
+    .sr-users { min-height: 0; padding: 24px; display: grid; grid-template-columns: 1fr 1fr; gap: 16px; align-items: start; }
+    .sr-users img { position: static; width: 100%; transform: none; }
+    .sr-client { padding: 24px; }
+    .sr-impact__grid { grid-template-columns: 1fr; gap: 0; }
+    .sr-body :global(.sr-impact__grid .stat) { min-height: 0; padding: 32px 16px; gap: 24px; }
+    .sr-body :global(.sr-impact__grid .stat__label) { min-width: 0; }
+    .sr-body :global(.sr-learn) { padding: 32px 24px 40px; }
+    .sr-body :global(.sr-learn__grid .cs-card) { min-height: 0; }
+    .sr-mobile-note { display: block; }
+  }
+  @media (max-width: 640px) {
+    .sr-tldr__tag :global(.atag__arrow) { width: 80px; margin-top: 16px; }
+    .sr-hero img { width: 94%; max-width: 94%; }
+    .sr-fig--onboard, .sr-fig--dash, .sr-fig--templates { padding: 24px 16px; }
+    .sr-fig--table { padding: 24px 16px; }
+    .sr-users { grid-template-columns: 1fr; }
+  }
+</style>
+
+<script>
+  // Fixed-layout figures are designed for a 1120px column; scale them when the column is narrower.
+  const body = document.querySelector<HTMLElement>('.cs__body');
+  if (body) {
+    const apply = () => {
+      const cs = getComputedStyle(body);
+      const inner = body.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
+      body.style.setProperty('--fig-zoom', String(Math.min(1, Math.max(0.5, inner / 1120))));
+    };
+    apply();
+    new ResizeObserver(apply).observe(body);
+  }
+</script>

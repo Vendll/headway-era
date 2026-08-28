@@ -1,0 +1,27 @@
+---
+/** Accent-coloured block with a mono label and a big quoted statement (problem statement). */
+interface Props {
+  label?: string;
+  bg?: string;
+  color?: string;
+  class?: string;
+  id?: string;
+}
+const { label = 'Section Label', bg = 'var(--accent-cs, var(--purple))', color = '#f5f5f5', class: className, id, ...rest } = Astro.props;
+---
+
+<div {...rest} id={id} class:list={['statement', className]} style={`background:${bg};color:${color}`} data-reveal="up" data-toc-section={id ? '' : undefined}>
+  {label && <p class="statement__label">{label}</p>}
+  <p class="statement__text"><slot /></p>
+</div>
+
+<style>
+  .statement { width: 1008px; max-width: 100%; margin-inline: auto; padding: 50px; border-radius: var(--r-lg); }
+  .statement__label { font-family: var(--font-mono); font-size: 14px; font-weight: 300; letter-spacing: -0.04em; line-height: 1.2; opacity: 0.95; margin-bottom: 32px; }
+  .statement__text { font-size: 28px; line-height: 1.3; font-weight: 500; letter-spacing: -0.02em; }
+  .statement__text :global(strong) { font-weight: 700; }
+  @media (max-width: 949px) {
+    .statement { padding: 28px 24px; }
+    .statement__text { font-size: 22px; }
+  }
+</style>

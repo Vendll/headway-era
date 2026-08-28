@@ -1,0 +1,30 @@
+---
+/** Project One — the little green "cursor" arrow from the Framer page (inline SVG, follows `color`). */
+interface Props {
+  size?: number;
+  rotate?: number;
+  class?: string;
+  style?: string;
+}
+const { size = 31, rotate = 0, class: className, style = '' } = Astro.props;
+---
+
+<svg
+  class:list={['sr-cursor', className]}
+  width={size}
+  height={Math.round(size * (31.804 / 30.626))}
+  viewBox="0 0 30.626 31.804"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+  style={`transform:rotate(${rotate}deg);${style}`}
+  aria-hidden="true"
+>
+  <path
+    d="M 17.436 4.409 C 16.579 2.63 14.047 2.63 13.19 4.409 L 3.146 25.269 C 2.156 27.326 4.376 29.447 6.386 28.365 L 15.313 23.558 L 24.24 28.365 C 26.25 29.447 28.47 27.326 27.48 25.269 Z"
+    fill="currentColor"
+  />
+</svg>
+
+<style>
+  .sr-cursor { display: block; color: var(--green); flex: none; }
+</style>

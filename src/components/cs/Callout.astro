@@ -1,0 +1,28 @@
+---
+/** Soft rounded callout box (e.g. the blue "Lorem ipsum? Dolor." note on the Project Three page). */
+interface Props {
+  bg?: string;
+  color?: string;
+  border?: string;
+  title?: string;
+  class?: string;
+  icon?: string;
+}
+const { bg = '#dce6ff', color = '#151515', border, title, class: className, icon, ...rest } = Astro.props;
+---
+
+<div {...rest} class:list={['callout', className]} style={`background:${bg};color:${color};${border ? `border:1px solid ${border};` : ''}`} data-reveal="up">
+  {icon && <span class="callout__icon" aria-hidden="true">{icon}</span>}
+  <div class="callout__main cs-body">
+    {title && <p class="callout__title" set:html={title} />}
+    <slot />
+  </div>
+</div>
+
+<style>
+  .callout { display: flex; gap: 20px; padding: 24px 30px; border-radius: var(--r-md); }
+  .callout__title { font-size: 18px; font-weight: 600; letter-spacing: -0.02em; margin-bottom: 16px; color: inherit; }
+  .callout__main :global(p), .callout__main :global(li) { color: inherit; font-weight: 400; }
+  .callout__main :global(a) { text-decoration: underline; text-underline-offset: 3px; }
+  .callout__icon { font-size: 22px; line-height: 1; flex: none; }
+</style>

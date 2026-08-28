@@ -1,0 +1,58 @@
+---
+/**
+ * Rounded media container used throughout the Project Six scroll story.
+ *
+ *   grey  – #fafafa, radius 20, padding 50 (landscape videos / dashboard screenshot)
+ *   phone – white, 1px border, fixed 552px height, phone video top-aligned and clipped at the bottom
+ *   plain – #fafafa, fixed 552px height, media centred (watch image)
+ *
+ * Media classes: `media--phone` for portrait phone recordings, `media--watch`
+ * for the watch image.
+ */
+interface Props {
+  variant?: 'grey' | 'phone' | 'plain';
+  class?: string;
+}
+const { variant = 'grey', class: className } = Astro.props;
+---
+
+<figure class:list={['panel', `panel--${variant}`, className]} data-reveal="up" data-fade>
+  <slot />
+</figure>
+
+<style>
+  .panel {
+    width: 100%;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+  }
+  .panel--grey { background: #fafafa; padding: 50px; }
+  .panel--phone {
+    background: #fff;
+    border: 1px solid #dedede;
+    height: 552px;
+    padding: 100px 20px 20px;
+    justify-content: flex-start;
+  }
+  .panel--plain { background: #fafafa; height: 552px; padding: 20px; }
+
+  .panel :global(.media) { display: block; max-width: 100%; height: auto; }
+  .panel--grey :global(.media) { width: 100%; border-radius: 12px; }
+  .panel--phone :global(.media--phone) { width: 297px; border-radius: 30px; flex: none; }
+  .panel--plain :global(.media--watch) { width: 270px; }
+
+  @media (max-width: 949px) {
+    .panel { border-radius: 16px; }
+    .panel--grey { padding: 16px; }
+    .panel--grey :global(.media) { border-radius: 8px; }
+    .panel--phone { height: auto; padding: 32px 16px 0; }
+    .panel--phone :global(.media--phone) { width: min(297px, 72%); max-height: 480px; object-fit: cover; object-position: top; border-radius: 22px 22px 0 0; }
+    .panel--plain { height: auto; padding: 40px 16px; }
+    .panel--plain :global(.media--watch) { width: min(270px, 60%); }
+  }
+</style>

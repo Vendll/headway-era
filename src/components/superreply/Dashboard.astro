@@ -1,0 +1,290 @@
+---
+/**
+ * Project One — the product dashboard ("Hello, User!") rebuilt in HTML/CSS.
+ * On the Framer page this is a live component (text + SVGs), not an image, so it is recreated here
+ * at its original size (756 × 618) and scaled down with `zoom` on small screens.
+ */
+interface Props {
+  class?: string;
+}
+const { class: className } = Astro.props;
+
+const stats = [
+  { label: 'Metric One', value: '100k', sub: '↑ 50,000', up: true },
+  { label: 'Metric Two', value: '1560', sub: '76%' },
+  { label: 'Total Metric Three', value: '35', sub: '100%' },
+  { label: 'Metric Four', value: '-', sub: 'Lorem ipsum dolor on 01-01-2024' },
+];
+const yLabels = ['50k', '10k', '1k', '500', '100', '0'];
+const days = ['19 Aug', '20 Aug', '21 Aug', '22 Aug', '23 Aug', '24 Aug', '25 Aug'];
+const points = [
+  [0, 133.75],
+  [89, 69.5],
+  [179, 102.5],
+  [269, 77.5],
+  [314, 54],
+  [359, 30.5],
+  [449, 80.75],
+  [539.25, 0],
+];
+const linePath = points.map(([x, y], i) => `${i ? 'L' : 'M'}${x} ${y}`).join(' ');
+const areaPath = `${linePath} L539.25 136 L0 136 Z`;
+---
+
+<div class:list={['dash', className]} role="img" aria-label="Project One dashboard: greeting, placeholder-style profile card for username, four metric cards (Metric One 100k, Metric Two 1560, Total Metric Three 35, Metric Four), and an Activity runs line chart for the last 7 days">
+  <img class="dash__side" src="/assets/images/9usSOhlYHbfJVZfCPLmNDwyQhNo.png" alt="" width="118" height="1820" loading="lazy" decoding="async" />
+
+  <div class="dash__top">
+    <span class="dash__crumb">Dashboard</span>
+    <span class="dash__new"><i aria-hidden="true">+</i> New Action</span>
+  </div>
+
+  <div class="dash__main">
+    <p class="dash__hello">Hello, User! <span aria-hidden="true">👋</span></p>
+
+    <div class="dash__profile">
+      <img class="dash__avatar" src="/assets/images/VreHDGKPtkt7nIODurr3FzA8.png" alt="" width="356" height="356" loading="lazy" decoding="async" />
+      <div class="dash__who">
+        <p class="dash__handle">
+          username
+          <img src="/assets/images/ER6VjEzofV7zjwNHk5HDlRqong.png" alt="" width="40" height="40" loading="lazy" decoding="async" />
+          <span class="dash__more" aria-hidden="true">⋮</span>
+        </p>
+        <p class="dash__name">Person Five</p>
+        <p class="dash__counts"><b>288</b> posts <b>400k</b> followers <b>1,890</b> following</p>
+        <p class="dash__bio">lorem ipsum 🛸</p>
+        <p class="dash__bio">dolor sit. Lorem &amp; Ipsum @user123</p>
+      </div>
+      <span class="dash__select dash__select--today">Today <i aria-hidden="true"></i></span>
+    </div>
+
+    <div class="dash__cards">
+      {
+        stats.map((s) => (
+          <div class="dash__card">
+            <p class="dash__card-label">
+              <svg width="8" height="8" viewBox="-1 -1 10 10" fill="none" aria-hidden="true"><path d="M0 .4v5c0 .1 0 .2.1.3l.3.1h2.9l2.1 1.7V5.8h1.7c.1 0 .2 0 .3-.1l.1-.3v-5c0-.1 0-.2-.1-.3L7.1 0H.4C.3 0 .2 0 .1.1L0 .4Z" stroke="#59585C" stroke-width=".75" stroke-linejoin="round"/></svg>
+              {s.label}
+            </p>
+            <p class="dash__card-value">{s.value}</p>
+            <p class:list={['dash__card-sub', { 'is-up': s.up }]}>{s.sub}</p>
+          </div>
+        ))
+      }
+    </div>
+
+    <div class="dash__runs">
+      <span class="dash__runs-h">Activity runs</span>
+      <span class="dash__select">Last 7 days <i aria-hidden="true"></i></span>
+    </div>
+
+    <div class="dash__chart">
+      <p class="dash__total">Total runs <b>11</b></p>
+      <div class="dash__plot">
+        <div class="dash__y">{yLabels.map((l) => <span>{l}</span>)}</div>
+        <svg class="dash__line" viewBox="-1 -4 542 141" preserveAspectRatio="none" aria-hidden="true">
+          <defs>
+            <linearGradient id="sr-dash-fill" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#8d01ff" stop-opacity="0.28" />
+              <stop offset="1" stop-color="#8d01ff" stop-opacity="0" />
+            </linearGradient>
+          </defs>
+          <path d={areaPath} fill="url(#sr-dash-fill)" />
+          <path d={linePath} stroke="#C290FE" stroke-width="1.5" fill="none" vector-effect="non-scaling-stroke" />
+        </svg>
+        <svg class="dash__dots" viewBox="-1 -4 542 141" preserveAspectRatio="none" aria-hidden="true">
+          {points.map(([x, y]) => <circle cx={x} cy={y} r="2.4" fill="#8d01ff" />)}
+        </svg>
+        <div class="dash__x">{days.map((d) => <span>{d}</span>)}</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .dash {
+    position: relative;
+    width: 756px;
+    height: 618px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 24px rgba(0, 0, 0, 0.06);
+    overflow: hidden;
+    font-family: var(--font-body);
+    color: #151515;
+    letter-spacing: -0.01em;
+    flex: none;
+  }
+  .dash p { margin: 0; }
+  .dash__side {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 38px;
+    height: auto;
+    border-right: 1px solid #ececec;
+  }
+  .dash__top {
+    position: absolute;
+    left: 38px;
+    right: 0;
+    top: 0;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 10px 0 18px;
+    border-bottom: 1px solid #f0f0f0;
+  }
+  .dash__crumb { font-size: 8px; font-weight: 500; }
+  .dash__new {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    height: 15px;
+    padding: 0 8px;
+    background: var(--purple);
+    color: #fff;
+    border-radius: 3px;
+    font-size: 6px;
+    font-weight: 500;
+  }
+  .dash__new i { font-style: normal; font-size: 8px; line-height: 1; }
+
+  .dash__main {
+    position: absolute;
+    left: 38px;
+    right: 0;
+    top: 0;
+    padding: 60px 12px 0 18px;
+  }
+  .dash__hello { font-size: 16px; font-weight: 600; letter-spacing: -0.02em; margin-bottom: 20px; }
+
+  .dash__profile {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid #ececec;
+  }
+  .dash__avatar { width: 86px; height: 86px; border-radius: 50%; flex: none; }
+  .dash__who { padding-top: 8px; }
+  .dash__handle { display: flex; align-items: center; gap: 4px; font-size: 14px; font-weight: 600; letter-spacing: -0.02em; }
+  .dash__handle img { width: 10px; height: 10px; }
+  .dash__more { font-size: 10px; color: #302e33; margin-left: 4px; }
+  .dash__name { font-size: 8px; margin-top: 4px; }
+  .dash__counts { font-size: 8px; color: #59585c; margin-top: 6px; word-spacing: 1px; }
+  .dash__counts b { font-weight: 600; color: #151515; }
+  .dash__bio { font-size: 8px; margin-top: 6px; }
+  .dash__bio + .dash__bio { margin-top: 2px; }
+
+  .dash__select {
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
+    height: 15px;
+    width: 79px;
+    padding: 0 6px;
+    border: 1px solid #e3e3e3;
+    border-radius: 3px;
+    font-size: 6px;
+    color: #303030;
+    background: #fff;
+    flex: none;
+  }
+  .dash__select i {
+    width: 4px;
+    height: 4px;
+    border-right: 1px solid #747376;
+    border-bottom: 1px solid #747376;
+    transform: translateY(-1px) rotate(45deg);
+  }
+  .dash__select--today { position: absolute; right: 0; bottom: 14px; }
+
+  .dash__cards {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 23px;
+    margin-top: 10px;
+  }
+  .dash__card {
+    height: 85px;
+    padding: 12px 12px 10px;
+    border: 1px solid #e6e6e6;
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+  }
+  .dash__card-label { display: flex; align-items: center; gap: 4px; font-size: 7px; color: #303030; }
+  .dash__card-value { font-size: 16px; font-weight: 600; letter-spacing: -0.02em; margin-top: 8px; text-align: center; }
+  .dash__card-sub { font-size: 6.5px; color: #5b5b5b; text-align: center; margin-top: 3px; }
+  .dash__card-sub.is-up { color: #6b9610; }
+
+  .dash__runs {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-top: 16px;
+  }
+  .dash__runs-h { font-size: 8px; font-weight: 600; }
+
+  .dash__chart {
+    position: relative;
+    margin-top: 8px;
+    height: 229px;
+    border: 1px solid #e6e6e6;
+    border-radius: 4px;
+    padding: 12px 16px 0;
+  }
+  .dash__total { font-size: 7px; color: #303030; text-align: center; }
+  .dash__total b { font-weight: 600; }
+  .dash__plot {
+    position: relative;
+    margin-top: 12px;
+    height: 176px;
+    padding-left: 40px;
+  }
+  .dash__y {
+    position: absolute;
+    left: 0;
+    top: -4px;
+    width: 30px;
+    height: 154px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-end;
+    font-size: 6px;
+    color: #747376;
+  }
+  .dash__line,
+  .dash__dots {
+    position: absolute;
+    left: 40px;
+    right: 0;
+    top: 0;
+    width: calc(100% - 40px);
+    height: 150px;
+    display: block;
+  }
+  .dash__dots { overflow: visible; }
+  .dash__x {
+    position: absolute;
+    left: 40px;
+    right: 0;
+    top: 160px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 6px;
+    color: #747376;
+  }
+  .dash__x span { width: 24px; text-align: center; }
+  .dash__x span:first-child { text-align: left; }
+  .dash__x span:last-child { text-align: right; }
+
+  @media (max-width: 949px) { .dash { zoom: 0.72; } }
+  @media (max-width: 640px) { .dash { zoom: 0.52; } }
+  @media (max-width: 460px) { .dash { zoom: 0.42; } }
+</style>

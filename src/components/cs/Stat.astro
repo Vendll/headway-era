@@ -1,0 +1,32 @@
+---
+/**
+ * Impact statistic: dark pill label, huge serif value, small caption.
+ * <Stat label="Lorem Ipsum" value="6 weeks" caption="Lorem ipsum dolor sit in <b>6 weeks</b>…" />
+ */
+interface Props {
+  label: string;
+  value: string;
+  caption?: string;
+  class?: string;
+}
+const { label, value, caption, class: className, ...rest } = Astro.props;
+---
+
+<div {...rest} class:list={['stat', className]} data-reveal>
+  <span class="stat__label">{label}</span>
+  <p class="stat__value" set:html={value} />
+  {caption && <p class="stat__caption" set:html={caption} />}
+</div>
+
+<style>
+  .stat { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 22px; }
+  .stat__label { display: inline-flex; align-items: center; height: 51px; padding: 0 30px; border-radius: var(--r-pill); background: var(--dark); color: #f5f5f5; font-size: 24px; font-weight: 400; letter-spacing: -0.02em; }
+  .stat__value { font-family: var(--font-display); font-weight: 400; font-size: 86px; line-height: 0.9; letter-spacing: -0.03em; color: var(--ink); }
+  .stat__value :global(em) { font-style: italic; }
+  .stat__caption { font-size: 14px; line-height: 1.3; font-weight: 300; letter-spacing: -0.02em; color: var(--muted-2); max-width: 400px; }
+  .stat__caption :global(b), .stat__caption :global(strong) { font-weight: 500; }
+  @media (max-width: 949px) {
+    .stat__value { font-size: 60px; }
+    .stat__label { font-size: 18px; height: 44px; padding: 0 20px; }
+  }
+</style>

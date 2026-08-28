@@ -1,0 +1,46 @@
+---
+/**
+ * Card used for user groups, key learnings, future enhancements etc.
+ *
+ * <Card variant="dark" title="Card Title" num="01"><ul><li>…</li></ul></Card>
+ */
+interface Props {
+  variant?: 'dark' | 'grey' | 'light' | 'outline' | 'none';
+  title?: string;
+  num?: string;
+  icon?: string; // image src for an icon tile (future enhancements)
+  class?: string;
+  style?: string;
+  titleSize?: number;
+}
+const { variant = 'dark', title, num, icon, class: className, style, titleSize, ...rest } = Astro.props;
+---
+
+<div {...rest} class:list={['cs-card', `cs-card--${variant}`, className]} style={style} data-reveal="up">
+  {icon && <div class="cs-card__icon"><img src={icon} alt="" loading="lazy" /></div>}
+  <div class="cs-card__main">
+    {(title || num) && (
+      <div class="cs-card__head">
+        {title && <h3 class="cs-card__title" set:html={title} style={titleSize ? `font-size:${titleSize}px` : undefined} />}
+        {num && <span class="cs-card__num">{num}</span>}
+      </div>
+    )}
+    <div class="cs-card__body cs-body"><slot /></div>
+  </div>
+</div>
+
+<style>
+  .cs-card { display: flex; gap: 20px; }
+  .cs-card__main { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+  .cs-card__head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; margin-bottom: 32px; }
+  .cs-card__title { font-size: 19px; line-height: 1.2; font-weight: 400; letter-spacing: -0.04em; }
+  .cs-card--grey .cs-card__title { font-size: 18px; font-weight: 600; line-height: 1.4; letter-spacing: -0.02em; }
+  .cs-card__num { font-family: var(--font-body); font-size: 20px; font-weight: 300; letter-spacing: -0.04em; opacity: 0.6; }
+  .cs-card__body :global(p), .cs-card__body :global(li) { font-size: 14px; line-height: 1.4; letter-spacing: -0.02em; }
+  .cs-card__body :global(ul) { list-style: disc; padding-left: 1.1em; margin: 0; }
+  .cs-card__body :global(li) { margin: 0.2em 0; }
+  .cs-card--outline, .cs-card--light { color: var(--ink); }
+  .cs-card--outline .cs-card__body :global(p), .cs-card--light .cs-card__body :global(p) { color: var(--muted-2); font-size: 16px; }
+  .cs-card__icon { width: 76px; height: 76px; flex: none; background: #fff; border-radius: var(--r-xs); display: grid; place-items: center; }
+  .cs-card__icon img { width: 40px; height: 40px; }
+</style>

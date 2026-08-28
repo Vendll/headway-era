@@ -1,0 +1,223 @@
+---
+/**
+ * Photo ticker — mirrors the Framer "Ticker" on /about: a full-width strip of
+ * photos and muted videos that drifts left forever, is clipped to the middle
+ * 86% of the viewport, and can be dragged with the pointer (cursor: grab).
+ *
+ *   <PhotoTicker items={[{ type: 'image', src: '/assets/images/x.png', alt: '…' }, { type: 'video', src: '/assets/videos/y.mp4', alt: '…' }]} />
+ *
+ * Items are 289×251 by default (`width` overrides). The list is rendered three
+ * times so the loop stays seamless on viewports up to ~3300px wide.
+ */
+import Video from '@/components/Video.astro';
+
+export interface TickerItem {
+  type: 'image' | 'video';
+  src: string;
+  alt: string;
+  width?: number;
+  /** CSS object-position for the crop */
+  position?: string;
+}
+
+interface Props {
+  items: TickerItem[];
+  height?: number;
+  gap?: number;
+  /** drift speed in px/s */
+  speed?: number;
+  label?: string;
+  class?: string;
+}
+const { items, height = 251, gap = 10, speed = 40, label = 'Photos', class: className } = Astro.props;
+const copies = [0, 1, 2];
+---
+
+<section
+  class:list={['ticker', className]}
+  data-ticker
+  data-speed={speed}
+  data-count={items.length}
+  style={`--t-h:${height}px;--t-gap:${gap}px`}
+  aria-label={label}
+>
+  <ul class="ticker__track" data-ticker-track>
+    {
+      copies.map((copy) =>
+        items.map((it) => (
+          <li class="ticker__item" style={`width:${it.width ?? 289}px`} aria-hidden={copy > 0 ? 'true' : undefined}>
+            {it.type === 'video' ? (
+              <Video class="ticker__media" src={it.src} fit="cover" label={copy === 0 ? it.alt : undefined} style={it.position ? `object-position:${it.position}` : undefined} />
+            ) : (
+              <img
+                class="ticker__media"
+                src={it.src}
+                alt={copy === 0 ? it.alt : ''}
+                loading="lazy"
+                decoding="async"
+                draggable="false"
+                style={it.position ? `object-position:${it.position}` : undefined}
+              />
+            )}
+          </li>
+        )),
+      )
+    }
+  </ul>
+</section>
+
+<script>
+  // Drift left at a constant speed; wrap by exactly one copy so the loop is seamless; drag to scrub.
+  const tickers = document.querySelectorAll<HTMLElement>('[data-ticker]');
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  for (const el of tickers) {
+    const track = el.querySelector<HTMLElement>('[data-ticker-track]');
+    if (!track) continue;
+    const speed = Number(el.dataset.speed || 40);
+    const count = Number(el.dataset.count || 0);
+    const items = Array.from(track.children) as HTMLElement[];
+
+    let loop = 0; // px covered by one copy (incl. its trailing gap)
+    const measure = () => {
+      loop = count > 0 && items[count] ? items[count].offsetLeft - items[0].offsetLeft : track.scrollWidth / 3;
+    };
+    measure();
+    window.addEventListener('resize', measure);
+
+    let x = 0;
+    let vel = 0; // px/s left over from a drag
+    let last = 0;
+    let raf = 0;
+    let dragging = false;
+    let dragStartX = 0;
+    let dragStartPos = 0;
+    let lastPointerX = 0;
+    let lastPointerT = 0;
+
+    const render = () => {
+      if (loop > 0) x = ((x % loop) + loop) % loop;
+      track.style.transform = `translate3d(${-x}px,0,0)`;
+    };
+
+    const tick = (t: number) => {
+      const dt = last ? Math.min(0.05, (t - last) / 1000) : 0;
+      last = t;
+      if (!dragging) {
+        x += (reduce ? 0 : speed) * dt + vel * dt;
+        vel *= Math.exp(-4 * dt); // inertia decay
+        if (Math.abs(vel) < 1) vel = 0;
+      }
+      render();
+      raf = requestAnimationFrame(tick);
+    };
+
+    const start = () => {
+      if (raf) return;
+      last = 0;
+      raf = requestAnimationFrame(tick);
+    };
+    const stop = () => {
+      if (!raf) return;
+      cancelAnimationFrame(raf);
+      raf = 0;
+    };
+
+    // Only animate while on screen.
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver((entries) => entries.forEach((en) => (en.isIntersecting ? start() : stop())), { rootMargin: '100px 0px' }).observe(el);
+    } else {
+      start();
+    }
+
+    // Drag to scrub (mouse, touch, pen).
+    el.addEventListener('pointerdown', (e) => {
+      if (e.button !== 0) return;
+      dragging = true;
+      vel = 0;
+      dragStartX = e.clientX;
+      dragStartPos = x;
+      lastPointerX = e.clientX;
+      lastPointerT = performance.now();
+      el.classList.add('is-dragging');
+      el.setPointerCapture(e.pointerId);
+    });
+    el.addEventListener('pointermove', (e) => {
+      if (!dragging) return;
+      const now = performance.now();
+      const dt = (now - lastPointerT) / 1000;
+      if (dt > 0) vel = -(e.clientX - lastPointerX) / dt;
+      lastPointerX = e.clientX;
+      lastPointerT = now;
+      x = dragStartPos - (e.clientX - dragStartX);
+      render();
+    });
+    const release = (e: PointerEvent) => {
+      if (!dragging) return;
+      dragging = false;
+      el.classList.remove('is-dragging');
+      if (el.hasPointerCapture(e.pointerId)) el.releasePointerCapture(e.pointerId);
+      vel = Math.max(-1500, Math.min(1500, vel));
+    };
+    el.addEventListener('pointerup', release);
+    el.addEventListener('pointercancel', release);
+    el.addEventListener('lostpointercapture', () => {
+      dragging = false;
+      el.classList.remove('is-dragging');
+    });
+  }
+</script>
+
+<style>
+  .ticker {
+    width: 100%;
+    height: calc(var(--t-h) + 17px);
+    display: flex;
+    align-items: center;
+    padding: 10px 0;
+    overflow: hidden;
+    cursor: grab;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: pan-y;
+    /* Framer clips the strip to the middle 86% of the viewport (hard edges, no fade) */
+    -webkit-mask-image: linear-gradient(to right, transparent 7%, #000 7%, #000 93%, transparent 93%);
+    mask-image: linear-gradient(to right, transparent 7%, #000 7%, #000 93%, transparent 93%);
+  }
+  .ticker.is-dragging { cursor: grabbing; }
+  .ticker__track {
+    list-style: none;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: var(--t-gap);
+    width: max-content;
+    height: var(--t-h);
+    will-change: transform;
+    padding-right: var(--t-gap); /* keeps the seam between copies equal to the gap */
+  }
+  .ticker__item {
+    flex: none;
+    border-radius: var(--r-md);
+    overflow: hidden;
+    height: var(--t-h);
+    overflow: hidden;
+    position: relative;
+    background: #1a191c;
+  }
+  .ticker__item :global(.ticker__media) {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    pointer-events: none;
+    -webkit-user-drag: none;
+  }
+  @media (max-width: 809px) {
+    .ticker {
+      -webkit-mask-image: linear-gradient(to right, transparent 0, #000 6%, #000 94%, transparent 100%);
+      mask-image: linear-gradient(to right, transparent 0, #000 6%, #000 94%, transparent 100%);
+    }
+  }
+</style>

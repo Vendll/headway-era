@@ -1,0 +1,376 @@
+---
+/**
+ * /digits-assignment — standalone scroll story (not in the nav).
+ * White page, minimal header (name + clock), fixed logo tile top-centre,
+ * "View File" pill bottom-left, "Scroll down!" bottom-right, no footer.
+ */
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import HandArrow from '@/components/HandArrow.astro';
+import Video from '@/components/Video.astro';
+import Panel from '@/components/digits-assignment/Panel.astro';
+
+const figma = '#';
+const v = (id: string) => `/assets/videos/${id}.mp4`;
+---
+
+<BaseLayout
+  title="Project Six — Placeholder Name"
+  description="Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt — ut labore et dolore, magna aliqua enim ad minim veniam quis nostrud exercitation."
+  theme="white"
+  header="minimal"
+  scrollTop={false}
+>
+  <div class="da">
+    <!-- fixed logo tile (top centre) -->
+    <div class="da-logo">
+      <img src="/assets/images/heU6p27UbTCZTtOiAcT05SPEzk.png" alt="Placeholder logo" width="60" height="60" decoding="async" />
+    </div>
+
+    <!-- ============ 1. intro ============ -->
+    <section class="slide">
+      <div class="slide__inner" data-reveal data-fade>
+        <h1 class="da-h">Lorem ipsum dolor sit<br /><em class="accent">consectetur</em> &amp; adipiscing elit<br />sed do eiusmod tempor incididunt</h1>
+      </div>
+    </section>
+
+    <!-- ============ 2. "well, that was tricky !!" ============ -->
+    <section class="slide">
+      <div class="slide__inner slide__inner--tricky" data-reveal data-fade>
+        <span class="tricky">sed, ut perspiciatis unde !!</span>
+        <HandArrow name="Arrow4" class="tricky__arrow" width={62} />
+        <h2 class="da-h">dolor sit amet, consectetur<br /><em class="accent">adipiscing elit</em> sed do eiusmod<br />tempor incididunt ut labore.</h2>
+      </div>
+    </section>
+
+    <!-- ============ 3. Accountant's side ============ -->
+    <section class="slide slide--lead">
+      <div class="slide__inner" data-reveal data-fade>
+        <h2 class="da-h">Ut ad<br /><span class="accent">Veniam</span> quis,</h2>
+      </div>
+    </section>
+
+    <div class="story">
+      <div class="story__text" data-reveal data-fade>
+        <p><span class="accent">Person Six</span> (lorem ipsum) dolor sit amet, consectetur adipiscing elit sed do eiusmod</p>
+      </div>
+      <Panel>
+        <Video class="media" src={v('kzSYmaHDHwtkf7JIto8g9diIiw')} width=3010 height=1838 label="Placeholder video showing the first step of the flow" />
+      </Panel>
+
+      <div class="story__text" data-reveal data-fade>
+        <p>Sed ut perspiciatis unde omnis iste natus: error sit voluptatem accusantium doloremque <strong>laudantium totam rem</strong>, aperiam eaque ipsa <strong>ab illo inventore</strong> veritatis quasi?</p>
+        <p>Nemo enim ipsam, voluptatem quia voluptas sit aspernatur, aut odit aut fugit,<br />sed quia <strong>consequuntur magni dolores eos ratione</strong>.</p>
+        <p><span class="accent">Ipsum in <strong>lorem sit amet.</strong></span></p>
+      </div>
+      <Panel>
+        <Video class="media" src={v('kfDD2llVHcAQPd8Re6cnyrFD30')} width=2486 height=1518 label="Placeholder video showing a form being filled in, a note added and a message composed for the next step" />
+      </Panel>
+
+      <div class="story__text" data-reveal data-fade>
+        <p>Neque porro quisquam est qui, dolorem ipsum quia dolor, <strong>amet consectetur</strong> adipisci velit sed quia non, aut <strong>numquam</strong> eius modi tempora incidunt magnam.</p>
+      </div>
+      <Panel>
+        <Video class="media" src={v('lRybdZOWniwjFqeBhjrdFIMeoI')} width=2466 height=1518 label="Placeholder video showing a tracked item: setting a reminder and assigning it to a teammate" />
+      </Panel>
+    </div>
+
+    <!-- ============ 6. Client's side ============ -->
+    <section class="slide slide--lead">
+      <div class="slide__inner" data-reveal data-fade>
+        <h2 class="da-h">Sed, quia dolor<br /><span class="accent">ut labore</span> magnam</h2>
+      </div>
+    </section>
+
+    <div class="story story--client">
+      <div class="story__text story__text--wide" data-reveal data-fade>
+        <p>Lorem ipsum dolor sit. Amet consectetur adipiscing elit, sed do eiusmod, tempor incididunt ut labore magna aliqua. Ut enim ad minim veniam. Quis nostrud exercitation ullamco laboris nisi.</p>
+        <p>Duis aute irure dolor in reprehenderit voluptate. Velit esse cillum dolore eu fugiat nulla, pariatur excepteur sint occaecat cupidatat.</p>
+      </div>
+      <Panel variant="phone">
+        <Video class="media media--phone" src={v('XuzaPjV9ZQcJb3kA0KHD8s8beg')} width=776 height=1702 label="Placeholder video showing a person answering a question from a notification" />
+      </Panel>
+
+      <div class="story__text" data-reveal data-fade>
+        <p>Person Seven lorem ipsum dolor sit amet consectetur elit.</p>
+        <p>Sed ut perspiciatis unde omnis iste natus error. Sit voluptatem accusantium, doloremque.<br />Laudantium totam rem. <span class="accent">Ipsum in <strong>10 seconds</strong>.</span></p>
+      </div>
+      <Panel variant="plain">
+        <img class="media media--watch" src="/assets/images/f9TGXBmePwEmpwV3xZTTW6LsYLc.png" alt="Placeholder smartwatch screenshot showing a “Lorem ipsum dolor” prompt with three generic placeholder response options" width="442" height="496" loading="lazy" decoding="async" />
+      </Panel>
+
+      <div class="story__text story__text--wide" data-reveal data-fade>
+        <p>Nemo enim ipsam voluptatem quia, voluptas sit aspernatur aut odit aut fugit. Sed quia consequuntur magni dolores, eos qui ratione "voluptatem sequi", nesciunt neque porro quisquam est qui dolorem ipsum quia.</p>
+        <p>Neque porro quisquam est qui dolorem ipsum quia dolor sit amet consectetur adipiscing.</p>
+      </div>
+      <Panel variant="phone">
+        <Video class="media media--phone" src={v('H1BTGZZAe2hDJhMXUlAAgRKMwQ')} width=702 height=1532 label="Placeholder video showing a person choosing an option, tapping a fallback, and reviewing more pending items" />
+      </Panel>
+
+      <div class="story__text story__text--narrow" data-reveal data-fade>
+        <p>Lorem ipsum dolor sit amet consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua enim ad minim veniam.</p>
+      </div>
+      <Panel>
+        <img class="media" src="/assets/images/ni1rS3onvwMrh70qAhqrp564LSM.png" alt="Placeholder dashboard screenshot with a detail panel open: a response has been submitted and is ready for approval" width="3456" height="2112" loading="lazy" decoding="async" />
+      </Panel>
+    </div>
+
+    <!-- ============ 8. closing ============ -->
+    <section class="outro">
+      <h2 class="outro__h" data-reveal data-fade>Lorem ipsum dolor sit<br />amet consectetur adipiscing elit, sed<br />do eiusmod.</h2>
+      <ul class="outro__card" data-reveal="up" data-fade>
+        <li>Lorem ipsum dolor sit? <span class="accent"><strong>Consectetur adipiscing.</strong></span></li>
+        <li>Sed do eiusmod tempor? <span class="accent"><strong>Incididunt ut labore et dolore.</strong></span></li>
+        <li>Magna aliqua enim? <span class="accent"><strong>Ad-minim.</strong></span></li>
+        <li>Veniam quis? <span class="accent"><strong>Nostrud exercitation &lt;30 seconds.</strong></span></li>
+        <li>Ullamco laboris nisi aliquip? <span class="accent"><strong>Ex ea commodo consequat.</strong></span></li>
+      </ul>
+      <p class="outro__thanks" data-reveal data-fade>Lorem ipsum!</p>
+    </section>
+
+    <!-- fixed bottom UI -->
+    <a class="da-figma" href={figma} target="_blank" rel="noopener">
+      View File
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M8 7h9v9"/></svg>
+    </a>
+    <p class="da-scroll" aria-hidden="true">Scroll down!</p>
+  </div>
+</BaseLayout>
+
+<script>
+  // Fade out + shrink blocks as they leave the viewport (Framer "exit" effect), fade back in when they return.
+  // The appear animation itself comes from the global data-reveal helper; this only toggles `.is-out`.
+  const els = document.querySelectorAll<HTMLElement>('[data-fade]');
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (els.length && !reduce && 'IntersectionObserver' in window) {
+    const steps = Array.from({ length: 11 }, (_, i) => i / 10);
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const en of entries) {
+          const rootH = en.rootBounds?.height ?? window.innerHeight;
+          // "out" once less than 35% of the block (or of the viewport, for tall blocks) is visible
+          const need = Math.min(en.boundingClientRect.height, rootH) * 0.35;
+          en.target.classList.toggle('is-out', en.intersectionRect.height < need);
+        }
+      },
+      { threshold: steps, rootMargin: '-12% 0px -8% 0px' },
+    );
+    els.forEach((el) => io.observe(el));
+  }
+</script>
+
+<style>
+  .da {
+    --da-ink: #262626;
+    --da-muted: #6b6b6b;
+    --da-green: #1b8360;
+    --da-col: 1240px;
+    color: var(--da-ink);
+    font-family: var(--font-body);
+    overflow-x: clip;
+    padding-bottom: 200px;
+  }
+  .da .accent, .da :global(.accent) { color: var(--da-green); }
+  .da strong { font-weight: 600; }
+
+  /* exit animation (pairs with the global [data-reveal] appear) */
+  .da :global([data-fade].is-in.is-out) {
+    opacity: 0;
+    transform: translateY(-14px) scale(0.96);
+    transition-duration: 0.5s;
+  }
+
+  /* ---------- fixed UI ---------- */
+  .da-logo {
+    position: fixed;
+    top: calc(var(--header-h) + 28px);
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 60px;
+    z-index: 50;
+    pointer-events: none;
+  }
+  .da-logo img { width: 100%; height: 100%; border-radius: 14px; }
+
+  .da-figma {
+    position: fixed;
+    left: 20px;
+    bottom: 20px;
+    z-index: 50;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 20px;
+    border-radius: 40px;
+    background: var(--da-green);
+    color: #fff;
+    font-size: 16px;
+    line-height: 1.5;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    white-space: nowrap;
+    transition: background 0.2s ease, transform 0.35s var(--ease-spring);
+  }
+  .da-figma:hover { background: #166f51; }
+  .da-figma:active { transform: scale(0.97); }
+  .da-figma svg { flex: none; }
+
+  .da-scroll {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    z-index: 50;
+    padding: 8px 20px;
+    font-size: 16px;
+    line-height: 1.5;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    color: #969696;
+    pointer-events: none;
+  }
+
+  /* ---------- headline slides ---------- */
+  .slide {
+    min-height: 100vh;
+    min-height: 100svh;
+    display: grid;
+    place-items: center;
+    padding: 120px 24px 80px;
+    text-align: center;
+  }
+  .slide__inner { position: relative; }
+  .da-h {
+    font-size: 50px;
+    line-height: 1.1;
+    font-weight: 600;
+    letter-spacing: -0.06em;
+    color: var(--da-ink);
+    text-wrap: balance;
+  }
+  .da-h em { font-style: italic; }
+
+  /* "well, that was tricky !!" pill + hand-drawn arrow (top-left of the heading) */
+  .tricky {
+    position: absolute;
+    left: -230px;
+    top: -125px;
+    display: inline-flex;
+    align-items: center;
+    height: 55px;
+    padding: 0 24px;
+    border-radius: 40px;
+    background: #111;
+    color: #fff;
+    font-size: 22px;
+    line-height: 1;
+    font-weight: 500;
+    letter-spacing: -0.04em;
+    white-space: nowrap;
+  }
+  .slide__inner--tricky :global(.tricky__arrow) {
+    position: absolute;
+    left: -276px;
+    top: -82px;
+    width: 62px;
+    color: #111;
+    transform: scaleY(-1);
+  }
+
+  /* ---------- narrative ---------- */
+  .story {
+    width: min(var(--da-col), 100% - 2 * var(--gutter));
+    margin-inline: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .story__text { width: 620px; max-width: 100%; margin-bottom: 60px; }
+  .story__text--wide { width: 700px; }
+  .story__text--narrow { width: 470px; }
+  .story__text p {
+    font-size: 20px;
+    line-height: 1.3;
+    font-weight: 500;
+    letter-spacing: -0.06em;
+    color: var(--da-muted);
+  }
+  .story__text p + p { margin-top: 1.3em; }
+  .story :global(.panel) { margin-bottom: 165px; }
+  .story :global(.panel:last-child) { margin-bottom: 0; }
+  .story--client { padding-top: 75px; }
+
+  /* ---------- closing ---------- */
+  .outro {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 280px 24px 0;
+  }
+  .outro__h {
+    font-size: 30px;
+    line-height: 1.1;
+    font-weight: 600;
+    letter-spacing: -0.06em;
+    color: var(--da-ink);
+    text-wrap: balance;
+  }
+  .outro__card {
+    list-style: none;
+    width: 800px;
+    max-width: 100%;
+    margin-top: 80px;
+    padding: 50px 40px;
+    border-radius: 30px;
+    background: #fafafa;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
+  .outro__card li {
+    font-size: 20px;
+    line-height: 1.1;
+    font-weight: 500;
+    letter-spacing: -0.06em;
+    color: var(--da-ink);
+  }
+  .outro__thanks {
+    margin-top: 330px;
+    font-size: 60px;
+    line-height: 1.1;
+    font-weight: 600;
+    letter-spacing: -0.06em;
+    color: var(--da-ink);
+  }
+
+  /* ---------- responsive ---------- */
+  @media (max-width: 1199px) {
+    .tricky { left: -120px; top: -130px; }
+    .slide__inner--tricky :global(.tricky__arrow) { left: -166px; top: -86px; }
+  }
+  @media (max-width: 949px) {
+    .da { padding-bottom: 140px; }
+    .da-logo { width: 48px; height: 48px; top: calc(var(--header-h) + 20px); }
+    .da-logo img { border-radius: 11px; }
+    .da-figma { left: 16px; bottom: 16px; font-size: 14px; padding: 8px 16px; }
+    .da-scroll { right: 16px; bottom: 16px; font-size: 14px; padding: 8px 12px; }
+    .slide { padding: 110px 20px 60px; }
+    .da-h { font-size: clamp(32px, 8.5vw, 44px); letter-spacing: -0.05em; }
+    .da-h br { display: none; }
+    .slide__inner--tricky { display: flex; flex-direction: column; align-items: center; gap: 28px; }
+    .tricky { position: static; height: 46px; padding: 0 18px; font-size: 18px; }
+    .slide__inner--tricky :global(.tricky__arrow) { display: none; }
+    .story__text, .story__text--wide, .story__text--narrow { width: 100%; margin-bottom: 32px; }
+    .story__text p { font-size: 18px; letter-spacing: -0.04em; }
+    .story__text p br { display: none; }
+    .story :global(.panel) { margin-bottom: 96px; }
+    .story--client { padding-top: 40px; }
+    .outro { padding-top: 160px; }
+    .outro__h { font-size: 26px; letter-spacing: -0.05em; }
+    .outro__h br { display: none; }
+    .outro__card { margin-top: 48px; padding: 32px 20px; border-radius: 22px; gap: 14px; }
+    .outro__card li { font-size: 17px; letter-spacing: -0.04em; line-height: 1.25; }
+    .outro__thanks { margin-top: 160px; font-size: 44px; }
+  }
+</style>

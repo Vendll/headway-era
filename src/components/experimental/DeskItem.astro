@@ -1,0 +1,91 @@
+---
+/**
+ * One sticker on the experimental "desk": a 120px square sitting at the end of a
+ * spoke of the (invisible) wheel the live Framer page arranges everything on.
+ *
+ *   <DeskItem href="/about" angle={0} label="About"><img … /></DeskItem>
+ *
+ * angle – degrees clockwise from the top of the wheel (the item is tilted by the same amount)
+ * href  – omit for a purely decorative sticker (e.g. the Company Name wordmark)
+ * The page script makes every item draggable via --dx / --dy; a click without a drag follows the link.
+ */
+interface Props {
+  href?: string;
+  angle: number;
+  label?: string;
+  class?: string;
+}
+const { href, angle, label, class: className } = Astro.props;
+const external = !!href && /^https?:\/\//.test(href);
+const Tag = href ? 'a' : 'div';
+---
+
+<Tag
+  class:list={['desk-item', { 'desk-item--link': !!href }, className]}
+  href={href}
+  target={external ? '_blank' : undefined}
+  rel={external ? 'noopener' : undefined}
+  aria-label={href ? label : undefined}
+  style={`--a:${angle}deg`}
+  data-desk-item
+  draggable="false"
+>
+  <span class="desk-item__box"><slot /></span>
+</Tag>
+
+<style>
+  .desk-item {
+    --dx: 0px;
+    --dy: 0px;
+    position: absolute;
+    left: 50%;
+    top: var(--cy);
+    width: var(--s);
+    height: var(--s);
+    /* drag offset (screen space) → centre on the wheel hub → walk out along the spoke */
+    transform: translate(var(--dx), var(--dy)) translate(-50%, -50%) rotate(var(--a)) translateY(calc(-1 * var(--r)));
+    touch-action: none;
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-user-drag: none;
+    -webkit-tap-highlight-color: transparent;
+    cursor: grab;
+    will-change: transform;
+  }
+  .desk-item.is-dragging { cursor: grabbing; }
+  /* hover/drag scale lives on the inner box so the sticker grows in place (scaling the outer
+     element would also scale its spoke offset and push it outwards) */
+  .desk-item:hover .desk-item__box { transform: scale(1.08); }
+  .desk-item.is-dragging .desk-item__box { transform: scale(1.08); box-shadow: 0 24px 50px rgba(0, 0, 0, 0.45); }
+  .desk-item:focus-visible { outline: 2px solid var(--green); outline-offset: 4px; }
+
+  .desk-item__box {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 100%;
+    overflow: clip;
+    background: var(--box-bg, transparent);
+    border-radius: var(--box-radius, 0);
+    pointer-events: none; /* the anchor takes the pointer; media never steals the drag */
+    transform: scale(1);
+    transition: transform 0.4s var(--ease-spring), box-shadow 0.3s ease;
+  }
+  .desk-item__box :global(img),
+  .desk-item__box :global(video) {
+    display: block;
+    width: 102%;
+    height: 102%;
+    max-width: none;
+    object-fit: cover;
+    object-position: var(--media-pos, 50% 50%);
+    -webkit-user-drag: none;
+  }
+
+  /* phones: the wheel becomes a full ring (angles doubled) but each sticker keeps its own tilt */
+  @media (max-width: 949px) {
+    .desk-item {
+      transform: translate(var(--dx), var(--dy)) translate(-50%, -50%) rotate(calc(var(--a) * 2)) translateY(calc(-1 * var(--r))) rotate(calc(-1 * var(--a)));
+    }
+  }
+</style>

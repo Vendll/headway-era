@@ -1,0 +1,51 @@
+---
+/** Infinite horizontal ticker. The whole strip is optionally a link. */
+interface Props {
+  text: string;
+  href?: string;
+  repeat?: number;
+  /** seconds for one full loop */
+  duration?: number;
+  class?: string;
+}
+const { text, href, repeat = 4, duration = 24, class: className, ...rest } = Astro.props;
+const items = Array.from({ length: repeat }, () => text);
+const Tag = href ? 'a' : 'div';
+---
+
+<Tag {...rest} class:list={['marquee', className]} href={href} target={href?.startsWith('http') ? '_blank' : undefined} rel={href?.startsWith('http') ? 'noopener' : undefined} style={`--marquee-duration:${duration}s`} aria-label={text}>
+  <div class="marquee__track" aria-hidden="true">
+    <div class="marquee__group">{items.map((t) => <span class="marquee__item">{t}</span>)}</div>
+    <div class="marquee__group">{items.map((t) => <span class="marquee__item">{t}</span>)}</div>
+  </div>
+</Tag>
+
+<style>
+  .marquee {
+    display: block;
+    overflow: hidden;
+    white-space: nowrap;
+    width: 100%;
+  }
+  .marquee__track {
+    display: flex;
+    width: max-content;
+    animation: marquee var(--marquee-duration, 24s) linear infinite;
+  }
+  .marquee:hover .marquee__track { animation-play-state: paused; }
+  .marquee__group { display: flex; flex: none; }
+  .marquee__item {
+    font-family: var(--font-display);
+    font-size: 110px;
+    line-height: 0.9;
+    letter-spacing: -0.04em;
+    padding: 0.15em 0.35em 0.25em 0;
+  }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+  @media (max-width: 949px) {
+    .marquee__item { font-size: 64px; }
+  }
+</style>

@@ -1,0 +1,66 @@
+---
+/**
+ * Image / video inside a light grey container, optional italic caption underneath.
+ * Extra children (e.g. <Annotation>) are rendered on top of the media, absolutely positioned.
+ *
+ * <Figure src="/assets/images/x.png" alt="…" width={880} caption="Fig. …" />
+ * <Figure video src="/assets/videos/x.mp4" width={856} />
+ */
+import Video from '../Video.astro';
+
+interface Props {
+  src?: string;
+  alt?: string;
+  video?: boolean;
+  poster?: string;
+  caption?: string;
+  /** max-width (px) of the media inside the container */
+  width?: number;
+  /** container background ('none' for transparent) */
+  bg?: string;
+  /** container padding */
+  pad?: string;
+  radius?: number;
+  shadow?: boolean;
+  border?: boolean;
+  class?: string;
+  mediaClass?: string;
+  style?: string;
+  id?: string;
+  /** container width (default 100% of the content column) */
+  containerWidth?: number;
+}
+const {
+  src,
+  alt = '',
+  video = false,
+  poster,
+  caption,
+  width,
+  bg,
+  pad,
+  radius,
+  shadow = false,
+  border = false,
+  class: className,
+  mediaClass,
+  style,
+  id,
+  containerWidth,
+  ...rest
+} = Astro.props;
+const mediaStyle = `${width ? `width:100%;max-width:${width}px;` : ''}${radius ? `border-radius:${radius}px;` : ''}${shadow ? 'box-shadow:0 20px 60px rgba(0,0,0,.12);' : ''}${border ? 'border:1px solid var(--line);' : ''}`;
+---
+
+<figure {...rest} id={id} class:list={['fig', className]} style={`${containerWidth ? `width:${containerWidth}px;max-width:100%;margin-inline:auto;` : ''}${style ?? ''}`} data-reveal="up">
+  <div class="cs-figure fig__box" style={`${bg ? `background:${bg === 'none' ? 'transparent' : bg};` : ''}${pad ? `padding:${pad};` : ''}`}>
+    {src && (video ? <Video class:list={['fig__media', mediaClass]} src={src} poster={poster} style={mediaStyle} label={alt} /> : <img class:list={['fig__media', mediaClass]} src={src} alt={alt} loading="lazy" decoding="async" style={mediaStyle} />)}
+    <slot />
+  </div>
+  {caption && <figcaption class="cs-figure__caption" set:html={caption} />}
+</figure>
+
+<style>
+  .fig { width: 100%; }
+  .fig__media { display: block; height: auto; border-radius: var(--r-sm); }
+</style>

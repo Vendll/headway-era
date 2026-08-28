@@ -1,0 +1,52 @@
+---
+/**
+ * Colourful rounded card in the Project Four "Lorem ipsum dolor sit" block.
+ *
+ *   <ChallengeCard title="Lorem Ipsum Dolor<br>Sit Amet Elit<br>Consectetur" bg="#F0562F" tilt={-7}><p>…</p></ChallengeCard>
+ */
+interface Props {
+  title: string; // HTML allowed (<br>)
+  bg: string;
+  /** rotation in degrees */
+  tilt?: number;
+  /** optional mascot image shown at the bottom of the card */
+  mascot?: string;
+  mascotAlt?: string;
+  class?: string;
+}
+const { title, bg, tilt = 0, mascot, mascotAlt = '', class: className } = Astro.props;
+---
+
+<div class:list={['trick', { 'trick--mascot': !!mascot }, className]} style={`background:${bg};--tilt:${tilt}deg;`}>
+  <h3 class="trick__title" set:html={title} />
+  <div class="trick__body"><slot /></div>
+  {mascot && <img class="trick__mascot" src={mascot} alt={mascotAlt} loading="lazy" decoding="async" />}
+</div>
+
+<style>
+  .trick {
+    border-radius: 16px;
+    padding: 24px 20px 26px;
+    color: #fff;
+    transform: rotate(var(--tilt, 0deg));
+    transform-origin: 50% 50%;
+  }
+  .trick--mascot { padding-bottom: 0; }
+  .trick__title {
+    font-family: var(--font-champ);
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 1.12;
+    letter-spacing: 0;
+    color: #fff;
+  }
+  .trick__body :global(p) {
+    font-size: 13px;
+    line-height: 1.4;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+    color: rgba(255, 255, 255, 0.94);
+    margin-top: 14px;
+  }
+  .trick__mascot { width: 44%; margin: 14px 0 0 26%; display: block; }
+</style>

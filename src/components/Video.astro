@@ -1,0 +1,38 @@
+---
+/** Muted, looping, inline video that plays only while on screen. */
+interface Props {
+  src: string;
+  poster?: string;
+  class?: string;
+  style?: string;
+  autoplay?: boolean;
+  loop?: boolean;
+  controls?: boolean;
+  fit?: 'cover' | 'contain';
+  width?: number | string;
+  height?: number | string;
+  label?: string;
+}
+const { src, poster, class: className, style, autoplay = true, loop = true, controls = false, fit, width, height, label, ...rest } = Astro.props;
+---
+
+<video
+  {...rest}
+  class:list={['vid', className]}
+  src={src}
+  poster={poster}
+  muted
+  playsinline
+  loop={loop}
+  controls={controls}
+  preload="metadata"
+  data-autoplay={autoplay ? '' : undefined}
+  width={width}
+  height={height}
+  aria-label={label}
+  style={`${fit ? `object-fit:${fit};` : ''}${style ?? ''}`}
+></video>
+
+<style>
+  .vid { display: block; max-width: 100%; }
+</style>
