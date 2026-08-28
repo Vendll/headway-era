@@ -121,6 +121,41 @@
     --rule: var(--color-line);
     --brand: var(--color-brand);
 
+    /* Raw palette names kept as aliases onto the @theme values. Scoped CSS that
+       has not been migrated yet still reads var(--blue) etc, and an undefined
+       var() invalidates the whole declaration - which silently fell back to
+       preflight (borders vanished, colours reset). These stay until the last
+       file is converted. */
+    --bg: var(--color-bg);
+    --bg-2: var(--color-bg-2);
+    --line: var(--color-line);
+    --ink: var(--color-ink);
+    --ink-2: var(--color-ink-2);
+    --ink-3: var(--color-ink-3);
+    --muted: var(--color-muted);
+    --muted-2: var(--color-muted-2);
+    --blue: var(--color-blue);
+    --green: var(--color-green);
+    --brand-2: var(--color-brand-2);
+    --dark: var(--color-dark);
+    --dark-2: var(--color-dark-2);
+    --light: var(--color-light);
+    --light-2: var(--color-light-2);
+    --purple: var(--color-purple);
+    --purple-2: var(--color-purple-2);
+    --yellow: var(--color-yellow);
+    --lime: var(--color-lime);
+    --violet: var(--color-violet);
+    --forest: var(--color-forest);
+    --white: #ffffff;
+    --nav-bg: var(--color-nav-bg);
+    --nav-fg: var(--color-nav-fg);
+    --ease-spring: cubic-bezier(0.22, 1, 0.36, 1);
+    --font-serif-2: var(--font-serif-2, "Instrument Serif", Georgia, serif);
+    --font-crimson: "Crimson Pro", Georgia, serif;
+    --font-brisa: "Brisa", "Comic Sans MS", cursive;
+    --font-champ: "Champ", "Arial Black", Impact, sans-serif;
+
     --header-h: 60px;
     --container: 1400px;
     --gutter: 24px;
