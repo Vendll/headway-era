@@ -9,15 +9,15 @@ export interface MobileNavItem {
 
 interface Props {
   items: readonly MobileNavItem[];
-  resumeHref: string;
+  cta: { label: string; href: string };
   /** already-normalised current path, so the island doesn't re-derive it */
   activePath: string;
 }
 
 /** Matches SiteHeader's active-link logic: strip the hash, ignore a trailing slash. */
-const isActive = (href: string, path: string) => (href.split('#')[0].replace(/\/+$/, '') || '/') === path;
+const isActive = (href: string, path: string) => !href.includes('#') && (href.replace(/\/+$/, '') || '/') === path;
 
-export default function MobileNav({ items, resumeHref, activePath }: Props) {
+export default function MobileNav({ items, cta, activePath }: Props) {
   return (
     <Sheet>
       <SheetTrigger
@@ -41,20 +41,15 @@ export default function MobileNav({ items, resumeHref, activePath }: Props) {
               <a
                 href={item.href}
                 aria-current={isActive(item.href, activePath) ? 'page' : undefined}
-                className="border-b-[color:var(--rule)] border-b py-4 font-[family-name:var(--font-mono)] text-[19px] tracking-[-0.03em] text-[color:var(--fg-muted)] aria-[current=page]:text-[color:var(--fg)]"
+                className="border-b-[color:var(--rule)] border-b py-4 font-semibold text-[26px] leading-[1.1] tracking-[-0.03em] text-[color:var(--fg)] aria-[current=page]:text-[color:var(--brand)]"
               >
                 {item.label}
               </a>
             </SheetClose>
           ))}
 
-          <a
-            href={resumeHref}
-            target="_blank"
-            rel="noopener"
-            className="mt-8 inline-flex h-11 items-center justify-center rounded-[var(--r-sm)] bg-[color:var(--brand)] font-[family-name:var(--font-mono)] text-[15px] tracking-[-0.02em] text-[color:var(--ink)]"
-          >
-            Resume
+          <a href={cta.href} className="btn btn--brand mt-8 h-12 text-[16px]">
+            {cta.label}
           </a>
         </nav>
       </SheetContent>

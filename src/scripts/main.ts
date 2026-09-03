@@ -6,6 +6,7 @@ import { initToc } from './toc';
 import { initVideo } from './video';
 import { initTypewriter } from './typewriter';
 import { initHeroRotate } from './hero-rotate';
+import { initCountUp } from './countup';
 
 function boot() {
   initScroll();
@@ -16,6 +17,7 @@ function boot() {
   initVideo();
   initTypewriter();
   initHeroRotate();
+  initCountUp();
 }
 
 if (document.readyState === 'loading') {

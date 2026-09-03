@@ -10,6 +10,7 @@
  */
 import BaseLayout from './BaseLayout.astro';
 import Footer from '@/components/Footer.astro';
+import { site } from '@/data/site';
 
 interface Props {
   title: string; // HTML allowed (<em> for the italic part)
@@ -26,7 +27,7 @@ const { title, pageTitle, description, eyebrow, tags, year, toc, accent, class: 
 const plainTitle = title.replace(/<[^>]+>/g, '');
 ---
 
-<BaseLayout title={pageTitle ?? `${eyebrow} — Placeholder Name`} description={description ?? plainTitle} theme="light" header="default" bodyClass="is-case">
+<BaseLayout title={pageTitle ?? `${eyebrow} | ${site.name}`} description={description ?? plainTitle} theme="light" header="default" bodyClass="is-case">
   <div
     class:list={[
       'cs',

@@ -1,158 +1,126 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
-import ArrowTag from '@/components/ArrowTag.astro';
-import TypewriterLink from '@/components/TypewriterLink.astro';
-import Marquee from '@/components/Marquee.astro';
-import WhereIveBeen from '@/components/WhereIveBeen.astro';
+import Services from '@/components/Services.astro';
 import Footer from '@/components/Footer.astro';
 import Video from '@/components/Video.astro';
 import { site } from '@/data/site';
 import { projects, testimonials } from '@/data/projects';
 
-/** Hero headline: the last word cycles. Longest word reserves the slot width. */
+/** Hero headline: the last word types itself. The longest word reserves the slot width. */
 const heroWords = ['megmozgat.', 'összeköt.', 'előrevisz.', 'megkülönböztet.', 'megmarad.'];
 const heroWidest = heroWords.reduce((a, b) => (b.length > a.length ? b : a));
 
-/** Media sizing lives on the media element itself (was .card__media--contain / --cover). */
+/* Media is absolutely positioned inside the card's media box: percentage
+   insets resolve against the box even where percentage heights would not. */
 const mediaFitClass = {
-  contain: 'w-[84%] h-auto max-h-[90%] object-contain',
-  cover: 'w-full h-full object-cover',
+  contain: 'absolute inset-[7%] w-[86%] h-[86%] object-contain',
+  cover: 'absolute inset-0 w-full h-full object-cover',
 };
+const count = String(projects.length).padStart(2, '0');
 ---
 
 <BaseLayout title={site.title} theme="light" header="default" headerPosition="fixed" headerAssemble>
   <!-- ============ Hero ============ -->
-  <section class="hero min-h-[100svh] grid place-items-center p-[80px_24px_40px] text-center" id="hero">
-    <div class="hero__text">
-      <h1
-        class="hero__h font-display font-normal text-[clamp(44px,5vw,92px)] leading-[0.92] tracking-[-0.03em] text-ink max-[950px]:text-[clamp(34px,8.5vw,60px)]"
-        data-reveal
-      >
-        Strat&eacute;gia, m&aacute;rka, kommunik&aacute;ci&oacute;.<br />Partners&eacute;g, amely<br />
-        <em class="rot relative inline-block text-center text-brand italic" data-rotate={heroWords.join('|')}>
-          <span class="visually-hidden">{heroWords[0]}</span>
-          <span class="rot__sizer invisible pr-[0.14em]" aria-hidden="true">{heroWidest}</span>
-          <span class="rot__live absolute left-0 right-0 top-0 whitespace-nowrap" aria-hidden="true"><span class="rot__text" /><span
-              class="rot__caret inline-block w-[0.055em] h-[0.62em] ml-[0.05em] bg-current rounded-[1px]"
-            /></span>
-        </em>
-      </h1>
+  <section class="hero wrap min-h-[100svh] flex flex-col justify-center pt-[calc(var(--header-h)+32px)] pb-16" id="hero">
+    <h1
+      class="hero__h font-semibold text-[clamp(32px,9.5vw,60px)] md:text-[clamp(40px,5.6vw,88px)] leading-[0.98] tracking-[-0.04em] text-ink max-w-[14em]"
+      data-reveal
+    >
+      Stratégia, márka, kommunikáció. Partnerség, amely{' '}
+      <em class="rot relative inline-block text-brand not-italic" data-rotate={heroWords.join('|')}>
+        <span class="visually-hidden">{heroWords[0]}</span>
+        <span class="rot__sizer invisible pr-[0.1em]" aria-hidden="true">{heroWidest}</span>
+        <span class="rot__live absolute left-0 right-0 top-0 whitespace-nowrap" aria-hidden="true"><span class="rot__text" /><span
+            class="rot__caret inline-block w-[0.05em] h-[0.72em] ml-[0.05em] bg-current rounded-[1px] align-[-0.06em]"
+          /></span>
+      </em>
+    </h1>
+
+    <div class="hero__row mt-[clamp(40px,5vw,72px)] grid grid-cols-1 md:grid-cols-12 gap-x-8 gap-y-8 items-end" data-reveal data-reveal-delay="0.15">
+      <p class="md:col-span-7 lg:col-span-6 text-[clamp(17px,1.35vw,20px)] leading-[1.5] text-ink-soft max-w-[32em]">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.
+      </p>
+      <div class="md:col-span-5 lg:col-start-9 lg:col-span-4 flex flex-wrap gap-3 md:justify-end">
+        <a class="btn btn--brand btn--lg" href={site.cta.href}>{site.cta.label}</a>
+        <a class="btn btn--ghost btn--lg" href="#munkaink">Ipsum dolor</a>
+      </div>
     </div>
   </section>
 
-  <!-- ============ Blue "know more" panel (widens as it scrolls in) ============ -->
+  <!-- ============ Manifesto panel (widens as it scrolls in) ============ -->
   <section
-    class="fun max-w-full m-[20px_auto_0] rounded-xl bg-blue text-[#fafafa] min-h-[1134px] grid place-items-center p-[120px_24px] will-change-[width] max-[950px]:min-h-0 max-[950px]:p-[140px_24px_90px] max-[950px]:mt-0"
-    id="fun"
+    class="fun mx-auto rounded-xl bg-ink text-light px-[clamp(24px,6vw,110px)] py-[clamp(72px,9vw,150px)] will-change-[width]"
+    id="rolunk"
     data-fun
   >
-    <div class="fun__inner relative w-[min(683px,100%)] text-center">
-      <div class="fun__tag absolute left-[-170px] top-[-150px] max-[1200px]:left-0 max-[950px]:static max-[950px]:mb-[40px]">
-        <ArrowTag side="right" variant="white">Lorem ipsum dolor<br />sit <em class="italic">amet elit</em></ArrowTag>
-      </div>
-      <div class="fun__copy flex flex-col items-center gap-[30px]">
-        <p
-          class="fun__p font-display text-[clamp(30px,2.45vw,50px)] leading-[0.8] tracking-[-0.02em] text-[#fafafa] max-[950px]:text-[32px]"
-          data-reveal
-        >
-          Sed <em class="italic">Placeholder,</em> lorem ipsum dolor, sit amet consectetur. Adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore. Enim ad minim veniam quis.
-        </p>
-        <p
-          class="fun__p font-display text-[clamp(30px,2.45vw,50px)] leading-[0.8] tracking-[-0.02em] text-[#fafafa] max-[950px]:text-[32px]"
-          data-reveal
-          data-reveal-delay="0.1"
-        >
-          Nostrud exercitation ullamco laboris. Nisi aliquip commodo consequat. Duis aute irure dolor in reprehenderit voluptate velit esse cillum dolore eu fugiat nulla pariatur sint.
-        </p>
-        <TypewriterLink class="fun__link text-[#fafafa] mt-[30px]" href="/about" text="About" />
-      </div>
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-x-8 gap-y-10">
+      <p class="lg:col-span-12 text-[14px] text-[#9a9a9a]">Rólunk</p>
+      <h2
+        class="lg:col-span-10 font-semibold text-[clamp(28px,3.2vw,52px)] leading-[1.1] tracking-[-0.03em] text-light"
+        data-reveal
+      >
+        Sed placeholder, lorem ipsum dolor, sit amet consectetur. Adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore. Enim ad minim veniam quis.
+      </h2>
+      <p class="lg:col-start-7 lg:col-span-5 text-[17px] leading-[1.55] text-[#c4c4c4] max-w-[34em]" data-reveal data-reveal-delay="0.1">
+        Nostrud exercitation ullamco laboris. Nisi aliquip commodo consequat. Duis aute irure dolor in reprehenderit voluptate velit esse cillum dolore eu fugiat nulla pariatur sint.
+      </p>
     </div>
   </section>
 
-  <!-- ============ Projects (sticky stacking cards) ============ -->
-  <section class="projects w-[min(1450px,100%_-_2_*_var(--gutter))] m-[130px_auto_0] max-[950px]:mt-[100px]" id="projects">
-    <div class="projects__head relative flex flex-col items-center mb-[80px] pt-0 max-[950px]:mb-[60px]" id="title">
-      <div class="projects__tag absolute right-[17%] top-[-10px] z-[1] max-[1200px]:right-[8%] max-[950px]:static max-[950px]:self-end">
-        <ArrowTag side="left" variant="dark">Lorem Ipsum<br /><em class="italic">dolorsit!!</em></ArrowTag>
-      </div>
-      <h2
-        class="projects__h font-display font-normal text-[clamp(96px,12.2vw,250px)] leading-[1] tracking-[-0.05em] text-ink-2 relative mt-[90px] max-[950px]:text-[clamp(72px,18vw,120px)] max-[950px]:mt-[10px]"
-        data-reveal
-      >
-        Lor<em class="italic">emip</em><span
-          class="projects__count font-mono text-[20px] tracking-[-0.05em] text-blue ml-[0.05em] align-baseline inline-block [transform:translateY(-0.2em)]"
-          >(05)</span
-        >
-      </h2>
+  <!-- ============ Services ============ -->
+  <Services />
+
+  <!-- ============ Work (image-first sticky stack) ============ -->
+  <section class="projects wrap pb-[clamp(96px,11vw,160px)]" id="munkaink">
+    <div class="projects__head flex items-baseline gap-4 mb-[clamp(40px,5vw,72px)]">
+      <h2 class="font-semibold text-[clamp(36px,4.2vw,64px)] leading-[1] tracking-[-0.035em] text-fg" data-reveal>Munkáink</h2>
+      <span class="font-mono text-[15px] text-fg-muted" aria-label={`${projects.length} projekt`}>({count})</span>
     </div>
 
-    <div class="stack relative w-[min(1400px,100%)] mx-auto pt-[60px] max-[1500px]:w-full" data-stack>
+    <div class="stack relative" data-stack>
       {
-        projects.map((p, i) => {
+        projects.map((p) => {
           const fit = p.media.fit ?? 'contain';
           const mediaCls = mediaFitClass[fit];
           return (
             <article
-              class="card sticky top-[60px] grid grid-cols-[490px_1fr] h-[756px] mb-[40px] last:mb-0 border border-line rounded-lg bg-bg-2 max-[1500px]:grid-cols-[38%_1fr] max-[1500px]:h-auto max-[1500px]:min-h-[640px] max-[950px]:grid-cols-[1fr] max-[950px]:relative max-[950px]:top-auto max-[950px]:min-h-0 max-[950px]:mb-[70px]"
+              class="card relative sticky top-[calc(var(--header-h)+20px)] flex flex-col h-[min(76vh,720px)] mb-6 last:mb-0 overflow-hidden rounded-lg border border-line bg-bg-2 max-[950px]:top-[calc(var(--header-h)+12px)] max-[950px]:h-auto max-[950px]:mb-4"
               id={p.id}
-              style={`--i:${i}`}
             >
-              <a
-                class="card__badge absolute top-[-50px] w-[50px] h-[50px] grid place-items-center rounded-t-sm bg-blue hover:bg-blue-2 text-[#f5f5f5] font-mono text-[18px] font-medium tracking-[-0.05em] [transition:background_0.2s_ease]"
-                href={p.href}
-                target={p.external ? '_blank' : undefined}
-                rel={p.external ? 'noopener' : undefined}
-                aria-label={`Project ${p.num}`}
-              >
-                {p.num}
-              </a>
-              <div class="card__info relative p-[40px_30px] flex flex-col">
-                <p class="card__year font-mono text-[16px] tracking-[-0.04em] text-muted">{p.year}</p>
-                <h3
-                  class="card__title text-[24px] leading-[1.2] font-normal tracking-[-0.02em] text-ink mt-[44px]"
-                  set:html={p.title.replace('\n', '<br />')}
-                />
-                <p class="card__desc text-[16px] leading-[1.3] text-muted-2 mt-[20px]" set:html={p.description} />
-                <div class="card__meta mt-[56px] flex flex-col gap-[4px]">
-                  <details class="acc" open>
-                    <summary class="acc__label list-none list-outside cursor-pointer flex justify-between items-center text-[16px] font-medium text-ink-2 py-[6px]">
-                      Category
-                    </summary>
-                    <p class="acc__value text-[16px] leading-[1.3] text-muted-2 pb-[12px]">{p.discipline}</p>
-                  </details>
-                  <details class="acc">
-                    <summary class="acc__label list-none list-outside cursor-pointer flex justify-between items-center text-[16px] font-medium text-ink-2 py-[6px]">
-                      The Role
-                    </summary>
-                    <p class="acc__value text-[16px] leading-[1.3] text-muted-2 pb-[12px]">{p.role}</p>
-                  </details>
-                  <details class="acc">
-                    <summary class="acc__label list-none list-outside cursor-pointer flex justify-between items-center text-[16px] font-medium text-ink-2 py-[6px]">
-                      Duration
-                    </summary>
-                    <p class="acc__value text-[16px] leading-[1.3] text-muted-2 pb-[12px]">{p.timeline}</p>
-                  </details>
-                </div>
-                <a
-                  class="btn card__cta mt-auto self-start max-[950px]:mt-[32px]"
-                  href={p.href}
-                  target={p.external ? '_blank' : undefined}
-                  rel={p.external ? 'noopener' : undefined}
-                >
-                  Case study
+              <header class="card__head flex items-center gap-x-6 gap-y-1 px-[clamp(18px,2vw,28px)] py-4 border-b border-line text-[14px] leading-[1.3]">
+                <span class="font-mono text-fg-muted">{p.num}</span>
+                <span class="font-semibold text-ink">{p.client}</span>
+                <span class="text-fg-muted-2 max-[641px]:hidden">{p.service}</span>
+                <span class="text-fg-muted-2 max-[641px]:hidden">{p.year}</span>
+                <span class="ml-auto inline-flex items-center gap-2 font-medium text-ink">
+                  Lorem ipsum
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M8 7h9v9"/></svg>
-                </a>
-              </div>
+                </span>
+              </header>
+
               <div
                 class:list={[
                   'card__media',
-                  `card__media--${fit}`,
-                  'relative overflow-hidden grid place-items-center rounded-[0_var(--r-lg)_var(--r-lg)_0] max-[950px]:aspect-[4/3] max-[950px]:order-[-1] max-[950px]:rounded-[var(--r-lg)_var(--r-lg)_0_0]',
+                  fit === 'cover' && 'card__media--cover',
+                  'relative flex-1 min-h-0 overflow-hidden max-[950px]:aspect-[4/3] max-[950px]:flex-none',
                 ]}
                 style={`background:${p.mediaBg}`}
               >
                 {p.media.type === 'video' ? <Video class={`card__vid ${mediaCls}`} src={p.media.src} label={p.media.alt} /> : <img class={mediaCls} src={p.media.src} alt={p.media.alt} loading="lazy" decoding="async" />}
               </div>
+
+              <p class="card__result px-[clamp(18px,2vw,28px)] py-[clamp(16px,1.6vw,22px)] border-t border-line font-semibold text-[clamp(20px,1.9vw,28px)] leading-[1.2] tracking-[-0.03em] text-ink tabular-nums" data-countup>
+                {p.result}
+              </p>
+
+              {/* the whole card is the link; it sits above the content but carries the accessible name */}
+              <a
+                class="card__link absolute inset-0 z-[1]"
+                href={p.href}
+                target={p.external ? '_blank' : undefined}
+                rel={p.external ? 'noopener' : undefined}
+                aria-label={`${p.client}: lorem ipsum`}
+              />
             </article>
           );
         })
@@ -160,75 +128,44 @@ const mediaFitClass = {
     </div>
   </section>
 
-  <!-- ============ Testimonials (dark box) ============ -->
-  <section
-    class="testi theme-dark w-[min(1880px,100%_-_2_*_68px)] m-[300px_auto_0] rounded-xl bg-[#151515] text-[#f5f5f5] p-[130px_24px_120px] text-center max-[950px]:w-full max-[950px]:mt-[140px] max-[950px]:p-[90px_20px_90px]"
-    id="testimonials"
-  >
-    <h2
-      class="testi__h font-display font-normal text-[clamp(64px,7.8vw,160px)] leading-[0.9] tracking-[-0.04em] text-[#f5f5f5]"
-      data-reveal
-    >
-      Consectetur, adipiscing <em class="text-green italic">elit</em><br />sed do eiusmod!
-    </h2>
-    <div
-      class="testi__wrap relative grid grid-cols-[300px_500px_300px] justify-center m-[150px_auto_0] text-left max-[1200px]:grid-cols-[minmax(0,500px)] max-[950px]:mt-[70px]"
-    >
-      <div class="testi__side relative max-[1200px]:hidden">
-        <span
-          class="testi__mark testi__mark--open block font-display text-[440px] leading-[0.5] h-[0.5em] text-green pointer-events-none pt-[0.1em] sticky top-[38vh] ml-0"
-          aria-hidden="true">“</span
-        >
-      </div>
-      <ul class="testi__list list-none flex flex-col gap-[100px] max-[950px]:gap-[60px]">
+  <!-- ============ Client quotes (dark) ============ -->
+  <section class="testi theme-dark bg-dark text-light" id="ugyfeleink">
+    <div class="wrap pt-[clamp(96px,11vw,160px)] pb-[clamp(32px,4vw,56px)]">
+      <h2 class="font-semibold text-[clamp(36px,4.2vw,64px)] leading-[1] tracking-[-0.035em] text-light" data-reveal>Ügyfeleink</h2>
+      <ul class="testi__list list-none mt-[clamp(40px,5vw,72px)] grid md:grid-cols-2 gap-x-16">
         {
-          testimonials.map((t, i) => (
-            <li class="testi__item" data-reveal data-reveal-delay={String(i * 0.05)}>
-              <p class="testi__q text-[22px] leading-[1.1] font-normal text-[#e3e3e3]">{t.quote}</p>
-              <p class="testi__by text-[16px] leading-[1.2] italic font-light text-[#e3e3e3] mt-[60px]">
-                {t.role}
-                <br />
-                {t.name}
-              </p>
+          testimonials.map((t) => (
+            <li class="testi__item py-10 md:py-12 border-t border-rule flex flex-col">
+              <blockquote class="font-medium text-[clamp(19px,1.5vw,23px)] leading-[1.45] tracking-[-0.015em] text-[#e6e6e6]">„{t.quote}”</blockquote>
+              <p class="mt-7 text-[15px] leading-[1.4] font-medium text-light">{t.name}</p>
+              <p class="text-[14px] leading-[1.4] text-fg-muted">{t.role}</p>
             </li>
           ))
         }
       </ul>
-      <div class="testi__side testi__side--end relative max-[1200px]:hidden">
-        <span
-          class="testi__mark testi__mark--close block font-display text-[440px] leading-[0.5] h-[0.5em] text-green pointer-events-none pt-[0.1em] sticky top-[38vh] ml-[150px] mt-[0.12em]"
-          aria-hidden="true">”</span
-        >
-      </div>
     </div>
   </section>
 
-  <div class="theme-dark home-dark bg-[#151515] text-[#f5f5f5]">
-    <Marquee
-      class="home-marquee p-[40px_0_0] border-b border-b-[#262626]"
-      text="Lorem ipsum dolor, sit amet consectetur"
-      href={site.linkedin}
-      repeat={3}
-      duration={22}
-    />
-    <WhereIveBeen />
-    <Footer />
-  </div>
+  <Footer />
 </BaseLayout>
 
 <script>
-  // Blue panel: grows from ~72% to ~90% of the viewport width as it scrolls into view.
+  // Manifesto panel: --fun-t scrubs 0 → 1 as the panel enters the viewport;
+  // the CSS below turns it into a width between --fun-from and --fun-to.
   const fun = document.querySelector<HTMLElement>('[data-fun]');
   if (fun) {
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const clamp = (v: number) => Math.min(1, Math.max(0, v));
+    let last = -1;
     const update = () => {
       const r = fun.getBoundingClientRect();
       const vh = window.innerHeight;
-      // 0 while the panel's top is below 62% of the viewport, 1 once it reaches 22% (matches the Framer scroll section)
+      // 0 while the panel's top is below 62% of the viewport, 1 once it reaches 22%
       const p = reduce ? 1 : clamp((vh * 0.62 - r.top) / (vh * 0.4));
       const eased = p * p * (3 - 2 * p);
-      fun.style.setProperty('--fun-w', `${72 + eased * 18}%`);
+      if (eased === last) return;
+      last = eased;
+      fun.style.setProperty('--fun-t', eased.toFixed(4));
     };
     update();
     let ticking = false;
@@ -249,53 +186,53 @@ const mediaFitClass = {
 </script>
 
 <style>
-  /* Everything that is expressible as a utility now lives on the markup.
-     What stays here: keyframe animations, rules that read the JS-driven
-     --fun-w / --i custom properties, ::after content, and :global() hooks into
-     child components / set:html output. */
+  /* What stays here: keyframes, rules that read the JS-driven --fun-t, and
+     hover rules that cross from the stretched link to its siblings. */
 
-  /* The rotating word reserves the width of the longest option via a hidden
-     sizer, so the centred headline never reflows as the word changes. The live
-     text is absolutely positioned over that slot and left-aligned, which is
-     what puts the caret right after the last typed character. */
+  /* The typed word reserves the width of the longest option via a hidden
+     sizer, so the headline never reflows as the word changes. The live text is
+     absolutely positioned over that slot, left-aligned, which puts the caret
+     right after the last typed character. */
   .hero__h .rot__caret { animation: rot-blink 1s steps(1) infinite; }
   @keyframes rot-blink { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; } }
   @media (prefers-reduced-motion: reduce) {
     .hero__h .rot__caret { animation: none; }
   }
 
-  /* ---------- blue panel ---------- */
-  /* --fun-w is written by the scroll script above; the width must read it here. */
+  /* ---------- manifesto panel ---------- */
+  /* --fun-t is written by the scroll script above (defaults to 1 so the panel
+     is full width if the script never runs). from/to are per breakpoint. */
   .fun {
-    --fun-w: 72%;
-    width: var(--fun-w);
+    --fun-t: 1;
+    --fun-from: 74%;
+    --fun-to: 92%;
+    width: calc(var(--fun-from) + (var(--fun-to) - var(--fun-from)) * var(--fun-t));
   }
-  .fun__tag :global(.atag__arrow) { color: #fafafa; }
-
-  /* ---------- projects ---------- */
-  .projects__tag :global(.atag__arrow) { color: var(--ink); }
-  /* --i is the card index, set inline; the badges fan out to the right. */
-  .card__badge { right: calc(var(--i) * 60px); }
-  .card__desc :global(strong) { font-weight: 600; color: var(--muted-2); }
-  .acc__label::-webkit-details-marker { display: none; }
-  .acc__label::after {
-    content: '';
-    width: 7px;
-    height: 7px;
-    border-right: 1.5px solid var(--muted);
-    border-bottom: 1.5px solid var(--muted);
-    transform: rotate(45deg) translate(-2px, -2px);
-    transition: transform 0.3s var(--ease-spring);
-  }
-  .acc[open] .acc__label::after { transform: rotate(-135deg) translate(-2px, -1px); }
-  .acc__value { animation: acc-in 0.4s var(--ease-spring); }
-  @keyframes acc-in { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
-
-  /* ---------- responsive ---------- */
   @media (max-width: 1199px) {
-    .fun { --fun-w: 92%; }
+    .fun { --fun-from: 88%; --fun-to: 94%; }
   }
+  /* phones: no room to widen, so the panel grows from inset-with-corners to
+     edge-to-edge-and-square instead - same scrub, different axis */
   @media (max-width: 949px) {
-    .card__badge { right: 0; }
+    .fun {
+      --fun-from: calc(100% - 2 * var(--gutter));
+      --fun-to: 100%;
+      border-radius: calc(var(--radius-xl) * (1 - var(--fun-t)));
+    }
+  }
+
+  /* ---------- work ---------- */
+  /* a cover image fills the box edge to edge, so it must not inherit the
+     site-wide rounded-media rule (unlayered, so a utility would lose to it) */
+  .card__media--cover :is(img, video) { border-radius: 0; }
+  /* hover answers the stretched link: the media eases in, the label turns brand */
+  .card__media :is(img, video) { transition: transform 0.6s var(--ease-spring); }
+  .card:has(.card__link:hover) .card__media :is(img, video) { transform: scale(1.02); }
+  .card:has(.card__link:hover) .card__head > span:last-child,
+  .card:has(.card__link:focus-visible) .card__head > span:last-child { color: var(--brand); }
+  .card:has(.card__link:focus-visible) { outline: 2px solid var(--brand); outline-offset: 3px; }
+  .card__link:focus-visible { outline: none; }
+  @media (prefers-reduced-motion: reduce) {
+    .card__media :is(img, video) { transition: none; }
   }
 </style>

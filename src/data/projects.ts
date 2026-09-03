@@ -2,6 +2,12 @@ export interface Project {
   id: string;
   num: string;
   year: string;
+  /** who the work was for */
+  client: string;
+  /** which service it belongs to (matches a name in site.ts services) */
+  service: string;
+  /** one outcome line, shown large on the work card */
+  result: string;
   title: string;
   /** HTML allowed (bold spans) */
   description: string;
@@ -19,6 +25,9 @@ export const projects: Project[] = [
     id: 'superreply',
     num: '01',
     year: '2024',
+    client: 'Client One',
+    service: 'Stratégia',
+    result: '+38% lorem ipsum dolor sit amet a kampány után',
     title: 'Project One: Lorem ipsum dolor sit amet consectetur elit',
     description:
       'Lorem ipsum dolor sit amet consectetur adipiscing elit sed eiusmod tempor, <strong>100,000+ in labore et dolore.</strong>',
@@ -33,6 +42,9 @@ export const projects: Project[] = [
     id: 'slate',
     num: '02',
     year: '2025',
+    client: 'Client Two',
+    service: 'Kommunikáció',
+    result: '3 hét alatt lorem ipsum, 5+ consectetur adipiscing',
     title: 'Project Two: Lorem ipsum dolor consectetur adipiscing elit',
     description:
       'Explored 3 lorem ipsum flows for dolor sit amet, consectetur adipiscing, elit sed eiusmod, and tempor incididunt,  with 5+ practical lorem ipsum dolor embedded directly into each interaction.',
@@ -47,6 +59,9 @@ export const projects: Project[] = [
     id: 'gemini',
     num: '03',
     year: '2026',
+    client: 'Client Three',
+    service: 'Stratégia',
+    result: '24 óra alatt lorem ipsum dolor sit amet',
     title: 'Project Three: Lorem Ipsum Dolor\nConsectetur - Elit',
     description:
       'Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod, tempor incididunt ut labore et dolore magna aliqua enim ad minim veniam quis nostrud exercitation.',
@@ -61,6 +76,9 @@ export const projects: Project[] = [
     id: 'flex-d',
     num: '04',
     year: '2025',
+    client: 'Client Four',
+    service: 'Márka',
+    result: '50+ lorem ipsum, egy consectetur adipiscing elit',
     title: 'Project Four - Lorem Ipsum Dolor',
     description:
       'Lorem ipsum dolor sit amet consectetur for Project Four, a placeholder mobile app built around expressive, character-driven interactions across 50+ screens.',
@@ -75,6 +93,9 @@ export const projects: Project[] = [
     id: 'speakaboo',
     num: '05',
     year: '2025',
+    client: 'Client Five',
+    service: 'Márka',
+    result: '+120k lorem ipsum dolor sit amet 3 hónap alatt',
     title: 'Project Five - Lorem Ipsum Dolor Consectetur',
     description:
       'Lorem ipsum dolor and sit amet consectetur for Project Five. a placeholder mobile app helping lorem ipsum dolor understand their consectetur through adipiscing elit and sed eiusmod tempor.<br><br><em>(Opens in a new tab)</em>',

@@ -1,56 +1,64 @@
 ---
+/**
+ * Site footer: one closing statement ("Beszéljünk."), the email as the
+ * action, then a quiet bar with the wordmark, navigation and copyright.
+ * Always dark - pages that end on a light section get the contrast step.
+ */
 import { site, nav } from '@/data/site';
-import ArrowTag from './ArrowTag.astro';
 
 interface Props {
-  /** show the "Still here?" intro (default true) */
-  intro?: boolean;
   class?: string;
 }
-const { intro = true, class: className, ...rest } = Astro.props;
-
-// shared nav pill. The Resume pill carries its own background and, because the
-// old rule used `!important`, keeps it on hover too - so it opts out of hover:bg.
-const pill = 'inline-flex items-center h-10 px-5 rounded-sm text-nav-fg [transition:background_0.2s_ease] max-[950px]:h-9 max-[950px]:px-[14px] max-[950px]:text-[12px]';
-const link = `${pill} bg-nav-bg hover:bg-[#333]`;
+const { class: className, ...rest } = Astro.props;
 ---
 
 <footer
   {...rest}
-  class:list={[
-    'footer',
-    'relative overflow-hidden pt-40 px-4 pb-[90px] text-fg max-[950px]:pt-[120px] max-[950px]:pb-[120px]',
-    className,
-  ]}
+  class:list={['footer', 'theme-dark bg-dark text-light', className]}
   data-footer
+  id="kapcsolat"
 >
-  <div class="footer__cta flex flex-col items-center text-center">
-    {intro && <p class="footer__still text-[14px] font-normal tracking-[-0.03em] text-fg-muted mb-[70px]" data-reveal>Lorem ipsum?</p>}
-    <div class="footer__work relative inline-block">
-      <div class="footer__tag absolute right-[-0.65em] top-[-1.15em] z-[1] max-[950px]:right-0 max-[950px]:top-[-2.4em] max-[950px]:origin-top-right max-[950px]:[transform:scale(0.7)]"><ArrowTag side="left" variant="blue" arrowWidth={80}>Ut enim ad minim quis</ArrowTag></div>
-      <h2 class="footer__title font-display font-normal text-[clamp(72px,10.5vw,200px)] leading-[0.9] tracking-[-0.04em] text-fg whitespace-nowrap" data-reveal>Lorem <em class="italic">ipsum.</em></h2>
+  <div class="wrap pt-[clamp(80px,10vw,140px)] pb-8">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-x-8 gap-y-10 items-end">
+      <div class="lg:col-span-8">
+        <p
+          class="font-semibold text-[clamp(56px,9.5vw,150px)] leading-[0.95] tracking-[-0.05em] text-light"
+          data-reveal
+        >
+          Beszéljünk<span class="text-brand">.</span>
+        </p>
+      </div>
+      <div class="lg:col-span-4 lg:pb-4">
+        <a
+          class="footer__mail inline-block font-medium text-[clamp(20px,1.9vw,28px)] leading-[1.1] tracking-[-0.02em] text-light underline decoration-1 underline-offset-[0.28em] decoration-[#5b5b5b] hover:decoration-brand transition-[text-decoration-color] duration-200"
+          href={`mailto:${site.email}`}
+        >
+          {site.email}
+        </a>
+        <ul class="mt-6 flex gap-6 text-[15px] text-fg-muted">
+          <li><a class="hover:text-light transition-colors duration-200" href={site.linkedin} target="_blank" rel="noopener">LinkedIn</a></li>
+          <li><a class="hover:text-light transition-colors duration-200" href={site.instagram} target="_blank" rel="noopener">Instagram</a></li>
+        </ul>
+      </div>
     </div>
-    <ul class="footer__links list-none flex gap-5 mt-[26px] text-[14px] font-normal tracking-[-0.04em]" data-reveal data-reveal-delay="0.15">
-      <li><a class="[transition:opacity_0.2s_ease] hover:opacity-70" href={`mailto:${site.email}`}>Email</a></li>
-      <li><a class="[transition:opacity_0.2s_ease] hover:opacity-70" href={site.linkedin} target="_blank" rel="noopener">Profile</a></li>
-      <li><a class="footer__ig text-green [transition:opacity_0.2s_ease] hover:opacity-70" href={site.instagram} target="_blank" rel="noopener">{site.instagramHandle}</a></li>
-    </ul>
-  </div>
 
-  <div class="footer__bar absolute left-4 right-4 bottom-[22px] flex justify-between items-center gap-4 max-[950px]:flex-col max-[950px]:items-start max-[950px]:pl-14 max-[950px]:gap-3">
-    <p class="footer__copy text-[16px] font-normal leading-[1.2] text-fg-muted max-[950px]:text-[13px]">{site.copyright}</p>
-    <nav class="footer__nav flex gap-1 font-mono text-[14px] font-medium tracking-[-0.01em]" aria-label="Footer">
-      <a class={link} href={nav[0].href}>Work</a>
-      <a class={link} href={nav[2].href}>About</a>
-      <a class={link} href={nav[1].href}>Play</a>
-      <a class:list={['footer__nav-resume', pill, 'bg-ink-3 text-[13px]']} href={site.resumeNav} target="_blank" rel="noopener">Resume</a>
-    </nav>
+    <div class="footer__bar mt-[clamp(72px,9vw,130px)] pt-8 border-t border-rule grid grid-cols-1 md:grid-cols-[auto_1fr_auto] items-center gap-x-12 gap-y-6 text-[14px] text-fg-muted">
+      <a class="inline-flex items-center justify-self-start" href="/" aria-label={site.name}>
+        <img class="footer__logo block h-7 w-auto" src={site.logo} alt="" width="556" height="88" loading="lazy" />
+      </a>
+      <nav class="flex flex-wrap gap-x-7 gap-y-2 md:justify-center" aria-label="Footer">
+        {nav.map((n) => <a class="hover:text-light transition-colors duration-200" href={n.href}>{n.label}</a>)}
+      </nav>
+      <p class="md:text-right">{site.copyright}</p>
+    </div>
   </div>
 </footer>
 
 <style>
-  /* KEPT deliberately: `:global()` into <ArrowTag>'s internal <HandArrow>. The
-     arrow has no class prop of its own here, and HandArrow's unlayered
-     `.hand-arrow { color: inherit }` would beat a `text-blue` utility anyway. */
-  .footer__tag :global(.atag__arrow) { color: var(--blue); }
+  /* The wordmark must not inherit the site-wide rounded-media rule
+     (`main :is(img, video, iframe)`): a 16px radius on a 28px-tall image
+     rounds off the ascender of the "h" and the tail of the "y". That rule is
+     unlayered, so a `rounded-none` utility would lose to it; this scoped rule
+     outranks it. */
+  .footer__logo { border-radius: 0; }
 </style>

@@ -1,0 +1,66 @@
+---
+/**
+ * Services for the home page: one full-width band per service. Name on the
+ * left; promise, deliverables and a link to a proving piece of work on the
+ * right. Hairlines between bands, no cards.
+ */
+import { services } from '@/data/site';
+
+interface Props {
+  id?: string;
+  class?: string;
+}
+const { id = 'szolgaltatasok', class: className, ...rest } = Astro.props;
+---
+
+<section {...rest} class:list={['services', 'wrap py-[clamp(96px,11vw,160px)]', className]} id={id}>
+  <h2 class="font-semibold text-[clamp(36px,4.2vw,64px)] leading-[1] tracking-[-0.035em] text-fg" data-reveal>Szolgáltatások</h2>
+
+  <ul class="list-none mt-[clamp(40px,5vw,72px)] border-t border-rule">
+    {
+      services.map((s) => (
+        <li class="grid grid-cols-1 lg:grid-cols-12 gap-x-8 gap-y-6 py-[clamp(40px,4.5vw,64px)] border-b border-rule">
+          <h3 class="lg:col-span-4 font-semibold text-[clamp(28px,2.6vw,40px)] leading-[1.05] tracking-[-0.03em] text-fg">{s.name}</h3>
+
+          <div class="lg:col-span-8 grid grid-cols-1 md:grid-cols-12 gap-x-8 gap-y-8">
+            <p class="md:col-span-12 font-medium text-[clamp(20px,1.7vw,26px)] leading-[1.3] tracking-[-0.02em] text-ink max-w-[26em]">{s.promise}</p>
+
+            <div class="md:col-span-7">
+              <p class="text-[14px] text-fg-muted">Mit kapsz</p>
+              <ul class="mt-3 grid grid-cols-2 gap-x-6 gap-y-2 list-none text-[16px] leading-[1.45] text-ink-soft">
+                {s.deliverables.map((d) => (
+                  <li class="services__item">{d}</li>
+                ))}
+              </ul>
+            </div>
+
+            <div class="md:col-span-5 md:justify-self-end md:text-right self-end">
+              <p class="text-[14px] text-fg-muted">Példa</p>
+              <a
+                class="services__example mt-2 inline-block font-medium text-[16px] text-ink underline decoration-1 underline-offset-[0.3em] decoration-line hover:decoration-brand transition-[text-decoration-color] duration-200"
+                href={s.example.href}
+              >
+                {s.example.label}
+              </a>
+            </div>
+          </div>
+        </li>
+      ))
+    }
+  </ul>
+</section>
+
+<style>
+  /* small brand-coloured marker instead of a bullet, so the deliverables read as
+     a set without turning into a second list */
+  .services__item::before {
+    content: '';
+    display: inline-block;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--brand);
+    margin-right: 10px;
+    vertical-align: 0.2em;
+  }
+</style>

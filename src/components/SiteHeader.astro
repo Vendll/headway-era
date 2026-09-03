@@ -1,12 +1,13 @@
 ---
 /**
- * Top navigation bar: links left, centred logo, Resume right.
+ * Top navigation bar: links left, centred wordmark, call to action right.
  *
- *   default – full bar (links + logo + Resume)
+ *   default – full bar (links + logo + CTA)
  *   minimal – logo only (standalone pages)
  */
 import { site, nav } from '@/data/site';
 import MobileNav from '@/components/MobileNav';
+import Wordmark from '@/components/Wordmark.astro';
 
 interface Props {
   variant?: 'default' | 'minimal';
@@ -18,7 +19,8 @@ const { variant = 'default', position = 'fixed', assemble = false } = Astro.prop
 
 /** current path, normalised so "/play.html", "/play/" and "/index.html" all match */
 const path = Astro.url.pathname.replace(/\.html$/, '').replace(/\/index$/, '/').replace(/(.)\/+$/, '$1') || '/';
-const isActive = (href: string) => (href.split('#')[0].replace(/\/+$/, '') || '/') === path;
+/** hash links (all of the home nav) are never "current page" - the section they point at is unknown server-side */
+const isActive = (href: string) => !href.includes('#') && (href.replace(/\/+$/, '') || '/') === path;
 ---
 
 <header
@@ -30,8 +32,8 @@ const isActive = (href: string) => (href.split('#')[0].replace(/\/+$/, '') || '/
     position === 'absolute' ? 'absolute' : 'fixed',
     'top-0 left-0 right-0 z-[60] h-[var(--header-h)]',
     'flex items-center justify-between gap-4',
-    'px-6 max-[950px]:px-4',
-    'font-mono text-[14px] max-[950px]:text-[12px] leading-[1.2] tracking-[-0.03em] text-fg',
+    'px-[var(--gutter)]',
+    'font-body text-[15px] max-[950px]:text-[14px] font-medium leading-[1.2] tracking-[-0.01em] text-fg',
   ]}
   data-header
   data-nav-assemble={assemble ? '' : undefined}
@@ -39,7 +41,7 @@ const isActive = (href: string) => (href.split('#')[0].replace(/\/+$/, '') || '/
   {
     variant !== 'minimal' && (
       <div class="site-nav__burger hidden max-[641px]:block">
-        <MobileNav client:load items={nav} resumeHref={site.resumeNav} activePath={path} />
+        <MobileNav client:load items={nav} cta={site.cta} activePath={path} />
       </div>
     )
   }
@@ -47,7 +49,7 @@ const isActive = (href: string) => (href.split('#')[0].replace(/\/+$/, '') || '/
   {
     variant !== 'minimal' && (
       <nav
-        class="site-nav__links flex items-center gap-[22px] max-[950px]:gap-4 max-[641px]:hidden"
+        class="site-nav__links flex items-center gap-[28px] max-[950px]:gap-5 max-[641px]:hidden"
         aria-label="Primary"
       >
         {nav.map((n) => (
@@ -56,7 +58,7 @@ const isActive = (href: string) => (href.split('#')[0].replace(/\/+$/, '') || '/
               'site-nav__link',
               { 'is-active': isActive(n.href) },
               'whitespace-nowrap transition-[color] duration-200 ease-[ease] hover:text-fg',
-              isActive(n.href) ? 'text-fg' : 'text-fg-muted',
+              isActive(n.href) ? 'text-fg' : 'text-fg-muted-2',
             ]}
             href={n.href}
             aria-current={isActive(n.href) ? 'page' : undefined}
@@ -72,30 +74,44 @@ const isActive = (href: string) => (href.split('#')[0].replace(/\/+$/, '') || '/
   <a
     class="site-nav__logo absolute left-1/2 top-1/2 [transform:translate(-50%,-50%)] flex items-center"
     href="/"
-    aria-label="Home"
+    aria-label={site.name}
   >
-    {/* the mark is 6.32:1 - at its 48px open size it needs 304px, so max-width must
-        stay above that or it clamps the width and distorts it */}
-    <img
-      class="block h-7 w-auto max-w-[min(340px,45vw)] max-[950px]:h-6 max-[641px]:h-7 max-[641px]:max-w-[62vw]"
-      src={site.logo}
-      alt="Logo"
-      width="556"
-      height="88"
-    />
+    {/* the mark is 6.32:1 - at its 40px landing size it needs 253px, so max-width
+        must stay above that or it clamps the width and distorts it. On the home
+        page it is inline SVG so nav.ts can morph the letters (see Wordmark). */}
+    {
+      assemble ? (
+        <Wordmark class="block h-7 w-auto max-w-[min(340px,45vw)] max-[950px]:h-6 max-[641px]:h-7 max-[641px]:max-w-[62vw]" />
+      ) : (
+        <img
+          class="block h-7 w-auto max-w-[min(340px,45vw)] max-[950px]:h-6 max-[641px]:h-7 max-[641px]:max-w-[62vw]"
+          src={site.logo}
+          alt={site.name}
+          width="556"
+          height="88"
+        />
+      )
+    }
   </a>
 
   {
+    /* Home only. One stroked path, drawn by src/scripts/nav.ts from the
+       wordmark's real position: the lockup's curved underline on landing,
+       morphing into the bar's full-width rule as the nav assembles. */
+    assemble && (
+      <svg class="site-nav__underline" aria-hidden="true">
+        <path fill="none" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+    )
+  }
+
+  {
     variant !== 'minimal' && (
-      /* --ink is not theme-swapped, so the label stays dark on the orange fill on
-         both light and dark pages: 7.95:1, which white-on-orange (2.20:1) is not */
       <a
-        class="site-nav__cta inline-flex items-center h-8 max-[641px]:h-7 px-[14px] max-[641px]:px-3 border border-brand hover:border-brand-2 rounded-sm bg-brand hover:bg-brand-2 text-ink hover:text-ink whitespace-nowrap transition-[background,color,border-color] duration-200 ease-[ease]"
-        href={site.resumeNav}
-        target="_blank"
-        rel="noopener"
+        class="site-nav__cta btn h-9 px-[18px] text-[14px] max-[641px]:hidden"
+        href={site.cta.href}
       >
-        Resume
+        {site.cta.label}
       </a>
     )
   }
@@ -134,12 +150,12 @@ const isActive = (href: string) => (href.split('#')[0].replace(/\/+$/, '') || '/
   /* ---- assemble-on-scroll (home only) ---- */
   /* interpolates from the open landing height down to --header-h, so the
      assembled bar always matches the height every other page uses at this
-     breakpoint (60px desktop, 92px mobile) instead of a hardcoded 60px. */
+     breakpoint instead of a hardcoded 60px. */
   .site-nav--assemble {
     --nav-h-open: 96px;
     height: calc(var(--nav-h-open) - (var(--nav-h-open) - var(--header-h)) * var(--nav-t));
   }
-  .site-nav--assemble .site-nav__logo img { height: calc(40px - 12px * var(--nav-t)); }
+  .site-nav--assemble .site-nav__logo :is(img, svg) { height: calc(40px - 12px * var(--nav-t)); }
   .site-nav--assemble .site-nav__links {
     opacity: var(--nav-t);
     transform: translateX(calc(-16px * (1 - var(--nav-t))));
@@ -151,11 +167,27 @@ const isActive = (href: string) => (href.split('#')[0].replace(/\/+$/, '') || '/
   /* keyboard users tabbing in get the assembled bar immediately */
   .site-nav--assemble:focus-within { --nav-t: 1 !important; }
 
+  /* ---- the underline (home only) ----
+     Geometry, stroke width and colour are all written by nav.ts, so it works
+     the same in every browser. It is the bar's rule as well: once the script
+     has drawn it (`.has-underline`) the CSS hairline is switched off, so there
+     is exactly one line at any scroll position. Without the script the CSS
+     hairline stays as the fallback. */
+  .site-nav__underline {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+    pointer-events: none;
+  }
+  .site-nav.has-underline::after { display: none; }
+
   @media (prefers-reduced-motion: reduce) {
     .site-nav--assemble { --nav-t: 1 !important; }
   }
 
   @media (max-width: 640px) {
-    .site-nav--assemble .site-nav__logo img { height: calc(34px - 6px * var(--nav-t)); }
+    .site-nav--assemble .site-nav__logo :is(img, svg) { height: calc(34px - 6px * var(--nav-t)); }
   }
 </style>
