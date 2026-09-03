@@ -40,7 +40,8 @@ const isActive = (href: string) => !href.includes('#') && (href.replace(/\/+$/, 
 >
   {
     variant !== 'minimal' && (
-      <div class="site-nav__burger hidden max-[641px]:block">
+      /* phones: the burger is the only bar item, so it goes to the right, where the sheet opens from */
+      <div class="site-nav__burger hidden max-[641px]:block ml-auto">
         <MobileNav client:load items={nav} cta={site.cta} activePath={path} />
       </div>
     )
