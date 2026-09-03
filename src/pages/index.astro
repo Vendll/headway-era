@@ -22,16 +22,7 @@ const mediaFitClass = {
 
 <BaseLayout title={site.title} theme="light" header="default" headerPosition="fixed" headerAssemble>
   <!-- ============ Hero ============ -->
-  <section class="hero relative isolate min-h-[100svh] grid place-items-center p-[80px_24px_40px] text-center" id="hero">
-    <div
-      class="hero__bg absolute inset-0 z-[-1] overflow-hidden pointer-events-none [-webkit-mask-image:linear-gradient(to_bottom,#000_55%,transparent_96%)] [mask-image:linear-gradient(to_bottom,#000_55%,transparent_96%)]"
-      aria-hidden="true"
-    >
-      <span class="hero__wash hero__wash--a absolute inset-[-20%] block will-change-transform"></span>
-      <span class="hero__wash hero__wash--b absolute inset-[-20%] block will-change-transform"></span>
-      <span class="hero__wash hero__wash--c absolute inset-[-20%] block will-change-transform"></span>
-      <span class="hero__wash hero__wash--d absolute inset-[-20%] block will-change-transform"></span>
-    </div>
+  <section class="hero min-h-[100svh] grid place-items-center p-[80px_24px_40px] text-center" id="hero">
     <div class="hero__text">
       <h1
         class="hero__h font-display font-normal text-[clamp(44px,5vw,92px)] leading-[0.92] tracking-[-0.03em] text-ink max-[950px]:text-[clamp(34px,8.5vw,60px)]"
@@ -262,44 +253,6 @@ const mediaFitClass = {
      What stays here: keyframe animations, rules that read the JS-driven
      --fun-w / --i custom properties, ::after content, and :global() hooks into
      child components / set:html output. */
-
-  /* ---------- hero washes ---------- */
-  /* Soft brand washes so the hero is not an empty white field. Pure gradients -
-     no images, no requests. Their centres sit well away from the middle of the
-     screen, which keeps the headline over near-untinted background. */
-  .hero__wash--a {
-    background: radial-gradient(42% 40% at 18% 26%, rgba(247, 147, 29, 0.2), transparent 68%);
-    animation: hero-drift-a 74s ease-in-out infinite alternate;
-  }
-  .hero__wash--b {
-    background: radial-gradient(40% 38% at 84% 76%, rgba(247, 147, 29, 0.15), transparent 68%);
-    animation: hero-drift-b 88s ease-in-out infinite alternate;
-  }
-  .hero__wash--c {
-    background: radial-gradient(34% 32% at 80% 14%, rgba(23, 16, 230, 0.06), transparent 70%);
-    animation: hero-drift-a 96s ease-in-out infinite alternate-reverse;
-  }
-  /* right-hand counterpart to --a. Deliberately not a mirror: sits lower, is
-     taller than it is wide, and drifts on its own vector and clock. */
-  .hero__wash--d {
-    background: radial-gradient(34% 46% at 93% 47%, rgba(247, 147, 29, 0.17), transparent 66%);
-    animation: hero-drift-c 81s ease-in-out infinite alternate;
-  }
-  @keyframes hero-drift-a {
-    from { transform: translate3d(0, 0, 0); }
-    to { transform: translate3d(3%, 2%, 0); }
-  }
-  @keyframes hero-drift-b {
-    from { transform: translate3d(0, 0, 0); }
-    to { transform: translate3d(-3%, -2%, 0); }
-  }
-  @keyframes hero-drift-c {
-    from { transform: translate3d(0, 0, 0); }
-    to { transform: translate3d(-2%, 3.5%, 0); }
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .hero__wash { animation: none; }
-  }
 
   /* The rotating word reserves the width of the longest option via a hidden
      sizer, so the centred headline never reflows as the word changes. The live
